@@ -10,5 +10,5 @@ package nl.tue.algorithms.dbl.algorithm;
  * @author s169014
  */
 public class Algorithm {
-    
+    //ERIC IS LELIJK :)
 }
