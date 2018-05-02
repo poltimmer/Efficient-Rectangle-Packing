@@ -5,8 +5,6 @@
  */
 package nl.tue.algorithms.dbl.common;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Stores all the data necessary for the algorithm. This includes a fixed container
@@ -17,19 +15,13 @@ import java.util.List;
  * @author K.D. Voorintholt (1005136)
  * @since 25 APR 2018
  */
-public class Pack {
-    private final int containerHeight;
-    private final boolean canRotate;
-    private int numberOfRectangles;
-    
-    //TODO: determine data type. Simple list for now. maybe make it an ADT?
-    private final List<Rectangle> rectangles;
+public abstract class Pack {
+    protected final int containerHeight;
+    protected final boolean canRotate;
     
     public Pack(int containerHeight, boolean canRotate) {
         this.containerHeight = containerHeight;
         this.canRotate = canRotate;
-        this.numberOfRectangles = 0;
-        this.rectangles = new ArrayList<>();
     }
     
     /**
@@ -43,13 +35,7 @@ public class Pack {
      * 
      * @throws NullPointerException if the precondition is violated
      */
-    public void addRectangle(Rectangle rec) throws NullPointerException {
-        if (rec == null) {
-            throw new NullPointerException("Pack.addRectangle.pre violated: rec == null");
-        }
-        rectangles.add(rec);
-        numberOfRectangles++;
-    }
+    public abstract void addRectangle(Rectangle rec) throws NullPointerException;
     
     /** basic query */
     public int getContainerHeight() {
@@ -62,20 +48,10 @@ public class Pack {
     }
     
     /** basic query */
-    public int getNumberOfRectangles() {
-        return numberOfRectangles;
-    }
+    public abstract int getNumberOfRectangles();
     
     /** basic query */
     public boolean hasFixedHeight() {
         return containerHeight >= 0;
-    }
-
-    /** basic query */
-    public List<Rectangle> getRectanglesList() { return rectangles; }
-    
-    @Override
-    public String toString(){
-        return rectangles.toString();
     }
 }

@@ -4,11 +4,11 @@ package nl.tue.algorithms.dbl.io;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nl.tue.algorithms.dbl.common.Pack;
+import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.Rectangle;
 
 
@@ -71,7 +71,7 @@ public class InputReader {
         canRotate = sc.next().equals("yes");
         
         //create the pack
-        Pack pack = new Pack(containerHeight, canRotate);
+        Pack pack = new PackList(containerHeight, canRotate);
         
         //skip "number of rectangles" text
         checkValidInputText(sc.next(), expectedSc.next());
