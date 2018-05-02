@@ -32,10 +32,21 @@ public class InputReader {
     //Expected sequence of non-input strings that the input file is required to have
     private final static String EXPECTED_INPUT = "container height: rotations allowed: number of rectangles:";
     
+    private StringBuilder inputMsg;
+    
     public InputReader() throws FileNotFoundException{
         //should be System.in
-        this.sc = new Scanner(new File("tests/test.txt"));
+        this.sc = new Scanner(System.in);
         this.expectedSc = new Scanner(EXPECTED_INPUT);
+        this.inputMsg = new StringBuilder();
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public String getInputMessage() {
+        return inputMsg.toString();
     }
     
     /**
@@ -48,46 +59,54 @@ public class InputReader {
      * 
      * @throws IOException if the precondition is violated
      */
-    public Pack readInput() throws IOException {
+    public PackList readInput() throws IOException {
         //data we want to store
         final int containerHeight;
         final boolean canRotate;
-        final int numberOfRectangles;        
+        final int numberOfRectangles;
       
         //skip "container height" text
-        checkValidInputText(sc.next(), expectedSc.next());
-        checkValidInputText(sc.next(), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
         
         //Read free/fixed height input
-        if (sc.next().equals("fixed")) {
+        if (scanNextString(sc).equals("fixed")) {
             containerHeight = sc.nextInt();
         } else {
             containerHeight = -1;
         }
         
+        inputMsg.append("\n");
+        
         //skip "rotations allowed" text
-        checkValidInputText(sc.next(), expectedSc.next());
-        checkValidInputText(sc.next(), expectedSc.next());
-        canRotate = sc.next().equals("yes");
+        checkValidInputText(scanNextString(sc), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
+        canRotate = scanNextString(sc).equals("yes");
         
         //create the pack
-        Pack pack = new PackList(containerHeight, canRotate);
+        PackList pack = new PackList(containerHeight, canRotate);
+        
+        inputMsg.append("\n");
         
         //skip "number of rectangles" text
-        checkValidInputText(sc.next(), expectedSc.next());
-        checkValidInputText(sc.next(), expectedSc.next());
-        checkValidInputText(sc.next(), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
+        checkValidInputText(scanNextString(sc), expectedSc.next());
         
         //Read number of rectangles-input
-        numberOfRectangles = sc.nextInt();
+        numberOfRectangles = scanNextInteger(sc);
+        
+        inputMsg.append("\n");
         
         //Read each rectangle
         for (int i = 0; i < numberOfRectangles; i++){
-            final int width = sc.nextInt();
-            final int height = sc.nextInt();
+            final int width = scanNextInteger(sc);
+            final int height = scanNextInteger(sc);
             Rectangle rec = new Rectangle(i, width, height);
             //add each rectangle to the pack
             pack.addRectangle(rec);
+            
+            inputMsg.append("\n");
         }
         
         //we can only use Scanners once (like Iterators), so close them
@@ -114,12 +133,35 @@ public class InputReader {
         }
     }
     
+    /**
+     * 
+     * @param  
+     */
+    public String scanNextString(Scanner sc) {
+        String scanned = sc.next();
+        inputMsg.append(scanned);
+        inputMsg.append(" ");
+        return scanned;
+    }
+    
+    /**
+     * 
+     * @param  
+     */
+    public int scanNextInteger(Scanner sc) {
+        int scanned = sc.nextInt();
+        inputMsg.append(scanned);
+        inputMsg.append(" ");
+        return scanned;
+    }
+    
     //TODO: main method to be moved somewhere else
     public static void main(String [ ] args) {
         try {
             InputReader in = new InputReader();
             Pack pack = in.readInput();
             System.out.println(pack);
+            System.out.println(in.getInputMessage());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InputReader.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException  ex) {
