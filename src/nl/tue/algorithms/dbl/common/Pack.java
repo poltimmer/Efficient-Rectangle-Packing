@@ -14,6 +14,7 @@ import java.util.List;
  * of rectangles
  * 
  * @author E.M.A. Arts (1004076)
+ * @author K.D. Voorintholt (1005136)
  * @since 25 APR 2018
  */
 public class Pack {
@@ -69,6 +70,9 @@ public class Pack {
     public boolean hasFixedHeight() {
         return containerHeight >= 0;
     }
+
+    /** basic query */
+    public List<Rectangle> getRectanglesList() { return rectangles; }
     
     @Override
     public String toString(){
