@@ -12,7 +12,7 @@ package nl.tue.algorithms.dbl.wholeFile;
  * @author K.D. Voorintholt (1005136)
  * @author E.M.A. Arts (1004076)
  * @author T.M. Verberk ()
- * @author Koen ()
+ * @author Koen (1018025)
  * @author Wouter ()
  * @author Pol ()
  * @author Robin ()
