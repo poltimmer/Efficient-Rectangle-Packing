@@ -5,9 +5,11 @@ import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.io.InputReader;
 
 public class Prototype {
+    /*
     public static void main(String args[]) {
         new Prototype().run();
     }
+    */
 
     void run() {
         int x = 0; int y = 0;

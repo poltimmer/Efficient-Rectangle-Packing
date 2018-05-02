@@ -18,7 +18,7 @@ import nl.tue.algorithms.dbl.common.Rectangle;
  * 
  * @author Kees Voorintholt (1005136)
  * @author E.M.A. Arts (1004076)
- * @since 25 APR 2018
+ * @since 2 MAY 2018
  * 
  * TODO: Possibly also look at "fixed" and "free". Right now, if the input does
  * not match "fixed", it is assumed to be "free". Same with "yes" and "no".
@@ -34,8 +34,7 @@ public class InputReader {
     
     private StringBuilder inputMsg;
     
-    public InputReader() throws FileNotFoundException{
-        //should be System.in
+    public InputReader() throws FileNotFoundException {
         this.sc = new Scanner(System.in);
         this.expectedSc = new Scanner(EXPECTED_INPUT);
         this.inputMsg = new StringBuilder();
@@ -71,7 +70,7 @@ public class InputReader {
         
         //Read free/fixed height input
         if (scanNextString(sc).equals("fixed")) {
-            containerHeight = sc.nextInt();
+            containerHeight = scanNextInteger(sc);
         } else {
             containerHeight = -1;
         }
@@ -156,6 +155,7 @@ public class InputReader {
     }
     
     //TODO: main method to be moved somewhere else
+    /*
     public static void main(String [ ] args) {
         try {
             InputReader in = new InputReader();
@@ -168,6 +168,7 @@ public class InputReader {
             Logger.getLogger(InputReader.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
+*/
     
     
 }
