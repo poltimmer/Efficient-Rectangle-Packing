@@ -34,7 +34,7 @@ public class InputReader {
     
     public InputReader() throws FileNotFoundException{
         //should be System.in
-        this.sc = new Scanner(new File("tests/test.txt"));
+        this.sc = new Scanner(System.in);
         this.expectedSc = new Scanner(EXPECTED_INPUT);
     }
     
