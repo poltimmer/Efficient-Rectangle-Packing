@@ -16,13 +16,27 @@ public class Rectangle {
     private final int ID;
     private final int width;
     private final int height;
+    private int x,y;
     
     public Rectangle(int ID, int width, int height) {
         this.ID = ID;
         this.width = width;
         this.height = height;
     }
-    
+    /** Getters and Setters for coordinates of the rectangle */
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+
     /** basic getter */
     public int getID() {
         return this.ID;

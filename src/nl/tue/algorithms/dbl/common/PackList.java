@@ -6,6 +6,7 @@
 package nl.tue.algorithms.dbl.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,11 +23,10 @@ import java.util.List;
  * TODO
  */
 public class PackList extends Pack {
+
     
-    private final List<Rectangle> rectangles;
-    
-    public PackList(int containerHeight, boolean canRotate) {
-        super(containerHeight, canRotate);
+    public PackList() {
+        super();
         this.rectangles = new ArrayList<>();
     }
     
@@ -37,17 +37,24 @@ public class PackList extends Pack {
         }
         rectangles.add(rec);
     }
-    
+
+    @Override
+    protected void addRectangleSubclass(Rectangle rec) {
+        rectangles.add(rec);
+    }
+
     /** basic query */
     @Override
     public int getNumberOfRectangles() {
         return rectangles.size();
     }
-    
-    /** basic query */
-    public List<Rectangle> getRectanglesList() {
+
+    @Override
+    public Collection<Rectangle> getRectanglesList() {
         return rectangles;
     }
+
+    /** basic query */
     
     
     @Override

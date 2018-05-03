@@ -23,7 +23,7 @@ import nl.tue.algorithms.dbl.common.Rectangle;
  * TODO: Possibly also look at "fixed" and "free". Right now, if the input does
  * not match "fixed", it is assumed to be "free". Same with "yes" and "no".
  */
-public class InputReader {
+public class InputReader<P extends Pack> {
     //Scannner for the input file
     private final Scanner sc;
     
@@ -58,7 +58,7 @@ public class InputReader {
      * 
      * @throws IOException if the precondition is violated
      */
-    public PackList readInput() throws IOException {
+    public P readInput(P pack) throws IOException {
         //data we want to store
         final int containerHeight;
         final boolean canRotate;
@@ -83,8 +83,9 @@ public class InputReader {
         canRotate = scanNextString(sc).equals("yes");
         
         //create the pack
-        PackList pack = new PackList(containerHeight, canRotate);
-        
+        pack.setCanRotate(canRotate);
+        pack.setContainerHeight(containerHeight);
+
         inputMsg.append("\n");
         
         //skip "number of rectangles" text

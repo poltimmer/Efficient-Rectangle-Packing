@@ -1,22 +1,20 @@
 package nl.tue.algorithms.dbl.algorithm;
 
-import nl.tue.algorithms.dbl.common.Pack;
-import nl.tue.algorithms.dbl.common.PackList;
+import nl.tue.algorithms.dbl.common.HeightQueuePack;
 import nl.tue.algorithms.dbl.io.InputReader;
 
 public class Prototype {
-    /*
     public static void main(String args[]) {
         new Prototype().run();
     }
-    */
 
     void run() {
         int x = 0; int y = 0;
-        PackList rectangles;
+        HeightQueuePack rectangles = new HeightQueuePack();
         try {
-            InputReader r = new InputReader();
-            rectangles = r.readInput();
+            InputReader<HeightQueuePack> r = new InputReader<>();
+            rectangles = r.readInput(rectangles);
+
             String s = r.getInputMessage();
             System.out.print(s);
             System.out.println("placement of rectangles");
@@ -25,7 +23,7 @@ public class Prototype {
                     System.out.print("no ");
                 }
                 System.out.println(x + " " + y);
-                x += rectangles.getRectanglesList().get(i).getWidth();
+                x += rectangles.getOrderRectangles().get(i).getWidth();
             }
         } catch(Exception e) {
             System.out.println("Exception thrown");
