@@ -17,6 +17,7 @@ public class Rectangle {
     private final int width;
     private final int height;
     private int x,y;
+    private boolean rotated;
     
     public Rectangle(int ID, int width, int height) {
         this.ID = ID;
@@ -35,6 +36,9 @@ public class Rectangle {
     }
     public int getY() {
         return y;
+    }
+    public boolean isRotated() {
+        return rotated;
     }
 
     /** basic getter */

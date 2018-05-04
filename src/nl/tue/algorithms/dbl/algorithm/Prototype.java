@@ -1,7 +1,6 @@
 package nl.tue.algorithms.dbl.algorithm;
 
 import nl.tue.algorithms.dbl.common.HeightQueuePack;
-import nl.tue.algorithms.dbl.common.Rectangle;
 import nl.tue.algorithms.dbl.io.InputReader;
 
 public class Prototype {
@@ -15,13 +14,10 @@ public class Prototype {
         try {
             InputReader<HeightQueuePack> i = new InputReader<>();
             pack = i.readInput(pack);
-
-            String s = i.getInputMessage();
-            System.out.print(s);
-            System.out.println("placement of rectangles");
             while (!pack.getRectangles().isEmpty()) {
-                System.out.println(pack.getRectangles().poll().getWidth());
+                
             }
+            i.printOutput(pack);
         } catch(Exception e) {
             System.out.println("Exception thrown");
         }

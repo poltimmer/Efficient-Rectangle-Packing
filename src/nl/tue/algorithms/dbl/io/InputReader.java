@@ -41,11 +41,29 @@ public class InputReader<P extends Pack> {
     }
     
     /**
-     * 
-     * @return 
+     * Method which returns the input.
+     * @return string containing the input
      */
     public String getInputMessage() {
         return inputMsg.toString();
+    }
+
+    /**
+     * Method which will print the output to System.out
+     *
+     * @param p pack which contains the rectangle input
+     */
+    public void printOutput(Pack p) {
+        System.out.print(getInputMessage());
+        System.out.println("placement of rectangles");
+        for (Rectangle r : p.getOrderedRectangles()) {
+            if (r.isRotated()) {
+                System.out.print("yes ");
+            } else {
+                System.out.print("no ");
+            }
+            System.out.println(r.getX()+ " " +r.getY());
+        }
     }
     
     /**
