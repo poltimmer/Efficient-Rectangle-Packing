@@ -15,7 +15,7 @@ public class Prototype {
             InputReader<PackWidthQueue> i = new InputReader<>();
             pack = i.readInput(pack);
             while (!pack.getRectangles().isEmpty()) {
-
+                
             }
             i.printOutput(pack);
         } catch(Exception e) {

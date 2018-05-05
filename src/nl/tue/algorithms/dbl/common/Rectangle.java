@@ -58,7 +58,7 @@ public class Rectangle {
     
     @Override
     public String toString(){
-        return "" + width + " " + height + "";
+        return "(" + width + ", " + height + ")";
     }
     
     //TODO: possible extensions include rotations, positions, etc.
