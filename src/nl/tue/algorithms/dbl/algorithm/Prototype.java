@@ -12,7 +12,7 @@ public class Prototype {
         int x = 0; int y = 0;
         HeightQueuePack rectangles = new HeightQueuePack();
         try {
-            InputReader<HeightQueuePack> r = new InputReader<>();
+            InputReader<HeightQueuePack> r = new InputReader<>(System.in);
             rectangles = r.readInput(rectangles);
 
             String s = r.getInputMessage();

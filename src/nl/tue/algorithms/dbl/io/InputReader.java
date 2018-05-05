@@ -1,20 +1,16 @@
 
 package nl.tue.algorithms.dbl.io;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nl.tue.algorithms.dbl.common.Pack;
-import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.Rectangle;
 
-
 /**
- * Reads (and parses) the inputs from System.in
- * Each instance can only be used once (like Iterators) to read System.in's inputs
+ * Reads (and parses) the inputs from a given input stream (E.g. System.in)
+ * Each instance can only be used once (like Iterators) to read the input
+ * stream's inputs
  * 
  * @author Kees Voorintholt (1005136)
  * @author E.M.A. Arts (1004076)
@@ -34,8 +30,8 @@ public class InputReader<P extends Pack> {
     
     private StringBuilder inputMsg;
     
-    public InputReader() throws FileNotFoundException {
-        this.sc = new Scanner(System.in);
+    public InputReader(InputStream systemIn) {
+        this.sc = new Scanner(systemIn);
         this.expectedSc = new Scanner(EXPECTED_INPUT);
         this.inputMsg = new StringBuilder();
     }
@@ -134,8 +130,16 @@ public class InputReader<P extends Pack> {
     }
     
     /**
+     * A method that reads and returns a scanner's next string, but also stores
+     * the scanned string in a StringBuilder
+     * @param sc The scanner that reads over InputStream passed in this
+     * instance's constructor
      * 
-     * @param  
+     * @pre sc != null && sc.hasNext()
+     * @modifies this.inputMsg
+     * @post this.inputMsg = \old(this.inputMsg) + sc.next() + " "
+     * 
+     * @return the next integer from the given scanner
      */
     public String scanNextString(Scanner sc) {
         String scanned = sc.next();
@@ -145,31 +149,21 @@ public class InputReader<P extends Pack> {
     }
     
     /**
+     * A method that reads and returns a scanner's next integer, but also stores
+     * the scanned integer in a StringBuilder
+     * @param sc The scanner that reads over InputStream passed in this
+     * instance's constructor
      * 
-     * @param  
+     * @pre sc != null && sc.hasNextInt()
+     * @modifies this.inputMsg
+     * @post this.inputMsg = \old(this.inputMsg) + sc.nextInt() + " "
+     * 
+     * @return the next integer from the given scanner
      */
     public int scanNextInteger(Scanner sc) {
         int scanned = sc.nextInt();
         inputMsg.append(scanned);
         inputMsg.append(" ");
         return scanned;
-    }
-    
-    //TODO: main method to be moved somewhere else
-    /*
-    public static void main(String [ ] args) {
-        try {
-            InputReader in = new InputReader();
-            Pack pack = in.readInput();
-            System.out.println(pack);
-            System.out.println(in.getInputMessage());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InputReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException  ex) {
-            Logger.getLogger(InputReader.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }
-*/
-    
-    
+    }  
 }
