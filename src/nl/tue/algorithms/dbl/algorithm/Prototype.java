@@ -1,6 +1,6 @@
 package nl.tue.algorithms.dbl.algorithm;
 
-import nl.tue.algorithms.dbl.common.HeightQueuePack;
+import nl.tue.algorithms.dbl.common.PackWidthQueue;
 import nl.tue.algorithms.dbl.io.InputReader;
 
 public class Prototype {
@@ -10,12 +10,12 @@ public class Prototype {
 
     void run() {
         int x = 0; int y = 0;
-        HeightQueuePack pack = new HeightQueuePack();
+        PackWidthQueue pack = new PackWidthQueue();
         try {
-            InputReader<HeightQueuePack> i = new InputReader<>();
+            InputReader<PackWidthQueue> i = new InputReader<>();
             pack = i.readInput(pack);
             while (!pack.getRectangles().isEmpty()) {
-                
+
             }
             i.printOutput(pack);
         } catch(Exception e) {
