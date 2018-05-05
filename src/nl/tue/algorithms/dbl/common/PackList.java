@@ -5,6 +5,8 @@
  */
 package nl.tue.algorithms.dbl.common;
 
+import org.w3c.dom.css.Rect;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class PackList extends Pack {
 
-    
+    private List<Rectangle> rectangles;
     public PackList() {
         super();
         this.rectangles = new ArrayList<>();
@@ -50,7 +52,7 @@ public class PackList extends Pack {
     }
 
     @Override
-    public Collection<Rectangle> getRectanglesList() {
+    public List<Rectangle> getRectangles() {
         return rectangles;
     }
 

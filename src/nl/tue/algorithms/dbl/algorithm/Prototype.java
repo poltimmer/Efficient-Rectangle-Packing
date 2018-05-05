@@ -10,21 +10,14 @@ public class Prototype {
 
     void run() {
         int x = 0; int y = 0;
-        HeightQueuePack rectangles = new HeightQueuePack();
+        HeightQueuePack pack = new HeightQueuePack();
         try {
-            InputReader<HeightQueuePack> r = new InputReader<>(System.in);
-            rectangles = r.readInput(rectangles);
-
-            String s = r.getInputMessage();
-            System.out.print(s);
-            System.out.println("placement of rectangles");
-            for(int i = 0; i < rectangles.getRectanglesList().size(); i++) {
-                if (rectangles.canRotate()) {
-                    System.out.print("no ");
-                }
-                System.out.println(x + " " + y);
-                x += rectangles.getOrderRectangles().get(i).getWidth();
+            InputReader<HeightQueuePack> i = new InputReader<>(System.in);
+            pack = i.readInput(pack);
+            while (!pack.getRectangles().isEmpty()) {
+                
             }
+            i.printOutput(pack);
         } catch(Exception e) {
             System.out.println("Exception thrown");
         }

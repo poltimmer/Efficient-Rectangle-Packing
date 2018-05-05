@@ -27,8 +27,6 @@ public abstract class Pack {
     /** */
     protected boolean canRotate;
     /** */
-    protected Collection<Rectangle> rectangles;
-    /** */
     private final List<Rectangle> rectangleOrder;
     
     public Pack() {
@@ -88,9 +86,9 @@ public abstract class Pack {
     }
 
     /** abstract query to be implemented by subclass **/
-    public abstract Collection<Rectangle> getRectanglesList();
+    public abstract Collection<Rectangle> getRectangles();
 
-    public List<Rectangle> getOrderRectangles() {
+    public List<Rectangle> getOrderedRectangles() {
         return rectangleOrder;
     }
 }
