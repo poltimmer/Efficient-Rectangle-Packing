@@ -20,7 +20,7 @@ public class FirstFitDecreasingHeight {
     public void solve() {
         PackWidthQueue p = new PackWidthQueue();
         try {
-            InputReader<PackWidthQueue> i = new InputReader<>();
+            InputReader<PackWidthQueue> i = new InputReader<>(System.in);
             p = i.readInput(p);
             final int height = p.getContainerHeight(); //The fixed height of our container.
             Rectangle t = p.getRectangles().poll();

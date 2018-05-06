@@ -3,6 +3,8 @@ package nl.tue.algorithms.dbl.algorithm;
 import nl.tue.algorithms.dbl.common.PackWidthQueue;
 import nl.tue.algorithms.dbl.io.InputReader;
 
+import java.io.InputStream;
+
 public class Prototype {
     public static void main(String args[]) {
         new Prototype().run();
@@ -12,7 +14,7 @@ public class Prototype {
         int x = 0; int y = 0;
         PackWidthQueue pack = new PackWidthQueue();
         try {
-            InputReader<PackWidthQueue> i = new InputReader<>();
+            InputReader<PackWidthQueue> i = new InputReader<>(System.in);
             pack = i.readInput(pack);
             while (!pack.getRectangles().isEmpty()) {
                 
