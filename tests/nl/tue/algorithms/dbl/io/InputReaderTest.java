@@ -40,27 +40,26 @@ public class InputReaderTest extends TestCase {
      */
     public void testGetInputMessage() {
         System.out.println("getInputMessage");
-        Scanner sc = new Scanner("test test2 d full string 69");
+        Scanner sc = new Scanner("test true d full string 69");
         InputReader instance = new InputReader(System.in);
-        //String expResult = "";
-        //String result = instance.getInputMessage();
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-        assertEquals(null, instance.getInputMessage());
 
+        assertEquals("", instance.getInputMessage());
+
+        //parse the input
         assertEquals("test", instance.scanNextString(sc));
-        assertEquals("test2", instance.scanNextString(sc));
+        assertEquals("true", instance.scanNextString(sc));
         assertEquals("d", instance.scanNextString(sc));
         assertEquals("full", instance.scanNextString(sc));
         assertEquals("string", instance.scanNextString(sc));
         assertEquals("69", instance.scanNextString(sc));
 
-        assertEquals("test test2 test3 full string 69 ", instance.getInputMessage());
+        assertEquals("test true d full string 69 ", instance.getInputMessage());
 
-        Scanner sc = new Scanner("8 9 " + Integer.MIN_VALUE + " 0 " + Integer.MAX_VALUE);
-        InputReader instance = new InputReader(System.in);
+        //Need a new inputreader as it can only read inputs once
+        sc = new Scanner("8 9 " + Integer.MIN_VALUE + " 0 " + Integer.MAX_VALUE);
+        instance = new InputReader(System.in);
 
+        //parse the input
         assertEquals(8, instance.scanNextInteger(sc));
         assertEquals(9, instance.scanNextInteger(sc));
         assertEquals(Integer.MIN_VALUE, instance.scanNextInteger(sc));

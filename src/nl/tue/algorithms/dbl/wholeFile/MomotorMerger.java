@@ -191,7 +191,7 @@ public class MomotorMerger {
      * 
      * @post The program is terminated if user input is "N" or "NO" (capital insensitive)
      */
-    public static void awaitConfirmation() {
+    private static void awaitConfirmation() {
         Scanner sc = new Scanner(System.in);
         
         confirm: while (true) {
