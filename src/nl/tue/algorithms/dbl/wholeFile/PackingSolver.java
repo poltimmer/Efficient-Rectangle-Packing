@@ -11,7 +11,7 @@ import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
  * @author E.M.A. Arts (1004076)
  * @author T.M. Verberk (1016472)
  * @author Koen (1018025)
- * @author Wouter ()
+ * @author Wouter (1009509)
  * @author Pol ()
  * @author Robin (1011291)
  * 
