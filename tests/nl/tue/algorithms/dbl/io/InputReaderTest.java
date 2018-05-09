@@ -5,8 +5,6 @@
  */
 package nl.tue.algorithms.dbl.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Scanner;
 import junit.framework.TestCase;
 import nl.tue.algorithms.dbl.common.Pack;
@@ -14,8 +12,9 @@ import nl.tue.algorithms.dbl.common.Pack;
 /**
  *
  * @author E.M.A. Arts (1004076)
+ * @author K.D. Voorintholt (1005136)
  * 
- * @since 4 MAY 2018
+ * @since 9 MAY 2018
  */
 public class InputReaderTest extends TestCase {
     

@@ -9,11 +9,9 @@ import nl.tue.algorithms.dbl.io.InputReader;
  * 'shelf' anymore, when we start a new shelf.
  *
  * @author Koen Degeling
+ * @since 9 MAY 2018
  */
 public class FirstFitDecreasingHeight {
-    public static void main(String args[]) {
-        new FirstFitDecreasingHeight().solve();
-    }
     /**
      *
      */
