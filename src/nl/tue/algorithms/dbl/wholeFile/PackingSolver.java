@@ -13,7 +13,7 @@ import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
  * @author Koen (1018025)
  * @author Wouter ()
  * @author Pol ()
- * @author Robin ()
+ * @author Robin (1011291)
  * 
  * @since 9 MAY 2018
  */
