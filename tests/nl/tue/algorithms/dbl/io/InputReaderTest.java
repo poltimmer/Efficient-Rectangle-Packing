@@ -5,8 +5,6 @@
  */
 package nl.tue.algorithms.dbl.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Scanner;
 import junit.framework.TestCase;
 import nl.tue.algorithms.dbl.common.Pack;
@@ -14,25 +12,14 @@ import nl.tue.algorithms.dbl.common.Pack;
 /**
  *
  * @author E.M.A. Arts (1004076)
+ * @author K.D. Voorintholt (1005136)
  * 
- * @since 4 MAY 2018
+ * @since 9 MAY 2018
  */
 public class InputReaderTest extends TestCase {
     
     public InputReaderTest(String testName) {
         super(testName);
-    }
-
-    public void t() {
-        String data = "Hello, World!\r\n";
-        InputStream stdin = System.in;
-        try {
-          System.setIn(new ByteArrayInputStream(data.getBytes()));
-          Scanner scanner = new Scanner(System.in);
-          System.out.println(scanner.nextLine());
-        } finally {
-          System.setIn(stdin);
-        }
     }
     
     /**
@@ -81,20 +68,9 @@ public class InputReaderTest extends TestCase {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+
     }
 
-    /**
-     * Test of checkValidInputText method, of class InputReader.
-     */
-    public void testCheckValidInputText() throws Exception {
-        System.out.println("checkValidInputText");
-        String realStr = "";
-        String expStr = "";
-        InputReader instance = new InputReader(System.in);
-        instance.checkValidInputText(realStr, expStr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of scanNextString method, of class InputReader.
