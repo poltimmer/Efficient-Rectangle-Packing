@@ -2,10 +2,7 @@ package nl.tue.algorithms.dbl.common;
 
 import junit.framework.TestCase;
 
-public class PackListTest extends TestCase {
-    public void testAddRectangle() throws Exception {
-    }
-
+public class PackWidthQueueTest extends TestCase {
     public void testAddRectangleSubclass() throws Exception {
     }
 
