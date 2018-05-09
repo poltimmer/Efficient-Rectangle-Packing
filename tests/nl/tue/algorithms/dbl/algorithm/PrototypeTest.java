@@ -9,9 +9,11 @@ import junit.framework.TestCase;
  * @since 9 MAY 2018
  */
 public class PrototypeTest extends TestCase {
-    public void testMain() throws Exception {
-    }
 
+    /**
+     * Test methods
+     * @throws Exception
+     */
     public void testRun() throws Exception {
     }
 

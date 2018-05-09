@@ -10,6 +10,9 @@ public class Prototype {
         new Prototype().run();
     }
 
+    /**
+     *
+     */
     void run() {
         int x = 0; int y = 0;
         PackWidthQueue pack = new PackWidthQueue();

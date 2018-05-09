@@ -13,6 +13,7 @@ public class FirstFitDecreasingHeightTest extends TestCase {
     }
 
     public void testSolve() throws Exception {
+
     }
 
 }
