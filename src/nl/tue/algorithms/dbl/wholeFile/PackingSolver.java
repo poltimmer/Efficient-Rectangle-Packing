@@ -20,7 +20,7 @@ import java.util.Scanner;
  * @author T.M. Verberk ()
  * @author Koen (1018025)
  * @author Wouter ()
- * @author Pol ()
+ * @author Pol (1007701)
  * @author Robin ()
  */
 public class PackingSolver {
