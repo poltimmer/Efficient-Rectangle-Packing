@@ -1,14 +1,13 @@
 package nl.tue.algorithms.dbl.common;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class PackWidthQueue extends Pack {
 
     private PriorityQueue<Rectangle> rectangles;
-    public PackWidthQueue() {
-        super();
+    public PackWidthQueue(PackData data) {
+        super(data);
         rectangles = new PriorityQueue<>(new Comparator<Rectangle>() {
             @Override
             public int compare(Rectangle o1, Rectangle o2) {

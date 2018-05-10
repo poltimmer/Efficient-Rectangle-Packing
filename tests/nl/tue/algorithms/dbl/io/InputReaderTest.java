@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.tue.algorithms.dbl.io;
 
+import java.io.IOException;
 import java.util.Scanner;
 import junit.framework.TestCase;
-import nl.tue.algorithms.dbl.common.Pack;
 
 /**
  *
@@ -25,52 +20,21 @@ public class InputReaderTest extends TestCase {
     /**
      * Test of getInputMessage method, of class InputReader.
      */
-    public void testGetInputMessage() {
+    public void testGetInputMessage() throws IOException {
         System.out.println("getInputMessage");
-        Scanner sc = new Scanner("test true d full string 69");
+        String msg = "test true d full string 69";
+        Scanner sc = new Scanner(msg);
         InputReader instance = new InputReader(System.in);
 
         assertEquals("", instance.getInputMessage());
 
         //parse the input
-        assertEquals("test", instance.scanNextString(sc));
-        assertEquals("true", instance.scanNextString(sc));
-        assertEquals("d", instance.scanNextString(sc));
-        assertEquals("full", instance.scanNextString(sc));
-        assertEquals("string", instance.scanNextString(sc));
-        assertEquals("69", instance.scanNextString(sc));
+        while (sc.hasNext()) {
+            instance.scanNextString(sc);
+        }
 
-        assertEquals("test true d full string 69 ", instance.getInputMessage());
-
-        //Need a new inputreader as it can only read inputs once
-        sc = new Scanner("8 9 " + Integer.MIN_VALUE + " 0 " + Integer.MAX_VALUE);
-        instance = new InputReader(System.in);
-
-        //parse the input
-        assertEquals(8, instance.scanNextInteger(sc));
-        assertEquals(9, instance.scanNextInteger(sc));
-        assertEquals(Integer.MIN_VALUE, instance.scanNextInteger(sc));
-        assertEquals(0, instance.scanNextInteger(sc));
-        assertEquals(Integer.MAX_VALUE, instance.scanNextInteger(sc));
-
-        assertEquals("8 9 -2147483648 0 2147483647 ", instance.getInputMessage());
+        assertEquals(msg + " ", instance.getInputMessage());
     }
-
-    /**
-     * Test of readInput method, of class InputReader.
-     */
-    public void testReadInput() throws Exception {
-        System.out.println("readInput");
-        Pack pack = null;
-        InputReader instance = new InputReader(System.in);
-        Pack expResult = null;
-        Pack result = instance.readInput(pack);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-
-    }
-
 
     /**
      * Test of scanNextString method, of class InputReader.
@@ -105,7 +69,7 @@ public class InputReaderTest extends TestCase {
     /**
      * Test of scanNextInteger method, of class InputReader.
      */
-    public void testScanNextInteger() {
+    public void testScanNextInteger() throws IOException {
         System.out.println("scanNextInteger");
         Scanner sc = new Scanner("8 9 " + Integer.MIN_VALUE + " 0 " + Integer.MAX_VALUE);
         InputReader instance = new InputReader(System.in);
@@ -117,12 +81,12 @@ public class InputReaderTest extends TestCase {
         assertEquals("8 9 ", instance.getInputMessage());
         
         assertEquals(Integer.MIN_VALUE, instance.scanNextInteger(sc));
-        assertEquals("8 9 -2147483648 ", instance.getInputMessage());
+        assertEquals("8 9 " + Integer.MIN_VALUE + " ", instance.getInputMessage());
         
         assertEquals(0, instance.scanNextInteger(sc));
-        assertEquals("8 9 -2147483648 0 ", instance.getInputMessage());
+        assertEquals("8 9 " + Integer.MIN_VALUE + " 0 ", instance.getInputMessage());
         
         assertEquals(Integer.MAX_VALUE, instance.scanNextInteger(sc));
-        assertEquals("8 9 -2147483648 0 2147483647 ", instance.getInputMessage());
+        assertEquals("8 9 " + Integer.MIN_VALUE + " 0 " + Integer.MAX_VALUE + " ", instance.getInputMessage());
     }   
 }

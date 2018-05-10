@@ -1,14 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.tue.algorithms.dbl.algorithm;
+
+import nl.tue.algorithms.dbl.common.Pack;
 
 /**
  *
- * @author s169014
+ * @author E.M.A. Arts (1004076)
+ * @since 10 MAY 2018
  */
-public class Algorithm {
+public abstract class Algorithm<P extends Pack> {
+    protected P pack;
     
+    public Algorithm(P pack) {
+        this.pack = pack;
+    }
+    
+    public P getPack() {
+        //this intentionally 'leaks' a reference
+        return pack;
+    }
+    
+    /**
+     * Sets valid positions for all rectangles in this.pack such that they do not
+     * overlap and their combined area is minimized.
+     */
+    public abstract void solve();
 }

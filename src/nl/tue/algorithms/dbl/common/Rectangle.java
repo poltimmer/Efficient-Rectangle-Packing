@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package nl.tue.algorithms.dbl.common;
 
 /**
@@ -16,13 +12,14 @@ public class Rectangle {
     private final int ID;
     private final int width;
     private final int height;
-    private int x,y;
+    private int x, y;
     private boolean rotated;
     
     public Rectangle(int ID, int width, int height) {
         this.ID = ID;
         this.width = width;
         this.height = height;
+        this.rotated = false;
     }
     /** Getters and Setters for coordinates of the rectangle */
     public void setX(int x) {
@@ -39,6 +36,9 @@ public class Rectangle {
     }
     public boolean isRotated() {
         return rotated;
+    }
+    public void setRotated(boolean rotated) {
+        this.rotated = rotated;
     }
 
     /** basic getter */

@@ -1,12 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.tue.algorithms.dbl.common;
-
-
-import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,14 +14,16 @@ import java.util.List;
  * @since 25 APR 2018
  */
 public abstract class Pack {
-    /** */
-    protected int containerHeight;
-    /** */
-    protected boolean canRotate;
-    /** */
+    /** fixed container height. -1 if no fixed container height */
+    private final int containerHeight;
+    /** whether rotations are allowed */
+    private final boolean canRotate;
+    /** References to rectangles to keep their order */
     private final List<Rectangle> rectangleOrder;
     
-    public Pack() {
+    public Pack(PackData data) {
+        this.containerHeight = data.getContainerHeight();
+        this.canRotate = data.canRotate();
         this.rectangleOrder = new ArrayList<>();
     }
     
@@ -58,14 +52,6 @@ public abstract class Pack {
      * @post rectangles.contains(rec)
      */
     protected abstract void addRectangleSubclass(Rectangle rec);
-
-    public void setCanRotate(boolean canRotate) {
-        this.canRotate = canRotate;
-    }
-
-    public void setContainerHeight(int containerHeight) {
-        this.containerHeight = containerHeight;
-    }
 
     /** basic query */
     public int getContainerHeight() {

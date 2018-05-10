@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.tue.algorithms.dbl.common;
 
-import org.w3c.dom.css.Rect;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  *
  * @author E.M.A. Arts (1004076)
- * @since 2 MAY 2018
+ * @since 2 MAY 2018 
  * 
- * 
+ * Simplest implementation of a Pack data type. Stores all rectangles in a
+ * simple list
  * 
  * Representation Invariants:
  * TODO
@@ -27,8 +20,8 @@ import java.util.List;
 public class PackList extends Pack {
 
     private List<Rectangle> rectangles;
-    public PackList() {
-        super();
+    public PackList(PackData data) {
+        super(data);
         this.rectangles = new ArrayList<>();
     }
     
