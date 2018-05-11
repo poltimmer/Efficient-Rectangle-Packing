@@ -30,7 +30,7 @@ public class InputReader {
     private final static String EXPECTED_INPUT = "container height: rotations allowed: number of rectangles:";
     
     //stores the input as raw text
-    private StringBuilder inputMsg;
+    private final StringBuilder inputMsg;
     
     //used to throw exceptions and to check whether this reader is closed.
     private boolean closed;
@@ -77,7 +77,7 @@ public class InputReader {
      * @pre realStr != null && expStr != null
      * @throws IOException if expStr != realStr
      */
-    public void checkValidInputText(String realStr, String expStr) throws IOException {
+    protected void checkValidInputText(String realStr, String expStr) throws IOException {
         if (!realStr.equals(expStr)) {
             throw new IOException(
                     "Expected <" + expStr + "> but got <" + realStr + "> while parsing System.in");
@@ -96,7 +96,7 @@ public class InputReader {
      * 
      * @return the next integer from the given scanner
      */
-    public String scanNextString(Scanner sc) {
+    protected String scanNextString(Scanner sc) {
         String scanned = sc.next();
         inputMsg.append(scanned);
         inputMsg.append(" ");
@@ -116,7 +116,7 @@ public class InputReader {
      * @throws IOException if there is no next integer to scan.
      * @return the next integer from the given scanner
      */
-    public int scanNextInteger(Scanner sc) throws IOException {
+    protected int scanNextInteger(Scanner sc) throws IOException {
         if (!sc.hasNextInt()) {
             throw new IOException("Integer value expected while scanning inputs. Got <" + sc.next() + "> instead");
         }

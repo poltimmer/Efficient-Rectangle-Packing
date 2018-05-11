@@ -23,29 +23,26 @@ import nl.tue.algorithms.dbl.io.OutputWriter;
  * @since 9 MAY 2018
  */
 public class PackingSolver {
-    public static void main(String args[]) {
-        try {
-            InputReader reader = new InputReader(System.in);
-            PackData data = reader.readPackData();
-            
-            Algorithm algo;
-            //an algorithm based on pack data can be chosen here. E.g.:
-            /* 
-                if (data.canRotate()) {
-                    algo = new AlgorithmOne(data);
-                } else {
-                    algo = new AlgorithmTwo(data);
-                }
-            */
-            //since we only have 1 algorithm, we have to do this:
-            algo = new FirstFitDecreasingHeight(data);
-            reader.readRectangles(algo.getPack());
-            
-            algo.solve();
-            
-            OutputWriter.printOutput(algo.getPack(), reader.getInputMessage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String args[]) throws IOException {
+        
+        InputReader reader = new InputReader(System.in);
+        PackData data = reader.readPackData();
+
+        Algorithm algo;
+        //an algorithm based on pack data can be chosen here. E.g.:
+        /* 
+            if (data.canRotate()) {
+                algo = new AlgorithmOne(data);
+            } else {
+                algo = new AlgorithmTwo(data);
+            }
+        */
+        //since we only have 1 algorithm, we have to do this:
+        algo = new FirstFitDecreasingHeight(data);
+        reader.readRectangles(algo.getPack());
+
+        algo.solve();
+
+        OutputWriter.printOutput(System.out, algo.getPack(), reader.getInputMessage());
     }
 }

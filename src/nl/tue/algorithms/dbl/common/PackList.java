@@ -48,9 +48,6 @@ public class PackList extends Pack {
     public List<Rectangle> getRectangles() {
         return rectangles;
     }
-
-    /** basic query */
-    
     
     @Override
     public String toString(){

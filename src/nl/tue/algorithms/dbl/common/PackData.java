@@ -21,9 +21,9 @@ public class PackData {
     private final int numberOfRectangles;
     
     public PackData (int containerHeight, boolean canRotate, int numberOfRectangles) {
-        this.containerHeight = containerHeight;
+        this.containerHeight = Math.max(containerHeight, -1);
         this.canRotate = canRotate;
-        this.numberOfRectangles = Math.max(containerHeight, -1);
+        this.numberOfRectangles = numberOfRectangles;
     }
     
     //basic getters
