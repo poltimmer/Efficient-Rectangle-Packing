@@ -1,8 +1,10 @@
 package nl.tue.algorithms.dbl.algorithm;
 
+import java.awt.Point;
+import java.util.List;
 import nl.tue.algorithms.dbl.common.PackData;
-import nl.tue.algorithms.dbl.common.PackWidthQueue;
-import nl.tue.algorithms.dbl.common.Rectangle;
+import nl.tue.algorithms.dbl.common.PackList;
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 /**
  * Algorithm that brute forces a solution, with no rotation and no fixed height
@@ -11,46 +13,84 @@ import nl.tue.algorithms.dbl.common.Rectangle;
  * @since 16 May 2018
  */
 
- public class bruteforce1 extends Algorithm<PackData> {
 
-   public bruteforce1(PackData data) {
-       super(new PackData(data));
+
+ public class bruteforce extends Algorithm<PackList>{
+
+   public bruteforce(PackData data) {
+       super(new PackList(data));
    }
+   
+   public List<Point> possiblePlaces = null;
+   
 
    @Override
    public void solve(){ // method that solves this shit
      // declaring important variants
-     List<Rectangle> rectangles = pack.getRectangles();
-     int Rectanglesleft = rectangles.getnumberOfRectangles();
+     List<RectangleRotatable> rectangles = pack.getRectangles();
+     int rectanglesLeft = rectangles.size();
      int bestSolution = 1000000000;
-     List<Rectangle> rectanglesUsed = null;
+     List<RectangleRotatable> rectanglesUsed = null;
+     
+      //initiate the possiblePlaces list
+     Point startPosition = new Point(0, 0);
+     possiblePlaces.add(startPosition);
+     
      findBestSolution(rectangles, rectanglesUsed, rectanglesLeft);
    }
      
-   public int findBestSolution(List<Rectangle> rectangles, List<Rectangle> rectanglesUsed, int rectanglesLeft){
+   public int findBestSolution(List<RectangleRotatable> rectangles, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
+       int bestSolution = 0;
        if(rectanglesLeft!=0){ // add another rectangle
-           for (Rectangle a: rectangles){ // loop over all the rectangles
+           for (RectangleRotatable a: rectangles){ // loop over all the rectangles
                    boolean alreadyUsed = false;
-                   for (Rectangle alreadyUsed: rectanglesUsed){ // check if the rectangle was already used
-                           if(a.getID()==alreadyUsed.get(ID)){
-                                 boolean alreadyUsed = true;
+                   for(RectangleRotatable usedRectangle: rectanglesUsed){ // check if the rectangle was already used
+                           if(a.getID()==usedRectangle.getID()){
+                                 alreadyUsed = true;
                                }
                    }
                   if(!alreadyUsed){
-                        for(place p: possibleplaces){ //TRY ALL THE PLACES!!!
-                                    //TRY ALL THE PLACES!!, has to be implemented
-                                    a.setX(p.getX);
-                                    a.setY(p.getY);
-                          }
-                        place(rectangles, rectanglesUsed, rectanglesLeft-1)
-                  }
+                        // change possiblePlaces
+                      
+                      
+                        for(Point p: possiblePlaces){
+                        List<Point> added = PlaceRectangle(a, rectanglesUsed, p);
+
+                        possiblePlaces.addAll(added);
+                        possiblePlaces.remove(p);
+                        findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
+                        }
+                }
            }
        }
+       
        else{ //rectanglesLeft == 0;
-           if(areaSolution < bestSolution){
+           //calculate solution;
+           
+           int areaSolution = 2;
+           
+           if(bestSolution==0){
+               bestSolution = areaSolution;
+           } else if (bestSolution < areaSolution){
              bestSolution = areaSolution;
            }
        }
+       return bestSolution;
    }
+   
+   public List<Point> PlaceRectangle(RectangleRotatable a, List<RectangleRotatable> rectanglesUsed, Point p){
+       int widtha = (int) a.getWidth();
+       int heighta = (int) a.getHeight();
+       int pointX = (int) p.getX();
+       int pointY = (int) p.getY();
+       a.setLocation(pointX, pointY);
+       Point right = new Point(pointX + widtha , pointY );
+       Point up = new Point(pointX, pointY + heighta);
+       List<Point> newPoints= null;
+       newPoints.add(right);
+       newPoints.add(up);
+       return newPoints;
    }
- }
+   
+   }
+ 
