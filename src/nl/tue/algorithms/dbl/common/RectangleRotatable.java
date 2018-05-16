@@ -26,7 +26,8 @@ public class RectangleRotatable extends Rectangle {
         return x >= 0 && y >= 0;
     }
     
-    /** This method checks if the two rectangles given as input do not overlap
+    /** 
+     * This method checks if the two rectangles given as input do not overlap.
      *
      * @param r the rectangle to compare to
      * @pre solution is still valid up to this point && p != null
@@ -54,7 +55,10 @@ public class RectangleRotatable extends Rectangle {
         return true;
     }
     
-    /** Check if two rectangles intersect.
+    /** 
+     *  Checks if two rectangles intersect by calling noOverlapTwoRectangles
+     *  Height and width of a rectangle is mirrored if it has been rotated
+     * 
      *  @param r RectangleRotatable to compare the newly placed rectangle to
      *  @return true if there is overlap, false if there is no overlap
      */

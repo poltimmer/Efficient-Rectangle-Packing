@@ -45,7 +45,7 @@ public class ValidCheck {
      */
     private boolean noOverlapSolution(Pack p, RectangleRotatable r) {
         for (RectangleRotatable r2 : p.getRectangles()) {
-            if (r2.getX() >= 0 && r2.getY() >= 0 && r != r2 && r.intersects(r2)){
+            if (r2.isPlaced() && r != r2 && r.intersects(r2)){
                 return false;
             }
         }
