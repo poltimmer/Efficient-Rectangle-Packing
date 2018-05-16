@@ -23,7 +23,7 @@ public class ValidCheck {
     (\result == false ⇒ solution is no longer valid)
     */
     public boolean checkSolution(Pack p, RectangleRotatable r) {
-        return fitsInContainer(p, r) && noOverlapSolution(p, r);
+        return fitsInContainer(p, r) && noIllegalRotation(p, r) && noOverlapSolution(p, r);
     }
     
     /** This method checks if the current solution has no overlap
@@ -53,5 +53,9 @@ public class ValidCheck {
         int size = !r.isRotated() ? r.height : r.width;
         
         return r.y + size <= p.getContainerHeight();
+    }
+    
+    public boolean noIllegalRotation(Pack p, RectangleRotatable r){
+        return p.canRotate() || !r.isRotated();
     }
 }
