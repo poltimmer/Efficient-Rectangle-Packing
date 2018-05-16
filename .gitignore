@@ -22,3 +22,7 @@
 hs_err_pid*
 /nbproject/private/
 /res/momotor/
+
+#IntelliJ project files
+/.idea/
+*.iml
