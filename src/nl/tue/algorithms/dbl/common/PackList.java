@@ -19,14 +19,14 @@ import java.util.List;
  */
 public class PackList extends Pack {
 
-    private List<Rectangle> rectangles;
+    private List<RectangleRotatable> rectangles;
     public PackList(PackData data) {
         super(data);
         this.rectangles = new ArrayList<>();
     }
     
     @Override
-    public void addRectangle(Rectangle rec) throws NullPointerException {
+    public void addRectangle(RectangleRotatable rec) throws NullPointerException {
         if (rec == null) {
             throw new NullPointerException("Pack.addRectangle.pre violated: rec == null");
         }
@@ -34,7 +34,7 @@ public class PackList extends Pack {
     }
 
     @Override
-    protected void addRectangleSubclass(Rectangle rec) {
+    protected void addRectangleSubclass(RectangleRotatable rec) {
         rectangles.add(rec);
     }
 
@@ -45,7 +45,7 @@ public class PackList extends Pack {
     }
 
     @Override
-    public List<Rectangle> getRectangles() {
+    public List<RectangleRotatable> getRectangles() {
         return rectangles;
     }
     

@@ -2,7 +2,7 @@ package nl.tue.algorithms.dbl.io;
 
 import java.io.PrintStream;
 import nl.tue.algorithms.dbl.common.Pack;
-import nl.tue.algorithms.dbl.common.Rectangle;
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 /**
  * Class related to writing outputs.
@@ -24,7 +24,7 @@ public class OutputWriter {
     public static void printOutput(PrintStream systemOut, Pack p, String prefix) {
         systemOut.print(prefix);
         systemOut.println("placement of rectangles");
-        for (Rectangle r : p.getOrderedRectangles()) {
+        for (RectangleRotatable r : p.getOrderedRectangles()) {
             if (r.isRotated()) {
                 systemOut.print("yes ");
             } else {

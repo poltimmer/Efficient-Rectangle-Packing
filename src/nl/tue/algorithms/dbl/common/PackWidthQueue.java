@@ -5,19 +5,19 @@ import java.util.PriorityQueue;
 
 public class PackWidthQueue extends Pack {
 
-    private PriorityQueue<Rectangle> rectangles;
+    private PriorityQueue<RectangleRotatable> rectangles;
     public PackWidthQueue(PackData data) {
         super(data);
-        rectangles = new PriorityQueue<>(new Comparator<Rectangle>() {
+        rectangles = new PriorityQueue<>(new Comparator<RectangleRotatable>() {
             @Override
-            public int compare(Rectangle o1, Rectangle o2) {
+            public int compare(RectangleRotatable o1, RectangleRotatable o2) {
                 return (o1.getWidth() < o2.getWidth()) ? -1 : 1;
             }
         }); // Turn PriorityQueue into Max Heap.
     }
 
     @Override
-    protected void addRectangleSubclass(Rectangle rec) {
+    protected void addRectangleSubclass(RectangleRotatable rec) {
         rectangles.add(rec);
     }
 
@@ -27,7 +27,7 @@ public class PackWidthQueue extends Pack {
     }
 
     @Override
-    public PriorityQueue<Rectangle> getRectangles() {
+    public PriorityQueue<RectangleRotatable> getRectangles() {
         return rectangles;
     }
 }

@@ -19,7 +19,7 @@ public abstract class Pack {
     /** whether rotations are allowed */
     private final boolean canRotate;
     /** References to rectangles to keep their order */
-    private final List<Rectangle> rectangleOrder;
+    private final List<RectangleRotatable> rectangleOrder;
     
     public Pack(PackData data) {
         this.containerHeight = data.getContainerHeight();
@@ -38,7 +38,7 @@ public abstract class Pack {
      * 
      * @throws NullPointerException if the precondition is violated
      */
-    public void addRectangle(Rectangle rec) throws NullPointerException {
+    public void addRectangle(RectangleRotatable rec) throws NullPointerException {
         if (rec == null) {
             throw new NullPointerException("Given rectangle is null");
         }
@@ -51,7 +51,7 @@ public abstract class Pack {
      * @param rec the rectangle to be added, ractangleOrder keeps track of the order in which the triangle was entered.
      * @post rectangles.contains(rec)
      */
-    protected abstract void addRectangleSubclass(Rectangle rec);
+    protected abstract void addRectangleSubclass(RectangleRotatable rec);
 
     /** basic query */
     public int getContainerHeight() {
@@ -72,9 +72,9 @@ public abstract class Pack {
     }
 
     /** abstract query to be implemented by subclass **/
-    public abstract Collection<Rectangle> getRectangles();
+    public abstract Collection<RectangleRotatable> getRectangles();
 
-    public List<Rectangle> getOrderedRectangles() {
+    public List<RectangleRotatable> getOrderedRectangles() {
         return rectangleOrder;
     }
 }

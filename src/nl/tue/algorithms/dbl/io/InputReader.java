@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.PackData;
-import nl.tue.algorithms.dbl.common.Rectangle;
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 /**
  * Reads (and parses) the inputs from a given input stream (E.g. System.in)
@@ -214,7 +214,7 @@ public class InputReader {
         for (int i = 0; i < numberOfRectangles; i++){
             final int width = scanNextInteger(sc);
             final int height = scanNextInteger(sc);
-            Rectangle rec = new Rectangle(i, width, height);
+            RectangleRotatable rec = new RectangleRotatable(i, width, height);
             //add each rectangle to the pack
             pack.addRectangle(rec);
             

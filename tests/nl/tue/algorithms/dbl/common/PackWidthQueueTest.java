@@ -21,7 +21,7 @@ public class PackWidthQueueTest extends TestCase {
         System.out.println("PackWidthQueue test");
         PackData data = new PackData(0, true, 0);
         PackWidthQueue instance = new PackWidthQueue(data);
-        Rectangle rectangle = new Rectangle(0, 5, 7);
+        RectangleRotatable rectangle = new RectangleRotatable(0, 5, 7);
 
         //test if the pack is empty
         assertEquals(0, instance.getNumberOfRectangles());
@@ -42,12 +42,12 @@ public class PackWidthQueueTest extends TestCase {
 
         //First test if pack is empty
         assertEquals(0, instance.getNumberOfRectangles());
-        Rectangle rectangle1 = new Rectangle(0, 5, 7);
+        RectangleRotatable rectangle1 = new RectangleRotatable(0, 5, 7);
 
         //tests if the size increases when the rectangles are added
         instance.addRectangleSubclass(rectangle1);
         assertEquals(1, instance.getNumberOfRectangles());
-        Rectangle rectangle2 = new Rectangle(1, 4, 6);
+        RectangleRotatable rectangle2 = new RectangleRotatable(1, 4, 6);
         instance.addRectangleSubclass(rectangle2);
         assertEquals(2, instance.getNumberOfRectangles());
         instance.addRectangleSubclass(rectangle2);
@@ -65,14 +65,14 @@ public class PackWidthQueueTest extends TestCase {
         PackWidthQueue instance = new PackWidthQueue(data);
 
         //Two test rectangles, adding them to the pack
-        Rectangle rectangle1 = new Rectangle(0, 5, 7);
-        Rectangle rectangle3 = new Rectangle(1,6, 5);
+        RectangleRotatable rectangle1 = new RectangleRotatable(0, 5, 7);
+        RectangleRotatable rectangle3 = new RectangleRotatable(1,6, 5);
         instance.addRectangleSubclass(rectangle1);
         instance.addRectangleSubclass(rectangle3);
 
-        PriorityQueue<Rectangle> rec = instance.getRectangles();
+        PriorityQueue<RectangleRotatable> rec = instance.getRectangles();
         //get the first rectangle from the queue
-        Rectangle rectangle2 = rec.remove();
+        RectangleRotatable rectangle2 = rec.remove();
         //test if the test method work
         assertEquals(rectangle2.getWidth(), rectangle1.getWidth());
         assertEquals(rectangle2.getHeight(), rectangle1.getHeight());

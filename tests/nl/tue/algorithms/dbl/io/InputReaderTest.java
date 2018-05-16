@@ -10,7 +10,7 @@ import java.util.Set;
 import junit.framework.TestCase;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
-import nl.tue.algorithms.dbl.common.Rectangle;
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 /**
  *
@@ -213,16 +213,16 @@ public class InputReaderTest extends TestCase {
         PackList pack = new PackList(data);
         instance.readRectangles(pack);
 
-        Set<Rectangle> expRectangles = new HashSet<>();
-        expRectangles.add(new Rectangle(0, 8, 9));
-        expRectangles.add(new Rectangle(1, 3, 9));
-        expRectangles.add(new Rectangle(2, 11, 3));
+        Set<RectangleRotatable> expRectangles = new HashSet<>();
+        expRectangles.add(new RectangleRotatable(0, 8, 9));
+        expRectangles.add(new RectangleRotatable(1, 3, 9));
+        expRectangles.add(new RectangleRotatable(2, 11, 3));
         
-        List<Rectangle> recs = pack.getRectangles();
+        List<RectangleRotatable> recs = pack.getRectangles();
         //Test reading rectangles
-        for (Rectangle rec : recs) {
+        for (RectangleRotatable rec : recs) {
             boolean matchFound = false;
-            for (Rectangle expRec : expRectangles) {
+            for (RectangleRotatable expRec : expRectangles) {
                 //if the rectangles are equal
                 if (rec.getID() == expRec.getID() &&
                         rec.getHeight() == expRec.getHeight() &&
