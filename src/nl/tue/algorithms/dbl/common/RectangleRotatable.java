@@ -8,6 +8,7 @@ import java.awt.Rectangle;
  * and a unique ID. The latter is not enforced, but is expected.
  *
  * @author E.M.A. Arts (1004076)
+ * @author Robin Jonker (1011291)
  * @since 25 APR 2018
  */
 public class RectangleRotatable extends Rectangle {
@@ -25,7 +26,8 @@ public class RectangleRotatable extends Rectangle {
         return x >= 0 && y >= 0;
     }
     
-    /** This method checks if the two rectangles given as input do not overlap
+    /** 
+     * This method checks if the two rectangles given as input do not overlap.
      *
      * @param r the rectangle to compare to
      * @pre solution is still valid up to this point && p != null
@@ -34,7 +36,7 @@ public class RectangleRotatable extends Rectangle {
      * @return true if rectangles do not overlap, false if they do overlap
      */
     
-    private boolean noOverlap2Rectangles(int twidth, int theight, int rx, int ry, int rwidth, int rheight) {
+    private boolean noOverlapTwoRectangles(int twidth, int theight, int rx, int ry, int rwidth, int rheight) {
         int thisXMax = this.x + twidth;
         int thisYMax = this.y + theight;
         int rXMax = rx + rwidth;
@@ -53,22 +55,25 @@ public class RectangleRotatable extends Rectangle {
         return true;
     }
     
-    /** Check if two rectangles intersect.
+    /** 
+     *  Checks if two rectangles intersect by calling noOverlapTwoRectangles
+     *  Height and width of a rectangle is mirrored if it has been rotated
+     * 
      *  @param r RectangleRotatable to compare the newly placed rectangle to
      *  @return true if there is overlap, false if there is no overlap
      */
     public boolean intersects (RectangleRotatable r) {
         if (!this.rotated && !r.rotated){
-            return noOverlap2Rectangles(this.width, this.height, r.x, r.y, r.width, r.height);
+            return noOverlapTwoRectangles(this.width, this.height, r.x, r.y, r.width, r.height);
         }
         else if (!this.rotated && r.rotated){
-            return noOverlap2Rectangles(this.width, this.height, r.x, r.y, r.height, r.width);
+            return noOverlapTwoRectangles(this.width, this.height, r.x, r.y, r.height, r.width);
         }
         else if (this.rotated && !r.rotated){
-            return noOverlap2Rectangles(this.height, this.width, r.x, r.y, r.width, r.height);
+            return noOverlapTwoRectangles(this.height, this.width, r.x, r.y, r.width, r.height);
         }
         else{
-            return noOverlap2Rectangles(this.height, this.width, r.x, r.y, r.height, r.width);
+            return noOverlapTwoRectangles(this.height, this.width, r.x, r.y, r.height, r.width);
         }
     }
     
