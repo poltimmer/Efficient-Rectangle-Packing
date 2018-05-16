@@ -12,18 +12,18 @@ public class ValidCheckTest extends TestCase {
     public void testCheckSolution() throws Exception {
         System.out.println("ValidCheck test");
         ValidCheck instance = new ValidCheck();
-        PackData data = new PackData(0, false, 2);
+        PackData data = new PackData(-1, false, 2);
         PackList p = new PackList(data);
         RectangleRotatable rec1 = new RectangleRotatable(0, 3, 5);
-        //RectangleRotatable rec2 = new RectangleRotatable(1, 4, 3);
+        RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
 
         assertEquals(true, instance.checkSolution(p, rec1));
+        assertEquals(true, instance.checkSolution(p, rec2));
         data = new PackData(1, false, 2);
         p = new PackList(data);
 
         //check if not fits
         assertEquals(false, instance.checkSolution(p, rec1));
-
     }
 
     public void testNoOverlapSolution() throws Exception {
@@ -32,6 +32,8 @@ public class ValidCheckTest extends TestCase {
         PackData data = new PackData(0, false, 5);
         PackList p = new PackList(data);
         RectangleRotatable rec = new RectangleRotatable(0, 3, 5);
+        p.addRectangleSubclass(rec);
+
     }
 
     public void testFitsInContainer() throws Exception {
