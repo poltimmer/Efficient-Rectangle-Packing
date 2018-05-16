@@ -59,6 +59,11 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
                       
                       
                         for(Point p: possiblePlaces){
+                            
+                            // hasPrevious();
+                            // length of the possibleplaces;
+                            // Iterator.
+                            
                             List<Point> added = PlaceRectangle(a, rectanglesUsed, p);
                             //possiblePlaces.addAll(added);
                             //possiblePlaces.remove(p);
