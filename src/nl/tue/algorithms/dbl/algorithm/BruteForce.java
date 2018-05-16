@@ -16,9 +16,9 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 
 
- public class bruteforce extends Algorithm<PackList>{
+ public class BruteForce extends Algorithm<PackList>{
 
-   public bruteforce(PackData data) {
+   public BruteForce(PackData data) {
        super(new PackList(data));
    }
    
@@ -59,11 +59,10 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
                       
                       
                         for(Point p: possiblePlaces){
-                        List<Point> added = PlaceRectangle(a, rectanglesUsed, p);
-
-                        possiblePlaces.addAll(added);
-                        possiblePlaces.remove(p);
-                        findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
+                            List<Point> added = PlaceRectangle(a, rectanglesUsed, p);
+                            //possiblePlaces.addAll(added);
+                            //possiblePlaces.remove(p);
+                            findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
                         }
                 }
            }
