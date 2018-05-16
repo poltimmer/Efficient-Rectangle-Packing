@@ -22,8 +22,8 @@ public class ValidCheck {
     (\result == true ⇒ if solution is still valid) &&
     (\result == false ⇒ solution is no longer valid)
     */
-    public boolean checkSolution(Pack p) {
-        return false;
+    public boolean checkSolution(Pack p, RectangleRotatable r) {
+        return fitsInContainer(p, r) && noOverlapSolution(p, r);
     }
     
     /** This method checks if the current solution has no overlap
@@ -38,10 +38,20 @@ public class ValidCheck {
     
     public boolean noOverlapSolution(Pack p, RectangleRotatable r) {
         for (RectangleRotatable r2 : p.getRectangles()) {
-            if (r.intersects(r2)){
+            if (r2.getX() >= 0 && r2.getY() >= 0 && r != r2 && r.intersects(r2)){
                 return false;
             }
         }
         return true;
+    }
+    
+    public boolean fitsInContainer(Pack p, RectangleRotatable r){
+        if (!p.hasFixedHeight()) {
+            return true;
+        }
+                
+        int size = !r.isRotated() ? r.height : r.width;
+        
+        return r.y + size <= p.getContainerHeight();
     }
 }
