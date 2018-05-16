@@ -21,6 +21,10 @@ public class RectangleRotatable extends Rectangle {
         this.rotated = false;
     }
     
+    public boolean isPlaced() {
+        return x >= 0 && y >= 0;
+    }
+    
     /** This method checks if the two rectangles given as input do not overlap
      *
      * @param r the rectangle to compare to

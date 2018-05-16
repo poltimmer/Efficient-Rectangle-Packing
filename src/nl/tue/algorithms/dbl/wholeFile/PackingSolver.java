@@ -3,6 +3,7 @@ package nl.tue.algorithms.dbl.wholeFile;
 import java.io.IOException;
 import nl.tue.algorithms.dbl.algorithm.Algorithm;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
+import nl.tue.algorithms.dbl.algorithm.bruteforce;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.io.InputReader;
 import nl.tue.algorithms.dbl.io.OutputWriter;
@@ -38,7 +39,8 @@ public class PackingSolver {
             }
         */
         //since we only have 1 algorithm, we have to do this:
-        algo = new FirstFitDecreasingHeight(data);
+        algo = new bruteforce(data);
+        
         reader.readRectangles(algo.getPack());
 
         algo.solve();
