@@ -5,17 +5,69 @@
  */
 package nl.tue.algorithms.dbl.gui;
 
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 /**
  *
- * @author s169014
+ * @author E.M.A. Arts (1004076)
+ * @since 17 MAY 2018
  */
 public class GUI extends javax.swing.JFrame {
+
+    private JPanel basePanel;
+    private JScrollPane scrollPane;
+    private JButton button1;
+    private Canvas canvas;
 
     /**
      * Creates new form Form
      */
     public GUI() {
         initComponents();
+
+        canvas = new Canvas();
+        canvas.setBackground(Color.ORANGE);
+        canvas.setSize(this.getSize());
+        canvas.setIgnoreRepaint(true);
+
+        this.add(canvas);
+
+
+        canvas.createBufferStrategy(2);
+        requestFocus();
+
+        RectangleRotatable r = new RectangleRotatable(0, 100, 200);
+        System.out.println(r);
+        r.setLocation(100, 100);
+
+
+        this.setVisible(true);
+
+        drawRectangleRotatable(r);
+
+        r.setLocation(0,10);
+        drawRectangleRotatable(r);
+    }
+
+    /**
+     *
+     * @param r
+     */
+    public void drawRectangleRotatable(RectangleRotatable r) {
+        BufferStrategy buffer = canvas.getBufferStrategy();
+        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+        System.out.println("here");
+        g.setColor(Color.CYAN);
+        g.fillRect(r.x, r.y, r.width, r.height);
+        g.drawString("test", 100,100);
+
+
+        g.dispose();
+        buffer.show();
     }
 
     /**

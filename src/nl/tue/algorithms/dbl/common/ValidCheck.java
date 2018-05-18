@@ -43,7 +43,7 @@ public class ValidCheck {
      * @return true if the rectangle does not overlap with other rectangles,
      * false if there is overlap in the solution
      */
-    private boolean noOverlapSolution(Pack p, RectangleRotatable r) {
+    protected boolean noOverlapSolution(Pack p, RectangleRotatable r) {
         for (RectangleRotatable r2 : p.getRectangles()) {
             if (r2.isPlaced() && r != r2 && r.intersects(r2)){
                 return false;
@@ -63,7 +63,7 @@ public class ValidCheck {
      * @return true if there is no fixed height or if the newly placed rectangle does not go over this height,
      * false if the rectangle does go over this limit
      */
-    private boolean fitsInContainer(Pack p, RectangleRotatable r){
+    protected boolean fitsInContainer(Pack p, RectangleRotatable r){
         if (!p.hasFixedHeight()) {
             return true;
         }    
@@ -82,7 +82,7 @@ public class ValidCheck {
      * @return true if rotations are allowed or if there are no rotations,
      * false if there are illegal rotations
      */
-    public boolean noIllegalRotation(Pack p, RectangleRotatable r){
+    protected boolean noIllegalRotation(Pack p, RectangleRotatable r){
         return p.canRotate() || !r.isRotated();
     }
 }
