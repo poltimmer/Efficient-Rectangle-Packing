@@ -22,17 +22,26 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
     int yPosition = 0;
     int currentShelfWidth;
 
+    /**
+     * Basic implementation of First-Fit Decreasing Height algorithm.
+     */
     @Override
     public void solve() {
             height = pack.getContainerHeight(); //The fixed height of our container.
             RectangleRotatable t = pack.getRectangles().peek(); //We get the first element of queue
-            currentShelfWidth = (int) Math.max(t.getHeight(),t.getWidth()); //We set first shelf
+            if (pack.canRotate()) { //We set the currentShelfWidth
+                currentShelfWidth = (int) Math.max(t.getHeight(), t.getWidth());
+            } else {
+                currentShelfWidth = (int) t.getWidth();
+            }
 
             while (!pack.getRectangles().isEmpty()) {
                 RectangleRotatable r = pack.getRectangles().poll();
                 placeRectangle(r);
             }
     }
+
+    
 
     public void placeRectangle(RectangleRotatable r) {
         if (r.isRotated()) {

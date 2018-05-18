@@ -25,10 +25,12 @@ public class OutputWriter {
         systemOut.print(prefix);
         systemOut.println("placement of rectangles");
         for (RectangleRotatable r : p.getOrderedRectangles()) {
-            if (r.isRotated()) {
-                systemOut.print("yes ");
-            } else {
-                systemOut.print("no ");
+            if (p.canRotate()) {
+                if (r.isRotated()) {
+                    systemOut.print("yes ");
+                } else {
+                    systemOut.print("no ");
+                }
             }
             systemOut.println((int)r.getX()+ " " +(int)r.getY());
         }
