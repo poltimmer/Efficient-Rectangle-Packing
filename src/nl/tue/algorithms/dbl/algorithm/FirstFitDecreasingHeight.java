@@ -41,7 +41,19 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
             }
     }
 
-    
+    public void solveReccurence() {
+        height = pack.getContainerHeight();
+        RectangleRotatable t = pack.getRectangles().peek();
+        if (pack.canRotate()) { //We set the currentShelfWidth
+            currentShelfWidth = (int) Math.max(t.getHeight(), t.getWidth());
+        } else {
+            currentShelfWidth = (int) t.getWidth();
+        }
+    }
+
+    public void reccurence() {
+
+    }
 
     public void placeRectangle(RectangleRotatable r) {
         if (r.isRotated()) {
