@@ -30,7 +30,7 @@ public class OutputWriter {
             } else {
                 systemOut.print("no ");
             }
-            systemOut.println(r.getX()+ " " +r.getY());
+            systemOut.println((int)r.getX()+ " " +(int)r.getY());
         }
     }
 }

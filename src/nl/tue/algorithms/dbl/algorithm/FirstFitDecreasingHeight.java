@@ -16,33 +16,47 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
     public FirstFitDecreasingHeight(PackData data) {
         super(new PackWidthQueue(data));
     }
-    
+
+    int height;
+    int xPosition = 0;
+    int yPosition = 0;
+    int currentShelfWidth;
+
     @Override
     public void solve() {
-        try {            
-            final int height = pack.getContainerHeight(); //The fixed height of our container.
-            RectangleRotatable t = pack.getRectangles().poll();
-            t.setLocation(0, 0); //Set first rectangle
-            int currentShelfWidth = (int) t.getWidth(); //Width of the current shelf.
-            //position for the new triangle
-            int xPosition = 0;
-            int yPosition = (int) t.getHeight();
+            height = pack.getContainerHeight(); //The fixed height of our container.
+            RectangleRotatable t = pack.getRectangles().peek(); //We get the first element of queue
+            currentShelfWidth = (int) Math.max(t.getHeight(),t.getWidth()); //We set first shelf
+
             while (!pack.getRectangles().isEmpty()) {
                 RectangleRotatable r = pack.getRectangles().poll();
-                if ((yPosition + r.getHeight()) <= height) {
-                    // We set the position of the triangle on the shelf
-                    r.setLocation(xPosition, yPosition);
-                    yPosition += r.getHeight();
-                } else {
-                    //Triangle doesn't fir on the shelf, so we place it on new one
-                    xPosition = currentShelfWidth;
-                    yPosition = 0;
-                    currentShelfWidth += r.getWidth();
-                    r.setLocation(xPosition, yPosition);
-                }
+                placeRectangle(r);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+    }
+
+    public void placeRectangle(RectangleRotatable r) {
+        if (r.isRotated()) {
+            if (yPosition + r.getWidth() <= height) { //New rectangle fits on shelf
+                r.x = xPosition;
+                r.y = yPosition;
+                yPosition += r.getWidth();
+            } else { //New rectangle doesn't fit on shelf
+                xPosition = currentShelfWidth;
+                yPosition = 0;
+                r.x = xPosition;
+                r.y = yPosition;
+            }
+        } else {
+            if (yPosition + r.getHeight() <= height) { //New rectangle fits on shelf
+                r.x = xPosition;
+                r.y = yPosition;
+                yPosition += r.getHeight();
+            } else { //New rectangle doesn't fit on shelf
+                xPosition = currentShelfWidth;
+                yPosition = 0;
+                r.x = xPosition;
+                r.y = yPosition;
+            }
         }
     }
 }

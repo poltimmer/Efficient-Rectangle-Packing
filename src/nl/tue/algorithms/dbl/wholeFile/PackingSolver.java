@@ -16,7 +16,7 @@ import nl.tue.algorithms.dbl.io.OutputWriter;
  * @author K.D. Voorintholt (1005136)
  * @author E.M.A. Arts (1004076)
  * @author T.M. Verberk (1016472)
- * @author Koen Degeling (1018025)
+ * @author K. Degeling (1018025)
  * @author Wouter (1009509)
  * @author Pol (1007701)
  * @author Robin (1011291)
@@ -39,7 +39,7 @@ public class PackingSolver {
             }
         */
         //since we only have 1 algorithm, we have to do this:
-        algo = new BruteForce(data);
+        algo = new FirstFitDecreasingHeight(data);
         
         reader.readRectangles(algo.getPack());
 

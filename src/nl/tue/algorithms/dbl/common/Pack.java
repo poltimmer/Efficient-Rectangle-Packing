@@ -48,7 +48,7 @@ public abstract class Pack {
 
     /**
      * Method which is implemented by concrete subclass which will insert the rectangle in it's own defined collection.
-     * @param rec the rectangle to be added, ractangleOrder keeps track of the order in which the triangle was entered.
+     * @param rec the rectangle to be added, rectangleOrder keeps track of the order in which the triangle was entered.
      * @post rectangles.contains(rec)
      */
     protected abstract void addRectangleSubclass(RectangleRotatable rec);

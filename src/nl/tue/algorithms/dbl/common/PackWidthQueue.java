@@ -11,7 +11,21 @@ public class PackWidthQueue extends Pack {
         rectangles = new PriorityQueue<>(new Comparator<RectangleRotatable>() {
             @Override
             public int compare(RectangleRotatable o1, RectangleRotatable o2) {
-                return (o1.getWidth() < o2.getWidth()) ? -1 : 1;
+                if (!canRotate()) {
+                    return (o1.getWidth() >= o2.getWidth()) ? -1 : 1;
+                } else {
+                    if (Math.max(o1.getHeight(), o1.getWidth()) >= Math.max(o2.getHeight(), o2.getWidth())) {
+                        if (o1.getHeight() > o1.getWidth()) {
+                            o1.setRotated(true);
+                        }
+                        return -1;
+                    } else {
+                        if (o2.getHeight() > o2.getWidth()) {
+                            o2.setRotated(true);
+                        }
+                        return 1;
+                    }
+                }
             }
         }); // Turn PriorityQueue into Max Heap.
     }
