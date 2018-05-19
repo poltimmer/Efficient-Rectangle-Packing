@@ -78,15 +78,15 @@ public class ValidCheckTest extends TestCase {
         RectangleRotatable rec1 = new RectangleRotatable(0, 5, 1);
         RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
 
-        assertEquals(true, instance.checkSolution(p, rec1));
-        assertEquals(true, instance.checkSolution(p, rec2));
+        assertEquals(true, instance.fitsInContainer(p, rec1));
+        assertEquals(true, instance.fitsInContainer(p, rec2));
 
         data = new PackData(1, false, 2);
         p = new PackList(data);
 
         //check if not fits
         rec1.setRotated(true);
-        assertEquals(false, instance.checkSolution(p, rec1));
+        assertEquals(false, instance.fitsInContainer(p, rec1));
     }
 
     public void testNoIllegalRotation() throws Exception {

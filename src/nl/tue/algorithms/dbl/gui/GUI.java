@@ -9,6 +9,8 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -19,8 +21,8 @@ import java.awt.image.BufferStrategy;
 public class GUI extends javax.swing.JFrame {
 
     private JPanel basePanel;
-    private JScrollPane scrollPane;
     private JButton button1;
+    private JScrollPane scrollpane1;
     private Canvas canvas;
 
     /**
@@ -34,7 +36,7 @@ public class GUI extends javax.swing.JFrame {
         canvas.setSize(this.getSize());
         canvas.setIgnoreRepaint(true);
 
-        this.add(canvas);
+        scrollpane1.add(canvas);
 
 
         canvas.createBufferStrategy(2);
@@ -51,6 +53,12 @@ public class GUI extends javax.swing.JFrame {
 
         r.setLocation(0,10);
         drawRectangleRotatable(r);
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "hello world eric is a dick");
+            }
+        });
     }
 
     /**
@@ -122,7 +130,11 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        JFrame frame = new JFrame("GUI");
+        frame.setContentPane(new GUI().basePanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -130,6 +142,8 @@ public class GUI extends javax.swing.JFrame {
             }
         });
     }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
