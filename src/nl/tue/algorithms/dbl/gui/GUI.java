@@ -38,21 +38,20 @@ public class GUI extends javax.swing.JFrame {
 
         scrollpane1.add(canvas);
 
-
-        canvas.createBufferStrategy(2);
+        /**canvas.createBufferStrategy(2);
         requestFocus();
 
         RectangleRotatable r = new RectangleRotatable(0, 100, 200);
         System.out.println(r);
         r.setLocation(100, 100);
-
+        */
 
         this.setVisible(true);
 
-        drawRectangleRotatable(r);
+        //drawRectangleRotatable(r);
 
-        r.setLocation(0,10);
-        drawRectangleRotatable(r);
+        //r.setLocation(0,10);
+        //drawRectangleRotatable(r);
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
