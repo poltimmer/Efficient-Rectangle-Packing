@@ -1,7 +1,6 @@
 package nl.tue.algorithms.dbl.common;
 
 import junit.framework.TestCase;
-import org.w3c.dom.css.Rect;
 
 /**
  *
@@ -10,9 +9,10 @@ import org.w3c.dom.css.Rect;
  * @since 9 MAY 2018
  */
 public class ValidCheckTest extends TestCase {
-    public void testCheckSolution() throws Exception {
+    
+    public void testIsRectangleValidWithinPack() throws Exception {
         System.out.println("ValidCheck test");
-        ValidCheck instance = new ValidCheck();
+
         PackData data = new PackData(-1, false, 3);
         PackList p = new PackList(data);
         //make test rectangles
@@ -28,28 +28,28 @@ public class ValidCheckTest extends TestCase {
         p.addRectangleSubclass(rec3);
 
         //checks
-        assertEquals(true, instance.checkSolution(p, rec1));
-        assertEquals(true, instance.checkSolution(p, rec2));
+        assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec1, p));
+        assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec2, p));
         rec3.setLocation(1, 1);
-        assertEquals(false, instance.checkSolution(p, rec3));
+        assertEquals(false, ValidCheck.isRectangleValidWithinPack(rec3, p));
 
         data = new PackData(4, false, 3);
         p = new PackList(data);
-        assertEquals(false, instance.checkSolution(p, rec2));
-        assertEquals(true, instance.checkSolution(p, rec1));
+        assertEquals(false, ValidCheck.isRectangleValidWithinPack(rec2, p));
+        assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec1, p));
 
         rec1.setRotated(true);
-        assertEquals(false, instance.checkSolution(p, rec1));
+        assertEquals(false, ValidCheck.isRectangleValidWithinPack(rec1, p));
 
         data = new PackData(4, true, 3);
-        assertEquals(false, instance.checkSolution(p, rec1));
+        assertEquals(false, ValidCheck.isRectangleValidWithinPack(rec1, p));
         rec1.setRotated(false);
-        assertEquals(true, instance.checkSolution(p, rec1));
+        assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec1, p));
     }
 
-    public void testNoOverlapSolution() throws Exception {
+    public void testIsRectangleNotOverlappingWithPack() throws Exception {
         System.out.println("ValidCheck test");
-        ValidCheck instance = new ValidCheck();
+
         PackData data = new PackData(-1, false, 3);
         PackList p = new PackList(data);
         RectangleRotatable rec1 = new RectangleRotatable(0, 5, 1);
@@ -64,34 +64,34 @@ public class ValidCheckTest extends TestCase {
         p.addRectangleSubclass(rec2);
         p.addRectangleSubclass(rec3);
 
-        assertEquals(true, instance.noOverlapSolution(p, rec2));
+        assertEquals(true, ValidCheck.isRectangleNotOverlappingWithPack(rec2, p));
         rec2.setLocation(0,0);
-        assertEquals(false, instance.noOverlapSolution(p, rec2));
+        assertEquals(false, ValidCheck.isRectangleNotOverlappingWithPack(rec2, p));
 
     }
 
-    public void testFitsInContainer() throws Exception {
+    public void testIsRectangleWithinPackHeight() throws Exception {
         System.out.println("FitsInContainer test");
-        ValidCheck instance = new ValidCheck();
+
         PackData data = new PackData(-1, false, 5);
         PackList p = new PackList(data);
         RectangleRotatable rec1 = new RectangleRotatable(0, 5, 1);
         RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
 
-        assertEquals(true, instance.fitsInContainer(p, rec1));
-        assertEquals(true, instance.fitsInContainer(p, rec2));
+        assertEquals(true, ValidCheck.isRectangleWithinPackHeight(rec1, p));
+        assertEquals(true, ValidCheck.isRectangleWithinPackHeight(rec2, p));
 
         data = new PackData(1, false, 2);
         p = new PackList(data);
 
         //check if not fits
         rec1.setRotated(true);
-        assertEquals(false, instance.fitsInContainer(p, rec1));
+        assertEquals(false, ValidCheck.isRectangleWithinPackHeight(rec1, p));
     }
 
-    public void testNoIllegalRotation() throws Exception {
+    public void testIsRectangleNotRotatedIllegallyWithinPack() throws Exception {
         System.out.println("NoIllegalRotation test");
-        ValidCheck instance = new ValidCheck();
+
         PackData data1 = new PackData(-1, false, 5);
         PackData data2 = new PackData(100, true, 5);
         PackList p = new PackList(data1);
@@ -100,13 +100,12 @@ public class ValidCheckTest extends TestCase {
         RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
 
         rec2.setRotated(true);
-        assertEquals(true, instance.noIllegalRotation(p, rec1));
-        assertEquals(false, instance.noIllegalRotation(p, rec2));
+        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec1, p));
+        assertEquals(false, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec2, p));
 
         p = new PackList(data2);
-        assertEquals(true, instance.noIllegalRotation(p, rec1));
-        assertEquals(true, instance.noIllegalRotation(p, rec2));
-
+        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec1, p));
+        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec2, p));
     }
 
 }

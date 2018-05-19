@@ -1,4 +1,4 @@
-package nl.tue.algorithms.dbl.wholeFile;
+package nl.tue.algorithms.dbl.utilities;
 
 import java.io.IOException;
 import nl.tue.algorithms.dbl.algorithm.Algorithm;

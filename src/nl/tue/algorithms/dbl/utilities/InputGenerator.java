@@ -1,3 +1,7 @@
+//MOMOTOR_MERGER_IGNORE_FILE
+
+package nl.tue.algorithms.dbl.utilities;
+
 import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedWriter;
@@ -5,6 +9,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+/**
+ * This class is never used in the Algorithm code, and is only used to submit
+ * to generate test cases. It automatically generates an input file that can be
+ * used as input for the GUI class or PackingSolver class.
+ * Its generated input will be located in res/inputGenerator/input.txt
+ * (or creates the directory if it not yet exists).
+ * (If there is already an input.txt in that folder, it is replaced) 
+ * 
+ * @author Pol (1007701)
+ * @since 19 MAY 2018
+ */
 
 public class InputGenerator {
     Random r = new Random();
@@ -16,7 +32,7 @@ public class InputGenerator {
     public static int MINSIZE;
     public static int recNumber = 0;
     public static int requiredRectangles;
-    public static File OUTPUT = new File("res/input");
+    public static File OUTPUT = new File("res/inputGenerator");
     
     public void run(){
         OUTPUT.mkdirs();

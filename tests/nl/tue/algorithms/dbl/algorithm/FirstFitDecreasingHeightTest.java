@@ -1,7 +1,6 @@
-package tests.nl.tue.algorithms.dbl.algorithm;
+package nl.tue.algorithms.dbl.algorithm;
 
 import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class FirstFitDecreasingHeightTest extends TestCase {
     public void testMain() throws Exception {
     }
-    @Test
+
     public void testSolve() throws Exception {
 
     }

@@ -1,5 +1,5 @@
 //MOMOTOR_MERGER_IGNORE_FILE
-package nl.tue.algorithms.dbl.wholeFile;
+package nl.tue.algorithms.dbl.utilities;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -222,7 +222,7 @@ public class MomotorMerger {
         File[] files = new File("src/").listFiles();
         List<File> filesToMerge = getFilesToMerge(files);
         
-        System.out.println("The following files will be merged in " + MOMOTOR_DIR + " (" + filesToMerge.size() + " total): ");
+        System.out.println("The following files will be merged in " + MOMOTOR_DIR.getAbsolutePath() + " (" + filesToMerge.size() + " total): ");
         for (File file : filesToMerge) {
             System.out.format("- %-25s (%s)\n", file.getName(), file);
         }
