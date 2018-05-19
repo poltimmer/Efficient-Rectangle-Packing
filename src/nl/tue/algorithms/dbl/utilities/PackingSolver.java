@@ -5,6 +5,8 @@ import nl.tue.algorithms.dbl.algorithm.Algorithm;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
 import nl.tue.algorithms.dbl.algorithm.BruteForce;
 import nl.tue.algorithms.dbl.common.PackData;
+import nl.tue.algorithms.dbl.gui.GUI;
+import nl.tue.algorithms.dbl.gui.GUINew;
 import nl.tue.algorithms.dbl.io.InputReader;
 import nl.tue.algorithms.dbl.io.OutputWriter;
 
@@ -25,7 +27,7 @@ import nl.tue.algorithms.dbl.io.OutputWriter;
  */
 public class PackingSolver {
     public static void main(String args[]) throws IOException {
-        
+
         InputReader reader = new InputReader(System.in);
         PackData data = reader.readPackData();
 

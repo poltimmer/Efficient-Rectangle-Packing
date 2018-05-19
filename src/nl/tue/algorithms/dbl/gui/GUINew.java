@@ -25,6 +25,7 @@ import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
 import nl.tue.algorithms.dbl.io.InputReader;
 import nl.tue.algorithms.dbl.io.OutputWriter;
+import nl.tue.algorithms.dbl.utilities.PackingSolver;
 
 /**
  * This class is never used in the Algorithm code, and is only used to visualize
@@ -43,12 +44,13 @@ public class GUINew extends JFrame {
     public static int RENDER_WIDTH = 1024;
     /** Default height of the frame */
     public static int RENDER_HEIGHT = 640;
-    
+
     private final JScrollPane scrollPane;
     private final JPanel drawingPane;
     
     private static int IMG_WIDTH = 1024;
     private static int IMG_HEIGHT = 640;
+    /** Background color of the scrollPane*/
     private static final Color BACKGROUND_COLOR = Color.ORANGE;
     private final BufferedImage img;
     private final Graphics2D gImg;
@@ -56,15 +58,18 @@ public class GUINew extends JFrame {
     public static int SIZE_MODIFIER = 10;
     
     private static final int SCROLL_SPEED = 20;
-    
+
+    /** Possible colors of the rectangles */
     public static final Color[] VALID_RECTANGLE_COLORS =
             {   Color.BLACK,    Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
                 Color.GRAY,     Color.GREEN,    Color.LIGHT_GRAY,   Color.MAGENTA,
                 Color.PINK,     Color.RED,      Color.WHITE,        Color.YELLOW };
-    private final Random randomGen;
+
+    private int colorPicker = 0;
+    //private final Random randomGen;
 
     private GUINew() {
-        randomGen = new Random();
+        //randomGen = new Random();
         
         this.img = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, BufferedImage.TYPE_INT_ARGB);
         this.gImg = img.createGraphics();
@@ -121,7 +126,13 @@ public class GUINew extends JFrame {
     }
 
     private Color getRandomColor() {
-        int index = randomGen.nextInt(VALID_RECTANGLE_COLORS.length);
+        //int index = randomGen.nextInt(VALID_RECTANGLE_COLORS.length);
+        int index = colorPicker;
+        if (colorPicker - 1 < VALID_RECTANGLE_COLORS.length) {
+            colorPicker++;
+        } else {
+            colorPicker = 0;
+        }
         return VALID_RECTANGLE_COLORS[index];
     }
     
@@ -143,10 +154,12 @@ public class GUINew extends JFrame {
             }
         });
     }
-    
+
+    /**
+     * The method which is the same as PackingSolver.main, except for the last line drawPack(...
+     * If the packing solver changes, we have to copy paste it here too.
+     */
     private void test() throws IOException {
-                
-        
         InputReader reader = new InputReader(System.in);
         PackData data = reader.readPackData();
 
@@ -169,6 +182,7 @@ public class GUINew extends JFrame {
         OutputWriter.printOutput(System.out, algo.getPack(), reader.getInputMessage());
         
         drawPack(algo.getPack());
+
     }
 
     private static void setPixelSize(int width, int height) {
