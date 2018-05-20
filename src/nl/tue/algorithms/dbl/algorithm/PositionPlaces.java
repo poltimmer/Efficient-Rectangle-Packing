@@ -1,8 +1,9 @@
 package nl.tue.algorithms.dbl.algorithm;
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
+
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.List;
 
 /*
  * an implementation of positionPlacesIterator
@@ -13,17 +14,30 @@ import java.util.NoSuchElementException;
  */
 
 
-public class PositionPlaces implements Iterable<Point>{
+public class PositionPlaces implements Iterable<Void> {
 
     // list of all places
-    ArrayList positions = new ArrayList<Point>();
+    List positions = new ArrayList<Point>();
+    List<RectangleRotatable> rectangles = new ArrayList<RectangleRotatable>();
+    List<RectangleRotatable> rectanglesUsed = new ArrayList<RectangleRotatable>();
+    int rectanglesLeft;
+    RectangleRotatable R1;
+    Point point = new Point();
+
 
     /** Constructor for general range.  */
-    public PositionPlaces(final ArrayList<Point> points) {
+    public PositionPlaces(RectangleRotatable a, Point p, final List<Point> points, List<RectangleRotatable> rec, List<RectangleRotatable> recUsed, Integer recLeft ) {
         positions= points;
+        rectangles = rec;
+        rectanglesUsed = recUsed;
+        rectanglesLeft = recLeft;
+        RectangleRotatable R1= a;
+        point = p;
+
+
     }
 
-    public Iterator<Point> iterator() {
+    public Iterator<Void> iterator() {
         return new PositionPlacesIterator();
     }
 
@@ -32,7 +46,7 @@ public class PositionPlaces implements Iterable<Point>{
     /**
      * Inner class for a low-to-high iterator.
      */
-    private class PositionPlacesIterator implements Iterator<Point> {
+    private class PositionPlacesIterator implements Iterator<Void> {
         /** Current placement for iterator. */
         private int placement;
 
@@ -71,17 +85,37 @@ public class PositionPlaces implements Iterable<Point>{
                 return placement>sentinel;
             }
 
-            public Point next() throws NoSuchElementException {
+            public Void next() throws NoSuchElementException {
                 // Precondition.
                 if (! hasNext()) {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
                 }
                 placement--;
-                Point p = null;
-                return p;
+                int widtha = (int) R1.getWidth();
+                int heighta = (int) R1.getHeight();
+                int pointX = (int) point.getX();
+                int pointY = (int) point.getY();
+                R1.setLocation(pointX, pointY);
+
+                // check here if the new thingy is valid.
+
+                Point right = new Point(pointX + widtha , pointY );
+                Point up = new Point(pointX, pointY + heighta);
+                positions.add(right);
+                positions.add(up);
+                rectanglesUsed.add(R1);
+                BruteForce.FindBestSolution(positions, rectangles, rectanglesUsed, rectanglesLeft);
+                rectanglesUsed.remove(R1);
+                positions.remove(right);
+                positions.remove(up);
+
+
+                return null;
             }
 
-            /**
+
+
+        /**
              * For that case remove is unsupported operation.
              *
              * @throws UnsupportedOperationException  if precondition violated

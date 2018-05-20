@@ -24,14 +24,7 @@ public class PackList extends Pack {
         super(data);
         this.rectangles = new ArrayList<>();
     }
-    
-    @Override
-    public void addRectangle(RectangleRotatable rec) throws NullPointerException {
-        if (rec == null) {
-            throw new NullPointerException("Pack.addRectangle.pre violated: rec == null");
-        }
-        rectangles.add(rec);
-    }
+
 
     @Override
     protected void addRectangleSubclass(RectangleRotatable rec) {

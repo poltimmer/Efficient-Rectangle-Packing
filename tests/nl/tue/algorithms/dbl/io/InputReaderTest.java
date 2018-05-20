@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import junit.framework.TestCase;
+import junit.framework.tests;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;

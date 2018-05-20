@@ -1,11 +1,12 @@
 package nl.tue.algorithms.dbl.algorithm;
 
-import java.awt.Point;
-import java.util.LinkedList;
-import java.util.List;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
+
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Algorithm that brute forces a solution, with no rotation and no fixed height
@@ -23,7 +24,7 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
    }
    
    public List<Point> possiblePlaces;
-   
+   public int bestSolution = 10000000;
 
    @Override
    public void solve(){ // method that solves this shit
@@ -38,53 +39,39 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
      Point startPosition = new Point(0, 0);
      possiblePlaces = new LinkedList<>();
      possiblePlaces.add(startPosition);
-     
-     findBestSolution(rectangles, rectanglesUsed, rectanglesLeft);
+
+     FindBestSolution(possiblePlaces, rectangles, rectanglesUsed, rectanglesLeft);
    }
      
-   public int findBestSolution(List<RectangleRotatable> rectangles, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
-       int bestSolution = 0;
-       if(rectanglesLeft!=0){ // add another rectangle
-           for (RectangleRotatable a: rectangles){ // loop over all the rectangles
-                   boolean alreadyUsed = false;
-                   if(!rectanglesUsed.isEmpty()){
-                   for(RectangleRotatable usedRectangle: rectanglesUsed){ // check if the rectangle was already used
-                           if(a.getID()==usedRectangle.getID()){
-                                 alreadyUsed = true;
-                               }
+   public static void FindBestSolution(List<Point> possiblePlaces, List<RectangleRotatable> rectangles, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
+
+       if(rectanglesLeft!=0) { // add another rectangle
+           for (RectangleRotatable a : rectangles) { // loop over all the rectangles
+               boolean alreadyUsed = false;
+               if (!rectanglesUsed.isEmpty()) {
+                   for (RectangleRotatable usedRectangle : rectanglesUsed) { // check if the rectangle was already used
+                       if (a.getID() == usedRectangle.getID()) {
+                           alreadyUsed = true;
+                       }
                    }
+               }
+               if (!alreadyUsed) {
+                   // change possiblePlaces
+
+
+                   for (Point p : possiblePlaces) {
+
+                       // hasPrevious();
+                       // length of the possibleplaces;
+                       // Iterator.
+                       new PositionPlaces(a, p, possiblePlaces, rectangles, rectanglesUsed, rectanglesLeft);
+                       //possiblePlaces.addAll(added);
+                       //possiblePlaces.remove(p);
+                       //findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
                    }
-                  if(!alreadyUsed){
-                        // change possiblePlaces
-                      
-                      
-                        for(Point p: possiblePlaces){
-                            
-                            // hasPrevious();
-                            // length of the possibleplaces;
-                            // Iterator.
-                            
-                            List<Point> added = PlaceRectangle(a, rectanglesUsed, p);
-                            //possiblePlaces.addAll(added);
-                            //possiblePlaces.remove(p);
-                            findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
-                        }
-                }
+               }
            }
        }
-       
-       else{ //rectanglesLeft == 0;
-           //calculate solution;
-           
-           int areaSolution = 2;
-           
-           if(bestSolution==0){
-               bestSolution = areaSolution;
-           } else if (bestSolution < areaSolution){
-             bestSolution = areaSolution;
-           }
-       }
-       return bestSolution;
    }
    
    public List<Point> PlaceRectangle(RectangleRotatable a, List<RectangleRotatable> rectanglesUsed, Point p){
