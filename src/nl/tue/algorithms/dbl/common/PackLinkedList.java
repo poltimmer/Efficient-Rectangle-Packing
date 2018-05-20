@@ -1,14 +1,23 @@
 package nl.tue.algorithms.dbl.common;
 
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 
-public class PackWidthQueue extends Pack {
+public class PackLinkedList extends Pack {
+    /**
+     * Stores the rectangles in a sorted LinkedList. If rotations are allowed, the list will store the rectangle on
+     * max (height, width). 
+     */
+    private LinkedList<RectangleRotatable> rectangles;
 
-    private PriorityQueue<RectangleRotatable> rectangles;
-    public PackWidthQueue(PackData data) {
+    public PackLinkedList(PackData data) {
         super(data);
-        rectangles = new PriorityQueue<>(new Comparator<RectangleRotatable>() {
+        rectangles = new LinkedList<>();
+    }
+
+    public void sort() {
+        Comparator<RectangleRotatable> recComparator = new Comparator<RectangleRotatable>() {
             @Override
             public int compare(RectangleRotatable o1, RectangleRotatable o2) {
                 if (!canRotate()) {
@@ -18,16 +27,17 @@ public class PackWidthQueue extends Pack {
                         if (o1.getHeight() > o1.getWidth()) {
                             o1.setRotated(true);
                         }
-                        return -1;
+                        return 1;
                     } else {
                         if (o2.getHeight() > o2.getWidth()) {
                             o2.setRotated(true);
                         }
-                        return 1;
+                        return -1;
                     }
                 }
             }
-        }); // Turn PriorityQueue into Max Heap.
+        };
+        Collections.sort(rectangles, recComparator);
     }
 
     @Override
@@ -41,7 +51,7 @@ public class PackWidthQueue extends Pack {
     }
 
     @Override
-    public PriorityQueue<RectangleRotatable> getRectangles() {
+    public LinkedList<RectangleRotatable> getRectangles() {
         return rectangles;
     }
 }

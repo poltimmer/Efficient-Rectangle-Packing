@@ -5,17 +5,117 @@
  */
 package nl.tue.algorithms.dbl.gui;
 
+import nl.tue.algorithms.dbl.common.RectangleRotatable;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferStrategy;
+
 /**
  *
- * @author s169014
+ * @author E.M.A. Arts (1004076)
+ * @since 17 MAY 2018
  */
 public class GUI extends javax.swing.JFrame {
+
+    private JPanel basePanel;
+    private JScrollPane scrollPane;
+    private Canvas canvas;
 
     /**
      * Creates new form Form
      */
     public GUI() {
-        initComponents();
+        createView();
+        JFrame frame = new JFrame("GUI");
+        frame.setContentPane(new GUI().scrollPane);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(400, 200);
+        setLocationRelativeTo(null);
+        setResizable(true);
+        /**
+        canvas = new Canvas();
+        canvas.setBackground(Color.ORANGE);
+        canvas.setSize(this.getSize());
+        canvas.setIgnoreRepaint(true);
+
+        this.add(canvas);
+
+        canvas.createBufferStrategy(2);
+        requestFocus();
+
+        RectangleRotatable r = new RectangleRotatable(0, 100, 200);
+        System.out.println(r);
+        r.setLocation(100, 100);
+
+
+        this.setVisible(true);
+
+        drawRectangleRotatable(r);
+
+        r.setLocation(0,10);
+        drawRectangleRotatable(r);
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "hello world eric is a dick");
+            }
+        });
+         */
+    }
+
+    private void createView() {
+        getContentPane().add(scrollPane);
+
+        JPanel panelForm = new JPanel(new GridBagLayout());
+        scrollPane.add(panelForm);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_END;
+
+        panelForm.add(new JLabel("First name:"), c);
+        c.gridx ++;
+        panelForm.add(new JLabel("First name:"), c);
+        c.gridx ++;
+        panelForm.add(new JLabel("First name:"), c);
+        c.gridx ++;
+        panelForm.add(new JLabel("First name:"), c);
+        c.gridx ++;
+        panelForm.add(new JLabel("First name:"), c);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_START;
+        panelForm.add(new JTextField(8), c);
+        c.gridx ++;
+        panelForm.add(new JTextField(8), c);
+        c.gridx ++;
+        panelForm.add(new JTextField(15), c);
+        c.gridx ++;
+        panelForm.add(new JTextField(8), c);
+        c.gridx ++;
+        panelForm.add(new JPasswordField(8), c);
+    }
+    /**
+     *
+     * @param r
+     */
+
+    public void drawRectangleRotatable(RectangleRotatable r) {
+        BufferStrategy buffer = canvas.getBufferStrategy();
+        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+        System.out.println("here");
+        g.setColor(Color.CYAN);
+        g.fillRect(r.x, r.y, r.width, r.height);
+        g.drawString("test", 100,100);
+
+
+        g.dispose();
+        buffer.show();
     }
 
     /**
@@ -52,6 +152,9 @@ public class GUI extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        SwingUtilities.invokeLater(() -> { new GUI().setVisible(true);});
+
+        /**
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -70,14 +173,22 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
-        /* Create and display the form */
+        JFrame frame = new JFrame("GUI");
+        frame.setContentPane(new GUI().basePanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        /* Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GUI().setVisible(true);
             }
         });
+         */
+
     }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

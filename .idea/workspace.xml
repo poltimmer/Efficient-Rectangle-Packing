@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5ccd770-d072-46cf-bbf5-106c2c5dee40" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2IO90-RectanglePacking-24.iml" beforeDir="false" afterPath="$PROJECT_DIR$/2IO90-RectanglePacking-24.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/algorithm/FirstFitDecreasingHeightTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/algorithm/FirstFitDecreasingHeightTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/io/InputReaderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/io/InputReaderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/FirstFitDecreasingHeight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/FirstFitDecreasingHeight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/Pack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/Pack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackWidthQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackWidthQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/ValidCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/ValidCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/gui/GUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/gui/GUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/gui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/gui/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/io/OutputWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/io/OutputWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/wholeFile/MomotorMerger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nl/tue/algorithms/dbl/wholeFile/PackingSolver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/common/ValidCheckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/nl/tue/algorithms/dbl/common/ValidCheckTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,8 +35,8 @@
       <file leaf-file-name="BruteForce.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+            <state relative-caret-position="17">
+              <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -62,24 +71,13 @@
       <file leaf-file-name="PositionPlaces.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
+            <state relative-caret-position="204">
               <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#465#485#0" expanded="true" />
                 <element signature="e#548#568#0" expanded="true" />
-                <element signature="e#1015#1016#0" expanded="true" />
-                <element signature="e#1066#1067#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PackingSolver.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/wholeFile/PackingSolver.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -136,65 +134,41 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
               <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Extensions" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
             <path>
               <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="dbl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="2IO90-RectanglePacking-24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="2IO90-RectanglePacking-24" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="dbl" type="462c0819:PsiDirectoryNode" />
-              <item name="algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Extensions" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
+              <item name="com.intellij.database" type="1e004dc1:ScratchProjectViewPane$MyRootNode$1$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -250,6 +224,16 @@
       </option>
       <patterns />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="2IO90-RectanglePacking-24" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -291,20 +275,20 @@
       <workItem from="1526480411654" duration="156000" />
       <workItem from="1526480607523" duration="4604000" />
       <workItem from="1526633322646" duration="2621000" />
-      <workItem from="1526818771168" duration="4472000" />
+      <workItem from="1526818771168" duration="4653000" />
+      <workItem from="1526829609401" duration="78000" />
+      <workItem from="1526829708707" duration="23000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11853000" />
+    <option name="totallyTimeSpent" value="12135000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="Messages" order="0" visible="true" weight="0.32968536" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
@@ -326,6 +310,7 @@
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="0" visible="true" weight="0.32968536" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
@@ -344,6 +329,112 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackWidthQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/ValidCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/RectangleRotatable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#465#485#0" expanded="true" />
+            <element signature="e#548#568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2IO90-RectanglePacking-24.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackWidthQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/ValidCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/RectangleRotatable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#465#485#0" expanded="true" />
+            <element signature="e#548#568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2IO90-RectanglePacking-24.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/common/PackData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/Algorithm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -359,8 +450,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#465#485#0" expanded="true" />
             <element signature="e#548#568#0" expanded="true" />
-            <element signature="e#1015#1016#0" expanded="true" />
-            <element signature="e#1066#1067#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -401,8 +490,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#465#485#0" expanded="true" />
             <element signature="e#548#568#0" expanded="true" />
-            <element signature="e#1015#1016#0" expanded="true" />
-            <element signature="e#1066#1067#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -474,9 +561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -487,13 +571,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/wholeFile/PackingSolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/wholeFile/PackingSolver.java" />
     <entry file="file://$PROJECT_DIR$/2IO90-RectanglePacking-24.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -502,22 +580,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/PositionPlaces.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
+        <state relative-caret-position="204">
           <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#465#485#0" expanded="true" />
             <element signature="e#548#568#0" expanded="true" />
-            <element signature="e#1015#1016#0" expanded="true" />
-            <element signature="e#1066#1067#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tue/algorithms/dbl/algorithm/BruteForce.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="26" column="24" lean-forward="true" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
+        <state relative-caret-position="17">
+          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -538,7 +614,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited />
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

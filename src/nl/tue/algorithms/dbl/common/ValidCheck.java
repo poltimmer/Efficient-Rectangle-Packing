@@ -15,35 +15,34 @@ public class ValidCheck {
     /**
      * A method that checks if the solution is still valid.
      *
-     * @param p a pack with all the information
      * @param r the RectangleRotatable that has just been placed
+     * @param p a pack with all the information
      * @pre p != null && r != null
      * @modifies none
      * @throws IllegalArgumentException if p == null or if r == null
-     * @return true if solution is still valid, false if the solution is not valid
+     * @return the boolean
      */
-    public boolean checkSolution(Pack p, RectangleRotatable r) throws IllegalArgumentException {
+    public static boolean isRectangleValidWithinPack(RectangleRotatable r, Pack p) throws IllegalArgumentException {
         if (p == null || r == null){
             throw new IllegalArgumentException("Pack p is null");
         }
         else if (r == null) {
             throw new IllegalArgumentException("Rectangle r is null");
         }
-        return fitsInContainer(p, r) && noIllegalRotation(p, r) && noOverlapSolution(p, r);
+        return isRectangleWithinPackHeight(r, p) && isRectangleNotRotatedIllegallyWithinPack(r, p) && isRectangleNotOverlappingWithPack(r, p);
     }
     
     /**
      * This method checks if the newly placed rectangle does not overlap with any
      * of the earlier placed rectangles.
      *
-     * @param p a pack with all the information
      * @param r the RectangleRotatable that has just been placed
+     * @param p a pack with all the information
      * @pre p != null && r != null
      * @modifies none
-     * @return true if the rectangle does not overlap with other rectangles,
-     * false if there is overlap in the solution
+     * @return the boolean
      */
-    private boolean noOverlapSolution(Pack p, RectangleRotatable r) {
+    protected static boolean isRectangleNotOverlappingWithPack(RectangleRotatable r, Pack p) {
         for (RectangleRotatable r2 : p.getRectangles()) {
             if (r2.isPlaced() && r != r2 && r.intersects(r2)){
                 return false;
@@ -56,14 +55,13 @@ public class ValidCheck {
      * This method checks if the most recently placed rectangle fits in the container.
      * This is only relevant in the case that there is a fixed height
      *
-     * @param p a pack with all the information
      * @param r the RectangleRotatable that has just been placed
+     * @param p a pack with all the information
      * @pre p != null && r != null
      * @modifies none
-     * @return true if there is no fixed height or if the newly placed rectangle does not go over this height,
-     * false if the rectangle does go over this limit
+     * @return the boolean
      */
-    private boolean fitsInContainer(Pack p, RectangleRotatable r){
+    protected static boolean isRectangleWithinPackHeight(RectangleRotatable r, Pack p){
         if (!p.hasFixedHeight()) {
             return true;
         }    
@@ -75,14 +73,13 @@ public class ValidCheck {
      * This method checks if the most recently placed rectangle has not been illegally rotated.
      * Illegally rotated means that there has been a rotation while rotations are not allowed
      *
-     * @param p a pack with all the information
      * @param r the RectangleRotatable that has just been placed
+     * @param p a pack with all the information
      * @pre p != null && r != null
      * @modifies none
-     * @return true if rotations are allowed or if there are no rotations,
-     * false if there are illegal rotations
+     * @return the boolean
      */
-    public boolean noIllegalRotation(Pack p, RectangleRotatable r){
+    protected static boolean isRectangleNotRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
         return p.canRotate() || !r.isRotated();
     }
 }

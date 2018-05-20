@@ -20,5 +20,15 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#Netbeans stuff
 /nbproject/private/
+
+#MomotorMerger and InputGenerator files
 /res/momotor/
+/res/inputGenerator/
+/res/input/
+
+#IntelliJ project files
+/.idea/
+*.iml
