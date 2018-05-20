@@ -37,7 +37,7 @@ public class PackWidthQueue extends Pack {
 
     @Override
     public int getNumberOfRectangles() {
-        return rectangles.size();
+        return getOrderedRectangles().size();
     }
 
     @Override

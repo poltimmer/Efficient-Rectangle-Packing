@@ -14,9 +14,6 @@ import java.util.List;
  * @author Tom Verberk
  * @since 16 May 2018
  */
-
-
-
  public class BruteForce extends Algorithm<PackList>{
 
    public BruteForce(PackData data) {
@@ -24,7 +21,7 @@ import java.util.List;
    }
    
    public List<Point> possiblePlaces;
-   public int bestSolution = 10000000;
+   public int bestSolution = Integer.MAX_VALUE;
 
    @Override
    public void solve(){ // method that solves this shit
@@ -75,15 +72,14 @@ import java.util.List;
    }
    
    public List<Point> PlaceRectangle(RectangleRotatable a, List<RectangleRotatable> rectanglesUsed, Point p){
-       int widtha = (int) a.getWidth();
-       int heighta = (int) a.getHeight();
-       int pointX = (int) p.getX();
-       int pointY = (int) p.getY();
+       int widtha = a.width;
+       int heighta = a.height;
+       int pointX = p.x;
+       int pointY = p.y;
        a.setLocation(pointX, pointY);
        Point right = new Point(pointX + widtha , pointY );
        Point up = new Point(pointX, pointY + heighta);
-       List<Point> newPoints;
-       newPoints = new LinkedList<Point>();
+       List<Point> newPoints = new LinkedList<>();
        newPoints.add(right);
        newPoints.add(up);
        return newPoints;

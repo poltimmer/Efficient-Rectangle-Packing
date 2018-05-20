@@ -91,10 +91,10 @@ public class PositionPlaces implements Iterable<Void> {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
                 }
                 placement--;
-                int widtha = (int) R1.getWidth();
-                int heighta = (int) R1.getHeight();
-                int pointX = (int) point.getX();
-                int pointY = (int) point.getY();
+                int widtha = R1.width;
+                int heighta = R1.height;
+                int pointX = point.x;
+                int pointY = point.y;
                 R1.setLocation(pointX, pointY);
 
                 // check here if the new thingy is valid.

@@ -1,7 +1,6 @@
 package nl.tue.algorithms.dbl.algorithm;
 
 import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
 
 /**
  *

@@ -66,7 +66,7 @@ public class ValidCheck {
             return true;
         }    
         int size = !r.isRotated() ? r.height : r.width;
-        return r.y + size <= p.getContainerHeight();
+        return r.y + size <= p.getFixedHeight();
     }
     
     /**

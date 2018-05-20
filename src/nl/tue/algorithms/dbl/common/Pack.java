@@ -15,14 +15,14 @@ import java.util.List;
  */
 public abstract class Pack {
     /** fixed container height. -1 if no fixed container height */
-    private final int containerHeight;
+    private final int fixedHeight;
     /** whether rotations are allowed */
     private final boolean canRotate;
     /** References to rectangles to keep their order */
     private final List<RectangleRotatable> rectangleOrder;
     
     public Pack(PackData data) {
-        this.containerHeight = data.getContainerHeight();
+        this.fixedHeight = data.getContainerHeight();
         this.canRotate = data.canRotate();
         this.rectangleOrder = new ArrayList<>();
     }
@@ -54,8 +54,8 @@ public abstract class Pack {
     protected abstract void addRectangleSubclass(RectangleRotatable rec);
 
     /** basic query */
-    public int getContainerHeight() {
-        return containerHeight;
+    public int getFixedHeight() {
+        return fixedHeight;
     }
     
     /** basic query */
@@ -68,7 +68,7 @@ public abstract class Pack {
     
     /** basic query */
     public boolean hasFixedHeight() {
-        return containerHeight >= 0;
+        return fixedHeight >= 0;
     }
 
     /** abstract query to be implemented by subclass **/
@@ -77,4 +77,45 @@ public abstract class Pack {
     public List<RectangleRotatable> getOrderedRectangles() {
         return rectangleOrder;
     }
+    
+    /**
+     * A rather inefficient method of getting the height of the container,
+     * by iterating over all placed rectangles in the Pack.
+     * Should be overridden by a subclass extending this class!
+     * 
+     * @return The height of the container (0 if there are no rectangles or none
+     * have been placed yet)
+     */
+    public int getContainerHeight() {
+        int highestY = Integer.MIN_VALUE;
+        
+        for (RectangleRotatable r : getOrderedRectangles()) {
+            int height = !r.isRotated() ? r.height : r.width;
+            if (r.y + height > highestY && r.isPlaced()) {
+                highestY = r.y + height;
+            }
+        }
+        return Math.max(highestY, 0);
+    }
+    
+    /**
+     * A rather inefficient method of getting the width of the container,
+     * by iterating over all placed rectangles in the Pack.
+     * Should be overridden by a subclass extending this class!
+     * 
+     * @return The width of the container (0 if there are no rectangles or none
+     * have been placed yet)
+     */
+    public int getContainerWidth() {
+        int highestX = Integer.MIN_VALUE;
+        
+        for (RectangleRotatable r : getOrderedRectangles()) {
+            int width = !r.isRotated() ? r.width : r.height;
+            if (r.x + width > highestX && r.isPlaced()) {
+                highestX = r.x + width;
+            }
+        }
+        return Math.max(highestX, 0);
+    }
+    
 }

@@ -1,195 +1,313 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//MOMOTOR_MERGER_IGNORE_FILE
 package nl.tue.algorithms.dbl.gui;
 
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
+import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferStrategy;
+import nl.tue.algorithms.dbl.utilities.PackingSolver;
 
 /**
- *
+ * This class is never used in the Algorithm code, and is only used to visualize
+ * solutions created by the various algorithms.
+ * It uses a JPanel containing a BufferedImage. Rectangles are drawn onto this
+ * image. This way, it would be possible to create a file out of them (though
+ * this is not done as of now)
+ * 
  * @author E.M.A. Arts (1004076)
- * @since 17 MAY 2018
+ * @since 19 MAY 2018
  */
-public class GUI extends javax.swing.JFrame {
 
-    private JPanel basePanel;
-    private JScrollPane scrollPane;
-    private Canvas canvas;
+public class GUI extends JFrame {
+    //Title of the frame
+    public static final String TITLE = "PackingSolver GUI";
 
-    /**
-     * Creates new form Form
-     */
-    public GUI() {
-        createView();
-        JFrame frame = new JFrame("GUI");
-        frame.setContentPane(new GUI().scrollPane);
+    /** Default width of the frame */
+    public static int RENDER_WIDTH = 1024;
+    /** Default height of the frame */
+    public static int RENDER_HEIGHT = 640;
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(400, 200);
-        setLocationRelativeTo(null);
-        setResizable(true);
-        /**
-        canvas = new Canvas();
-        canvas.setBackground(Color.ORANGE);
-        canvas.setSize(this.getSize());
-        canvas.setIgnoreRepaint(true);
+    /** Ensures that the entire image can be viewed if it's bigger than the frame */
+    private final JScrollPane scrollPane;
+    /** Where the rectangles are drawn */
+    private final JPanel drawingPane;
+    
+    /** Width and Height of the current image */
+    public final int IMG_WIDTH;
+    public final int IMG_HEIGHT;
+    
+    /** Background color of the scrollPane*/
+    public static final Color BACKGROUND_COLOR = Color.ORANGE;
+    private final BufferedImage img;
+    private final Graphics2D gImg;
+    
+    /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
+    public static int SIZE_MODIFIER = 10;
+    
+    /** Scroll speed of the Horizontal and Vertical Scroll bars of the JScrollPane */
+    public static final int SCROLL_SPEED = 20;
 
-        this.add(canvas);
-
-        canvas.createBufferStrategy(2);
-        requestFocus();
-
-        RectangleRotatable r = new RectangleRotatable(0, 100, 200);
-        System.out.println(r);
-        r.setLocation(100, 100);
-
-
-        this.setVisible(true);
-
-        drawRectangleRotatable(r);
-
-        r.setLocation(0,10);
-        drawRectangleRotatable(r);
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "hello world eric is a dick");
-            }
-        });
-         */
-    }
-
-    private void createView() {
-        getContentPane().add(scrollPane);
-
-        JPanel panelForm = new JPanel(new GridBagLayout());
-        scrollPane.add(panelForm);
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.LINE_END;
-
-        panelForm.add(new JLabel("First name:"), c);
-        c.gridx ++;
-        panelForm.add(new JLabel("First name:"), c);
-        c.gridx ++;
-        panelForm.add(new JLabel("First name:"), c);
-        c.gridx ++;
-        panelForm.add(new JLabel("First name:"), c);
-        c.gridx ++;
-        panelForm.add(new JLabel("First name:"), c);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.LINE_START;
-        panelForm.add(new JTextField(8), c);
-        c.gridx ++;
-        panelForm.add(new JTextField(8), c);
-        c.gridx ++;
-        panelForm.add(new JTextField(15), c);
-        c.gridx ++;
-        panelForm.add(new JTextField(8), c);
-        c.gridx ++;
-        panelForm.add(new JPasswordField(8), c);
-    }
-    /**
-     *
-     * @param r
-     */
-
-    public void drawRectangleRotatable(RectangleRotatable r) {
-        BufferStrategy buffer = canvas.getBufferStrategy();
-        Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
-        System.out.println("here");
-        g.setColor(Color.CYAN);
-        g.fillRect(r.x, r.y, r.width, r.height);
-        g.drawString("test", 100,100);
-
-
-        g.dispose();
-        buffer.show();
-    }
+    /** Possible colors of the rectangles */
+    public static final Color[] VALID_RECTANGLE_COLORS =
+            {   Color.BLACK,    Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
+                Color.GRAY,     Color.GREEN,    Color.LIGHT_GRAY,   Color.MAGENTA,
+                Color.PINK,     Color.RED,      Color.WHITE,        Color.YELLOW };
+    
+    /** Keeps track of which colour to use to draw a rectangle */
+    private int colorPicker = 0;
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * Sets up things such as the frame title, frame size, scroll pane, resize
+     * listener, and BufferedImage to draw on.
+     * @param p the Pack to use
      */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private GUI(Pack p) {   
+        //Title and dimensions
+        setTitle(TITLE);
+        setVisible(true);
+        setMinimumSize(new Dimension(RENDER_WIDTH, RENDER_HEIGHT));     
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        SwingUtilities.invokeLater(() -> { new GUI().setVisible(true);});
-
-        /**
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        JFrame frame = new JFrame("GUI");
-        frame.setContentPane(new GUI().basePanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        /* Create and display the form
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
+        
+        //setup scrollPane
+        scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
+        scrollPane.getHorizontalScrollBar().setUnitIncrement(SCROLL_SPEED);
+        this.add(scrollPane);        
+        
+        //Resize listener to make the scrollpane have the same size as the frame
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resizeFrame(e.getComponent().getSize());
             }
         });
-         */
+        
+        //width and height of the BufferedImage
+        IMG_WIDTH = p.getContainerWidth()*SIZE_MODIFIER;
+        IMG_HEIGHT = p.getContainerHeight()*SIZE_MODIFIER;
+        
+        //setup BufferedImage
+        this.img = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        this.gImg = img.createGraphics();
 
+        //draw a BG colour
+        gImg.setColor(BACKGROUND_COLOR);
+        gImg.fillRect(0, 0, IMG_WIDTH, IMG_HEIGHT);
+
+        //Add the Image to the scrollPane
+        drawingPane = initDrawingPane(img);
+        scrollPane.setViewportView(drawingPane);        
+    }
+    
+    /**
+     * Initializes the drawPane that draws the BufferedImage
+     * @param img BufferedImage to draw
+     * @pre img != null
+     * @return A JPanel that draws img
+     */
+    private JPanel initDrawingPane(BufferedImage img) {
+        return new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                
+                // Creating a copy of the Graphics so any reconfiguration we do on
+                // it doesn't interfere with what Swing is doing.
+                Graphics2D g2 = (Graphics2D) g.create();
+                // Drawing the image.
+                int w = img.getWidth();
+                int h = img.getHeight();
+                g2.drawImage(img, 0, 0, w, h, null);
+
+                // At the end, we dispose the Graphics copy we've created
+                g2.dispose();
+            }
+            //auto-resize
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(img.getWidth(), img.getHeight());
+            }
+        };
+    }
+    
+    /**
+     * Gets the next colour from VALID_RECTANGLE_COLORS. This ensures that every
+     * valid colour is used equally
+     * @return  The next colour from VALID_RECTANGLE_COLORS, or the first one if
+     *          the last colour was reached
+     */
+    private Color getNextColor() {
+        if (colorPicker < VALID_RECTANGLE_COLORS.length - 1) {
+            colorPicker++;
+        } else {
+            colorPicker = 0;
+        }
+        return VALID_RECTANGLE_COLORS[colorPicker];
+    }
+    
+    /**
+     * Sets the size of the frame
+     * @param width Width of the new size
+     * @param height Height of the new size
+     * @post The frame has a size of width by height pixels
+     */
+    private static void setPixelSize(int width, int height) {
+        RENDER_WIDTH = width;
+        RENDER_HEIGHT = height;
     }
 
+    /**
+     * Sets the size of the frame
+     * @param d Dimension of the new size
+     * @pre d != null
+     * @post The frame has size of Dimensions d
+     */
+    private static void resizeFrame(Dimension d) {
+        setPixelSize(d.width, d.height);
+    }    
+    
+    /**
+     * Draws specified rotatable rectangle on screen
+     * @param r The RectangleRotatable to draw
+     * @pre r != null
+     * @post The specified rectangle is drawn on the screen with an arbitrary
+     * colour
+     */
+    public void drawRectangle(RectangleRotatable r) {
+        Color col = getNextColor();
+        if (!r.isRotated()) {
+            drawRectangle(r, col);
+        } else {
+            drawRectangle(new Rectangle(r.x, r.y, r.height, r.width), col);
+        }
+    }
+    
+    /**
+     * Draws the specified rectangle with a specified colour on screen
+     * @param r The Rectangle to draw
+     * @param col The colour to draw with
+     * @pre r != null && col != null
+     * @post The given rectangle is drawn on the screen with the given colour
+     */
+    private void drawRectangle(Rectangle r, Color col) { 
+        gImg.setColor(col);
+        //(0,0) is at the bottom-left of the screen
+        gImg.fillRect(r.x * SIZE_MODIFIER,
+                IMG_HEIGHT - r.y * SIZE_MODIFIER - r.height * SIZE_MODIFIER,
+                r.width * SIZE_MODIFIER, r.height * SIZE_MODIFIER);
+    }
+    
+    /**
+     * Draws all rectangles from a given Pack on the screen
+     * @param p Pack to draw all the rectangles from
+     * @pre p != null
+     * @post All rectangles from the given pack are drawn on the screen
+     */
+    public void drawPack(Pack p) {
+        for (RectangleRotatable r : p.getOrderedRectangles()) {
+            drawRectangle(r);
+        }
+    }
+    
+    /**
+     * Clears the specified rectangleRotatable off the screen
+     * @param r RectangleRotatable to clear
+     * @pre r != null
+     * @post The specified rectangleRotatable is filled with BACKGROUND_COLOR
+     */
+    public void clearRectangle(RectangleRotatable r) {
+        if (!r.isRotated()) {
+            clearRectangle((Rectangle) r);
+        } else {
+            clearRectangle(new Rectangle(r.x, r.y, r.height, r.width));
+        }
+    }
+    
+    /**
+     * Clears the specified Rectangle off the screen
+     * @param r Rectangle to clear
+     * @pre r != null
+     * @post The specified rectangle is filled with BACKGROUND_COLOR
+     */
+    private void clearRectangle(Rectangle r) {
+        drawRectangle(r, BACKGROUND_COLOR);
+    }
+    
+    /**
+     * Clears the entire screen
+     * @post The entire screen is filled with BACKGROUND_COLOR
+     */
+    public void clearScreen() {
+        clearRectangle(new Rectangle(0, 0, RENDER_WIDTH, RENDER_HEIGHT));
+    }
+    
+    /**
+     * Main Method
+     */
+    public static void main(String[] args) {
+        startDefault();        
+    }
 
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    /**
+     * Setting up
+     */
+    private static void startDefault() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        /* Create and display the frame */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                
+                try {
+                    PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingHeight.class);
+                    //A specific algorithm can be chosen by using something like:
+                    //new PackingSolver(System.in, BruteForce.class);
+                    
+                    //add the rectangles to the solver's Pack and calculate
+                    //how to place those rectangles in this pack
+                    solver.readRectangles();
+                    solver.solve();
+                    
+                    //Get the pack
+                    Pack p = solver.getAlgorithm().getPack();
+                    
+                    //Print useful data
+                    System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
+                    System.out.println("Input contained " + p.getNumberOfRectangles() + " rectangles: ");      
+                    System.out.println(p.getOrderedRectangles());
+                    
+                    //Create a GUI from this pack
+                    GUI gui = new GUI(p);
+                    
+                    //Make the GUI draw this pack
+                    gui.drawPack(p);
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            }
+        });
+    }
+    
 }

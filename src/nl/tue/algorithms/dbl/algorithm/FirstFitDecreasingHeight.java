@@ -27,12 +27,12 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
      */
     @Override
     public void solve() {
-            height = pack.getContainerHeight(); //The fixed height of our container.
+            height = pack.getFixedHeight(); //The fixed height of our container.
             RectangleRotatable t = pack.getRectangles().peek(); //We get the first element of queue
             if (pack.canRotate()) { //We set the currentShelfWidth
-                currentShelfWidth = (int) Math.max(t.getHeight(), t.getWidth());
+                currentShelfWidth = Math.max(t.height, t.width);
             } else {
-                currentShelfWidth = (int) t.getWidth();
+                currentShelfWidth = t.width;
             }
 
             while (!pack.getRectangles().isEmpty()) {
@@ -42,12 +42,12 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
     }
 
     public void solveReccurence() {
-        height = pack.getContainerHeight();
+        height = pack.getFixedHeight();
         RectangleRotatable t = pack.getRectangles().peek();
         if (pack.canRotate()) { //We set the currentShelfWidth
-            currentShelfWidth = (int) Math.max(t.getHeight(), t.getWidth());
+            currentShelfWidth = Math.max(t.height, t.width);
         } else {
-            currentShelfWidth = (int) t.getWidth();
+            currentShelfWidth = t.width;
         }
     }
 
