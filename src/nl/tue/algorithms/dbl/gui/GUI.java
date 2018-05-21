@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
+import nl.tue.algorithms.dbl.algorithm.*;
 import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
 import nl.tue.algorithms.dbl.utilities.PackingSolver;
@@ -32,7 +32,6 @@ import nl.tue.algorithms.dbl.utilities.PackingSolver;
  * @author E.M.A. Arts (1004076)
  * @since 19 MAY 2018
  */
-
 public class GUI extends JFrame {
     //Title of the frame
     public static final String TITLE = "PackingSolver GUI";
@@ -47,14 +46,10 @@ public class GUI extends JFrame {
     /** Where the rectangles are drawn */
     private final JPanel drawingPane;
     
-    /** Width and Height of the current image */
-    public final int IMG_WIDTH;
-    public final int IMG_HEIGHT;
-    
     /** Background color of the scrollPane*/
     public static final Color BACKGROUND_COLOR = Color.ORANGE;
-    private final BufferedImage img;
-    private final Graphics2D gImg;
+    private BufferedImage img;
+    private Graphics2D gImg;
     
     /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
     public static int SIZE_MODIFIER = 10;
@@ -74,9 +69,17 @@ public class GUI extends JFrame {
     /**
      * Sets up things such as the frame title, frame size, scroll pane, resize
      * listener, and BufferedImage to draw on.
-     * @param p the Pack to use
+     * @param imageWidth width of the bufferedimage on which will be drawn
+     * @param imageHeight height of the bufferedimage on which will be drawn
+     * @pre imageWidth > 0 && imageHeight > 0
      */
-    private GUI(Pack p) {   
+    private GUI(int imageWidth, int imageHeight) throws IllegalArgumentException {   
+        if (imageWidth <= 0 || imageHeight <= 0) {
+            throw new IllegalArgumentException("GUI.pre violated: Expected an"
+                    + "Image width and Image height greater than 0.Instead got"
+                    + "width = <" + imageWidth + ">, height = <" +  imageHeight + ">");
+        }
+
         //Title and dimensions
         setTitle(TITLE);
         setVisible(true);
@@ -97,21 +100,31 @@ public class GUI extends JFrame {
             }
         });
         
-        //width and height of the BufferedImage
-        IMG_WIDTH = p.getContainerWidth()*SIZE_MODIFIER;
-        IMG_HEIGHT = p.getContainerHeight()*SIZE_MODIFIER;
+        setDrawSize(imageWidth, imageHeight);  
         
+        //Add the Image to the scrollPane
+        drawingPane = initDrawingPane();
+        scrollPane.setViewportView(drawingPane);  
+    }
+    
+    /**
+     * 
+     */
+    private void setDrawSize(int imageWidth, int imageHeight) {        
+        BufferedImage oldImg = img;
+
         //setup BufferedImage
-        this.img = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        this.img = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
         this.gImg = img.createGraphics();
 
         //draw a BG colour
         gImg.setColor(BACKGROUND_COLOR);
-        gImg.fillRect(0, 0, IMG_WIDTH, IMG_HEIGHT);
-
-        //Add the Image to the scrollPane
-        drawingPane = initDrawingPane(img);
-        scrollPane.setViewportView(drawingPane);        
+        gImg.fillRect(0, 0, imageWidth, imageHeight);
+        
+        //if there was previous image, redraw it
+        if (oldImg != null) {
+            gImg.drawImage(oldImg, 0, img.getHeight() - oldImg.getHeight(), oldImg.getWidth(), oldImg.getHeight(), null);
+        }        
     }
     
     /**
@@ -120,7 +133,7 @@ public class GUI extends JFrame {
      * @pre img != null
      * @return A JPanel that draws img
      */
-    private JPanel initDrawingPane(BufferedImage img) {
+    private JPanel initDrawingPane() {
         return new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -208,7 +221,7 @@ public class GUI extends JFrame {
         gImg.setColor(col);
         //(0,0) is at the bottom-left of the screen
         gImg.fillRect(r.x * SIZE_MODIFIER,
-                IMG_HEIGHT - r.y * SIZE_MODIFIER - r.height * SIZE_MODIFIER,
+                img.getHeight() - r.y * SIZE_MODIFIER - r.height * SIZE_MODIFIER,
                 r.width * SIZE_MODIFIER, r.height * SIZE_MODIFIER);
     }
     
@@ -278,36 +291,49 @@ public class GUI extends JFrame {
             @Override
             public void run() {
                 
-                try {
-                    PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingHeight.class);
-                    //A specific algorithm can be chosen by using something like:
-                    //new PackingSolver(System.in, BruteForce.class);
-                    
-                    //add the rectangles to the solver's Pack and calculate
-                    //how to place those rectangles in this pack
-                    solver.readRectangles();
-                    solver.solve();
-                    
-                    //Get the pack
-                    Pack p = solver.getAlgorithm().getPack();
-                    
-                    //Print useful data
-                    System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
-                    System.out.println("Input contained " + p.getNumberOfRectangles() + " rectangles: ");      
-                    System.out.println(p.getOrderedRectangles());
-                    
-                    //Create a GUI from this pack
-                    GUI gui = new GUI(p);
-                    
-                    //Make the GUI draw this pack
-                    gui.drawPack(p);
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                GUI gui = new GUI(RENDER_WIDTH, RENDER_HEIGHT);
+                KeyboardListener keyboardListener = new KeyboardListener(gui);
+                gui.addKeyListener(keyboardListener);
+                gui.reload();
                
             }
         });
     }
     
+    /**
+     * Reloads the GUI, asking for new inputs as well.
+     */
+    public void reload() {   
+        try {
+            System.out.println("GUI Reloaded, please respecify inputs");
+            System.out.print("> ");
+            
+            PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingHeight.class);
+            //A specific algorithm can be chosen by using something like:
+            //new PackingSolver(System.in, BruteForce.class);
+            
+            //add the rectangles to the solver's Pack and calculate
+            //how to place those rectangles in this pack
+            solver.readRectangles();
+            solver.solve();
+            
+            //Get the pack
+            Pack p = solver.getAlgorithm().getPack();
+            
+            //Print useful data
+            System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
+            System.out.println("Input contained " + p.getNumberOfRectangles() + " rectangles: ");
+            System.out.println(p.getOrderedRectangles());
+            
+            //Make the GUI draw this pack
+            setDrawSize(p.getContainerWidth()*SIZE_MODIFIER, p.getContainerHeight()*SIZE_MODIFIER);
+            System.out.println("New draw size: (" + img.getWidth() + ", " + img.getHeight() + ")");
+            this.drawPack(p);
+            
+            drawingPane.revalidate();
+            drawingPane.repaint();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

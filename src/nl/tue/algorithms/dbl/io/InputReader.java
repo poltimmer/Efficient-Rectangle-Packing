@@ -235,7 +235,7 @@ public class InputReader {
      */
     public void closeReader() {
         //we can only use Scanners once (like Iterators), so close them
-        sc.close();
+        //sc.close(); //NOTE: closing scanners closes the underlying inputsteam (System.in), which we dont want!
         expectedSc.close();
         closed = true;
     }

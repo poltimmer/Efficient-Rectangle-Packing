@@ -41,7 +41,7 @@ public class PackingSolver {
         PackData data = reader.readPackData();
 
         Algorithm algo;
-        if (algoClass != null) {
+        if (algoClass != null && algoClass != Algorithm.class) {
             try {
                 algo = algoClass.getConstructor(PackData.class).newInstance(data);
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -54,7 +54,7 @@ public class PackingSolver {
         this.algo = algo;        
     }
     
-    public static Algorithm selectAlgorithm(PackData data) {
+    private Algorithm selectAlgorithm(PackData data) {
         //an algorithm based on pack data can be chosen here. E.g.:
         /* 
             if (data.canRotate()) {
