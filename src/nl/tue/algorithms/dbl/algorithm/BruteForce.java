@@ -77,31 +77,19 @@ import java.util.List;
                        if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
                            System.out.println("hallo");
                            a.setLocation(-1, -1);
+                           iter.remove();
 
                            return;
                        }
 
-                       // get the information from the rectangle
-                       int widtha = a.width;
-                       int heighta = a.height;
-
-                       // calculate the new points
-                       Point right = new Point(pointX + widtha , pointY );
-                       Point up = new Point(pointX, pointY + heighta);
-
-                       // add the points to position
-                       possiblePlaces.add(right);
-                       possiblePlaces.add(up);
 
                        // add the rectangle to rectangles used
                        rectanglesUsed.add(a);
 
+                       FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft-1);
                        // remove the rectangle
                        rectanglesUsed.remove(a);
 
-                       // remove the added positions from the list
-                       possiblePlaces.remove(right);
-                       possiblePlaces.remove(up);
                        return;
                        //possiblePlaces.addAll(added);
                        //possiblePlaces.remove(p);

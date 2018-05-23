@@ -25,6 +25,8 @@ public class PositionPlaces implements Iterable<Point> {
     int rectanglesLeft;
     RectangleRotatable R1;
     Point point;
+    Point right;
+    Point up;
 
 
     /** Constructor for general range.  */
@@ -33,7 +35,7 @@ public class PositionPlaces implements Iterable<Point> {
         this.pack = pack;
         rectanglesUsed = recUsed;
         rectanglesLeft = recLeft;
-        RectangleRotatable R1= a;
+        R1= a;
 
     }
 
@@ -97,9 +99,30 @@ public class PositionPlaces implements Iterable<Point> {
                 }
                 // pick the next point
                 point = positions.get(placement);
-                // adjust the placement
+
+                // coordinates of the point
+                int pointX = point.x;
+                int pointY = point.y;
+
+                // width and height of the rectangle
+                int widtha = R1.width;
+                int heighta = R1.height;
+
+                // calculate the new points
+                right = new Point(pointX + widtha , pointY );
+                up = new Point(pointX, pointY + heighta);
+
+                // add the points to position
+                positions.add(right);
+                positions.add(up);
+
                 placement --;
                 return point;
+            }
+
+            public void remove(){
+                positions.remove(right);
+                positions.remove(up);
             }
 
 
