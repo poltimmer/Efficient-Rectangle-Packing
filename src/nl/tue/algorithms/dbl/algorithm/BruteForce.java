@@ -26,9 +26,8 @@ import java.util.List;
    @Override
    public void solve(){ // method that solves this shit
      // declaring important variants
-     List<RectangleRotatable> rectangles = pack.getRectangles();
-     int rectanglesLeft = rectangles.size();
-     int bestSolution = 1000000000;
+     int rectanglesLeft = pack.getRectangles().size();
+     int bestSolution = Integer.MAX_VALUE;
      List<RectangleRotatable> rectanglesUsed;
      rectanglesUsed = new LinkedList<>();
      
@@ -37,13 +36,13 @@ import java.util.List;
      possiblePlaces = new LinkedList<>();
      possiblePlaces.add(startPosition);
 
-     FindBestSolution(possiblePlaces, rectangles, rectanglesUsed, rectanglesLeft);
+     FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
    }
      
-   public static void FindBestSolution(List<Point> possiblePlaces, List<RectangleRotatable> rectangles, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
+   public static void FindBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
 
        if(rectanglesLeft!=0) { // add another rectangle
-           for (RectangleRotatable a : rectangles) { // loop over all the rectangles
+           for (RectangleRotatable a : pack.getRectangles()) { // loop over all the rectangles
                boolean alreadyUsed = false;
                if (!rectanglesUsed.isEmpty()) {
                    for (RectangleRotatable usedRectangle : rectanglesUsed) { // check if the rectangle was already used
@@ -61,7 +60,7 @@ import java.util.List;
                        // hasPrevious();
                        // length of the possibleplaces;
                        // Iterator.
-                       new PositionPlaces(a, p, possiblePlaces, rectangles, rectanglesUsed, rectanglesLeft);
+                       new PositionPlaces(a, p, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
                        //possiblePlaces.addAll(added);
                        //possiblePlaces.remove(p);
                        //findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);

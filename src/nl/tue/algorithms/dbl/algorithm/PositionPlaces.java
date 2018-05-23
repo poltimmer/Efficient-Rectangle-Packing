@@ -1,5 +1,8 @@
 package nl.tue.algorithms.dbl.algorithm;
+import nl.tue.algorithms.dbl.common.Pack;
+import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 
 import java.awt.*;
 import java.util.*;
@@ -17,24 +20,22 @@ import java.util.List;
 public class PositionPlaces implements Iterable<Void> {
 
     // list of all places
-    List positions = new ArrayList<Point>();
-    List<RectangleRotatable> rectangles = new ArrayList<RectangleRotatable>();
-    List<RectangleRotatable> rectanglesUsed = new ArrayList<RectangleRotatable>();
+    List<Point> positions;
+    PackList pack;
+    List<RectangleRotatable> rectanglesUsed;
     int rectanglesLeft;
     RectangleRotatable R1;
-    Point point = new Point();
+    Point point;
 
 
     /** Constructor for general range.  */
-    public PositionPlaces(RectangleRotatable a, Point p, final List<Point> points, List<RectangleRotatable> rec, List<RectangleRotatable> recUsed, Integer recLeft ) {
+    public PositionPlaces(RectangleRotatable a, Point p, final List<Point> points, PackList pack, List<RectangleRotatable> recUsed, Integer recLeft ) {
         positions= points;
-        rectangles = rec;
+        this.pack = pack;
         rectanglesUsed = recUsed;
         rectanglesLeft = recLeft;
         RectangleRotatable R1= a;
         point = p;
-
-
     }
 
     public Iterator<Void> iterator() {
@@ -98,13 +99,16 @@ public class PositionPlaces implements Iterable<Void> {
                 R1.setLocation(pointX, pointY);
 
                 // check here if the new thingy is valid.
+                if (ValidCheck.isRectangleValidWithinPack(R1, pack)) {
+                    //still valid whoa
+                }
 
                 Point right = new Point(pointX + widtha , pointY );
                 Point up = new Point(pointX, pointY + heighta);
                 positions.add(right);
                 positions.add(up);
                 rectanglesUsed.add(R1);
-                BruteForce.FindBestSolution(positions, rectangles, rectanglesUsed, rectanglesLeft);
+                BruteForce.FindBestSolution(positions, pack, rectanglesUsed, rectanglesLeft);
                 rectanglesUsed.remove(R1);
                 positions.remove(right);
                 positions.remove(up);
