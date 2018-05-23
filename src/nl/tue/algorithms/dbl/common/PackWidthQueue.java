@@ -14,16 +14,22 @@ public class PackWidthQueue extends Pack {
                 if (!canRotate()) {
                     return (o1.getWidth() >= o2.getWidth()) ? -1 : 1;
                 } else {
-                    if (Math.max(o1.getHeight(), o1.getWidth()) >= Math.max(o2.getHeight(), o2.getWidth())) {
-                        if (o1.getHeight() > o1.getWidth()) {
-                            o1.setRotated(true);
-                        }
+                    if (o1.getHeight() > o1.getWidth()) {
+                        o1.setRotated(true);
+                    }
+                    if (o2.getHeight() > o2.getWidth()) {
+                        o2.setRotated(true);
+                    }
+                    if (Math.max(o1.getHeight(), o1.getWidth()) > Math.max(o2.getHeight(), o2.getWidth())) {
                         return -1;
-                    } else {
-                        if (o2.getHeight() > o2.getWidth()) {
-                            o2.setRotated(true);
-                        }
+                    } else if (Math.max(o1.getHeight(), o1.getWidth()) < Math.max(o2.getHeight(), o2.getWidth())) {
                         return 1;
+                    } else { // Rectangles have the same max(h,w)
+                        if (Math.min(o1.getHeight(), o1.getWidth()) >= Math.min(o2.getHeight(), o2.getWidth())) {
+                            return -1;
+                        } else {
+                            return 1;
+                        }
                     }
                 }
             }
