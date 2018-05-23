@@ -29,13 +29,12 @@ public class PositionPlaces implements Iterable<Void> {
 
 
     /** Constructor for general range.  */
-    public PositionPlaces(RectangleRotatable a, Point p, final List<Point> points, PackList pack, List<RectangleRotatable> recUsed, Integer recLeft ) {
+    public PositionPlaces(RectangleRotatable a, final List<Point> points, PackList pack, List<RectangleRotatable> recUsed, Integer recLeft ) {
         positions= points;
         this.pack = pack;
         rectanglesUsed = recUsed;
         rectanglesLeft = recLeft;
         RectangleRotatable R1= a;
-        point = p;
     }
 
     public Iterator<Void> iterator() {
@@ -54,8 +53,6 @@ public class PositionPlaces implements Iterable<Void> {
         /** Limit of iteration per one dimension. */
         private final int sentinel;
 
-        /** place where the extra points are added */
-        private int addHere;
 
 
 
@@ -82,26 +79,43 @@ public class PositionPlaces implements Iterable<Void> {
              * @post {@code \result == (placement < sentinel * sentinel && returned < amountPairs)}
              * @return  True, if next element exists, otherwise false
              */
-            public boolean hasNext() {
+            public boolean hasNext()
+            {
                 return placement>sentinel;
             }
+
+
+            /** places the rectangle at the next possible place
+             *
+             */
 
             public Void next() throws NoSuchElementException {
                 // Precondition.
                 if (! hasNext()) {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
                 }
-                placement--;
-                int widtha = R1.width;
-                int heighta = R1.height;
+                // pick the next point
+                point = positions.get(placement);
+                // adjust the placement
+                placement --;
+
+                // get information from the point
+
                 int pointX = point.x;
                 int pointY = point.y;
+                // place the rectangle
                 R1.setLocation(pointX, pointY);
 
                 // check here if the new thingy is valid.
-                if (ValidCheck.isRectangleValidWithinPack(R1, pack)) {
-                    //still valid whoa
+                if (!ValidCheck.isRectangleValidWithinPack(R1, pack)) {
+                    R1.setLocation(-1, -1);
+                    next();
+                    return null;
                 }
+
+                // get the information from the rectangle
+                int widtha = R1.width;
+                int heighta = R1.height;
 
                 Point right = new Point(pointX + widtha , pointY );
                 Point up = new Point(pointX, pointY + heighta);
@@ -112,22 +126,7 @@ public class PositionPlaces implements Iterable<Void> {
                 rectanglesUsed.remove(R1);
                 positions.remove(right);
                 positions.remove(up);
-
-
                 return null;
-            }
-
-
-
-        /**
-             * For that case remove is unsupported operation.
-             *
-             * @throws UnsupportedOperationException  if precondition violated
-             * @pre {@code false}
-             * @post {@code none}
-             */
-            public void remove() throws UnsupportedOperationException {
-                throw new UnsupportedOperationException("Unsupported operation remove");
             }
 
 

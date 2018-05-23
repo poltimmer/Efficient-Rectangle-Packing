@@ -54,13 +54,10 @@ import java.util.List;
                if (!alreadyUsed) {
                    // change possiblePlaces
 
-
-                   for (Point p : possiblePlaces) {
-
                        // hasPrevious();
                        // length of the possibleplaces;
                        // Iterator.
-                       new PositionPlaces(a, p, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
+                       new PositionPlaces(a, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
                        //possiblePlaces.addAll(added);
                        //possiblePlaces.remove(p);
                        //findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
@@ -68,21 +65,5 @@ import java.util.List;
                }
            }
        }
-   }
-   
-   public List<Point> PlaceRectangle(RectangleRotatable a, List<RectangleRotatable> rectanglesUsed, Point p){
-       int widtha = a.width;
-       int heighta = a.height;
-       int pointX = p.x;
-       int pointY = p.y;
-       a.setLocation(pointX, pointY);
-       Point right = new Point(pointX + widtha , pointY );
-       Point up = new Point(pointX, pointY + heighta);
-       List<Point> newPoints = new LinkedList<>();
-       newPoints.add(right);
-       newPoints.add(up);
-       return newPoints;
-   }
-   
    }
  
