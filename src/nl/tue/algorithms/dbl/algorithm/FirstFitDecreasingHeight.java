@@ -30,7 +30,7 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
             height = pack.getFixedHeight(); //The fixed height of our container.
             RectangleRotatable t = pack.getRectangles().peek(); //We get the first element of queue
             if (pack.canRotate()) { //We set the currentShelfWidth
-                currentShelfWidth = Math.max(t.height, t.width);
+                currentShelfWidth = Math.max((int)t.getHeight(), (int)t.getWidth());
             } else {
                 currentShelfWidth = t.width;
             }
@@ -41,23 +41,10 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
             }
     }
 
-    public void solveReccurence() {
-        height = pack.getFixedHeight();
-        RectangleRotatable t = pack.getRectangles().peek();
-        if (pack.canRotate()) { //We set the currentShelfWidth
-            currentShelfWidth = Math.max(t.height, t.width);
-        } else {
-            currentShelfWidth = t.width;
-        }
-    }
-
-    public void reccurence() {
-
-    }
 
     public void placeRectangle(RectangleRotatable r) {
         if (r.isRotated()) {
-            if (yPosition + r.getWidth() <= height) { //New rectangle fits on shelf
+            if (yPosition + (int)r.getWidth() <= height) { //New rectangle fits on shelf
                 r.x = xPosition;
                 r.y = yPosition;
                 yPosition += r.getWidth();
@@ -66,9 +53,11 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
                 yPosition = 0;
                 r.x = xPosition;
                 r.y = yPosition;
+                yPosition += (int)r.getWidth();
+                currentShelfWidth += r.getHeight();
             }
         } else {
-            if (yPosition + r.getHeight() <= height) { //New rectangle fits on shelf
+            if (yPosition + (int)r.getHeight() <= height) { //New rectangle fits on shelf
                 r.x = xPosition;
                 r.y = yPosition;
                 yPosition += r.getHeight();
@@ -77,6 +66,8 @@ public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {
                 yPosition = 0;
                 r.x = xPosition;
                 r.y = yPosition;
+                yPosition += (int)r.getHeight();
+                currentShelfWidth += r.getWidth();
             }
         }
     }

@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class PackLinkedList extends Pack {
     /**
      * Stores the rectangles in a sorted LinkedList. If rotations are allowed, the list will store the rectangle on
-     * max (height, width). 
+     * max (height, width).
      */
     private LinkedList<RectangleRotatable> rectangles;
 
