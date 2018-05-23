@@ -41,7 +41,7 @@ import java.util.List;
      FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
    }
      
-   public static void FindBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
+   public void FindBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft){
 
        if(rectanglesLeft!=0) { // add another rectangle
            for (RectangleRotatable a : pack.getRectangles()) { // loop over all the rectangles
@@ -78,7 +78,6 @@ import java.util.List;
                            System.out.println("hallo");
                            a.setLocation(-1, -1);
                            iter.remove();
-
                            return;
                        }
 
@@ -86,14 +85,13 @@ import java.util.List;
                        // add the rectangle to rectangles used
                        rectanglesUsed.add(a);
 
+                       // add the with and height to possiblePlaces
+                       possiblePlaces = PositionPlaces.getPositions();
                        FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft-1);
                        // remove the rectangle
                        rectanglesUsed.remove(a);
 
                        return;
-                       //possiblePlaces.addAll(added);
-                       //possiblePlaces.remove(p);
-                       //findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);
                    }
                }
            }

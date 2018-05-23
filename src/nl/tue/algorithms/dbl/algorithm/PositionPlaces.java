@@ -43,6 +43,9 @@ public class PositionPlaces implements Iterable<Point> {
         return new PositionPlacesIterator();
     }
 
+    public List<Point> getPositions(){
+        return positions;
+    }
 
 
     /**
