@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import nl.tue.algorithms.dbl.algorithm.Algorithm;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingHeight;
 import nl.tue.algorithms.dbl.algorithm.BruteForce;
+import nl.tue.algorithms.dbl.algorithm.RecursiveFit;
 import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.io.InputReader;
