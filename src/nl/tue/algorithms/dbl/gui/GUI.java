@@ -65,6 +65,9 @@ public class GUI extends JFrame {
     
     /** Keeps track of which colour to use to draw a rectangle */
     private int colorPicker = 0;
+    
+    /** Whether to display coverage (in percentages) */
+    public static boolean DISPLAY_COVERAGE = true;
 
     /**
      * Sets up things such as the frame title, frame size, scroll pane, resize
@@ -308,7 +311,7 @@ public class GUI extends JFrame {
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
             
-            PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingHeight.class);
+            PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingWidth.class);
             //A specific algorithm can be chosen by using something like:
             //new PackingSolver(System.in, BruteForce.class);
             
@@ -332,6 +335,11 @@ public class GUI extends JFrame {
             
             drawingPane.revalidate();
             drawingPane.repaint();
+            
+            //update coverage percentage
+            if (DISPLAY_COVERAGE) {
+                this.setTitle(TITLE + " (Coverage : " + p.getCoveragePercentage() + "%)");
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

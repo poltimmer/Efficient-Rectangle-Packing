@@ -11,9 +11,9 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
  * @author Koen Degeling
  * @since 9 MAY 2018
  */
-public class FirstFitDecreasingHeight extends Algorithm<PackWidthQueue> {   
+public class FirstFitDecreasingWidth extends Algorithm<PackWidthQueue> {   
 
-    public FirstFitDecreasingHeight(PackData data) {
+    public FirstFitDecreasingWidth(PackData data) {
         super(new PackWidthQueue(data));
     }
 

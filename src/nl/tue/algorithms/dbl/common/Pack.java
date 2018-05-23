@@ -118,4 +118,32 @@ public abstract class Pack {
         return Math.max(highestX, 0);
     }
     
+    /**
+     * Calculates the area of the pack. Invokes getWidth() and getHeight()
+     * @return the area of this pack
+     */
+    public int getContainerArea() {
+        return getContainerHeight() * getContainerWidth();
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public int getUsedArea() {
+        int area = 0;
+        for (RectangleRotatable r : getOrderedRectangles()) {
+            area += r.getArea();
+        }
+        return area;
+    }
+    
+    public int getUnusedArea() {
+        return getContainerArea() - getUsedArea();
+    }
+    
+    public int getCoveragePercentage() {
+        return getUsedArea() * 100 / getContainerArea();
+    }
+    
 }

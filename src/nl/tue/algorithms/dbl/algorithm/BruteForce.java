@@ -86,7 +86,7 @@ import java.util.List;
                        rectanglesUsed.add(a);
 
                        // add the with and height to possiblePlaces
-                       possiblePlaces = PositionPlaces.getPositions();
+                       possiblePlaces = positions.getPositions();
                        FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft-1);
                        // remove the rectangle
                        rectanglesUsed.remove(a);
