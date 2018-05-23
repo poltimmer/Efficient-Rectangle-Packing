@@ -64,7 +64,7 @@ public class PackingSolver {
             }
         */
         //since we only have 1 algorithm, we have to do this:
-        return new FirstFitDecreasingHeight(data);
+        return new BruteForce(data);
     }
     
     public void readRectangles() throws IOException {
