@@ -3,8 +3,10 @@ package nl.tue.algorithms.dbl.algorithm;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,12 +54,55 @@ import java.util.List;
                    }
                }
                if (!alreadyUsed) {
+                   System.out.println("!alreadyUsed");
                    // change possiblePlaces
 
                        // hasPrevious();
                        // length of the possibleplaces;
                        // Iterator.
-                       new PositionPlaces(a, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
+                       PositionPlaces positions = new PositionPlaces(a, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
+                       Iterator iter = positions.iterator();
+                       Point p = (Point) iter.next();
+
+                       // get information from the point
+
+                       int pointX = p.x;
+                       int pointY = p.y;
+
+                       // place the rectangle
+                       a.setLocation(pointX, pointY);
+
+                       System.out.println("outside");
+                       // check here if the new thingy is valid.
+                       if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
+                           System.out.println("hallo");
+                           a.setLocation(-1, -1);
+
+                           return;
+                       }
+
+                       // get the information from the rectangle
+                       int widtha = a.width;
+                       int heighta = a.height;
+
+                       // calculate the new points
+                       Point right = new Point(pointX + widtha , pointY );
+                       Point up = new Point(pointX, pointY + heighta);
+
+                       // add the points to position
+                       possiblePlaces.add(right);
+                       possiblePlaces.add(up);
+
+                       // add the rectangle to rectangles used
+                       rectanglesUsed.add(a);
+
+                       // remove the rectangle
+                       rectanglesUsed.remove(a);
+
+                       // remove the added positions from the list
+                       possiblePlaces.remove(right);
+                       possiblePlaces.remove(up);
+                       return;
                        //possiblePlaces.addAll(added);
                        //possiblePlaces.remove(p);
                        //findBestSolution(rectangles, rectanglesUsed, rectanglesLeft-1);

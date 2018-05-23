@@ -1,5 +1,4 @@
 package nl.tue.algorithms.dbl.algorithm;
-import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
 import nl.tue.algorithms.dbl.common.ValidCheck;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 
 
-public class PositionPlaces implements Iterable<Void> {
+public class PositionPlaces implements Iterable<Point> {
 
     // list of all places
     List<Point> positions;
@@ -35,9 +34,10 @@ public class PositionPlaces implements Iterable<Void> {
         rectanglesUsed = recUsed;
         rectanglesLeft = recLeft;
         RectangleRotatable R1= a;
+
     }
 
-    public Iterator<Void> iterator() {
+    public Iterator<Point> iterator() {
         return new PositionPlacesIterator();
     }
 
@@ -46,7 +46,7 @@ public class PositionPlaces implements Iterable<Void> {
     /**
      * Inner class for a low-to-high iterator.
      */
-    private class PositionPlacesIterator implements Iterator<Void> {
+    private class PositionPlacesIterator implements Iterator<Point> {
         /** Current placement for iterator. */
         private int placement;
 
@@ -68,9 +68,10 @@ public class PositionPlaces implements Iterable<Void> {
              */
             public PositionPlacesIterator() {
                 // placement starts with the size of position.
-                placement = positions.size();
+                placement = positions.size()-1;
                 // and goes to 0
                 sentinel = 0;
+
             }
             /**
              * Check if it has next element.
@@ -81,7 +82,7 @@ public class PositionPlaces implements Iterable<Void> {
              */
             public boolean hasNext()
             {
-                return placement>sentinel;
+                return placement>=sentinel;
             }
 
 
@@ -89,7 +90,7 @@ public class PositionPlaces implements Iterable<Void> {
              *
              */
 
-            public Void next() throws NoSuchElementException {
+            public Point next() throws NoSuchElementException {
                 // Precondition.
                 if (! hasNext()) {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
@@ -98,46 +99,7 @@ public class PositionPlaces implements Iterable<Void> {
                 point = positions.get(placement);
                 // adjust the placement
                 placement --;
-
-                // get information from the point
-
-                int pointX = point.x;
-                int pointY = point.y;
-                // place the rectangle
-                R1.setLocation(pointX, pointY);
-
-                // check here if the new thingy is valid.
-                if (!ValidCheck.isRectangleValidWithinPack(R1, pack)) {
-                    R1.setLocation(-1, -1);
-                    next();
-                    return null;
-                }
-
-                // get the information from the rectangle
-                int widtha = R1.width;
-                int heighta = R1.height;
-
-                // calculate the new points
-                Point right = new Point(pointX + widtha , pointY );
-                Point up = new Point(pointX, pointY + heighta);
-
-                // add the points to position
-                positions.add(right);
-                positions.add(up);
-
-                // add the rectangle to rectangles used
-                rectanglesUsed.add(R1);
-
-                // place the next rectangle
-                BruteForce.FindBestSolution(positions, pack, rectanglesUsed, rectanglesLeft);
-
-                // remove the rectangle
-                rectanglesUsed.remove(R1);
-
-                // remove the added positions from the list
-                positions.remove(right);
-                positions.remove(up);
-                return null;
+                return point;
             }
 
 
