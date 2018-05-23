@@ -45,6 +45,8 @@ public class InputGenerator {
         System.out.println("canvas width?");
         width = sc.nextInt();
         bottomright = new int[]{width,height};
+        //Added to ensure that the first rectangle is counted
+        InputGenerator.recNumber++;
         Rectangle rec = new Rectangle(bottomleft, bottomright);
         // start output
         try (
