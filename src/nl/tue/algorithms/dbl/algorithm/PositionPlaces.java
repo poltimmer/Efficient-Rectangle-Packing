@@ -117,13 +117,24 @@ public class PositionPlaces implements Iterable<Void> {
                 int widtha = R1.width;
                 int heighta = R1.height;
 
+                // calculate the new points
                 Point right = new Point(pointX + widtha , pointY );
                 Point up = new Point(pointX, pointY + heighta);
+
+                // add the points to position
                 positions.add(right);
                 positions.add(up);
+
+                // add the rectangle to rectangles used
                 rectanglesUsed.add(R1);
+
+                // place the next rectangle
                 BruteForce.FindBestSolution(positions, pack, rectanglesUsed, rectanglesLeft);
+
+                // remove the rectangle
                 rectanglesUsed.remove(R1);
+
+                // remove the added positions from the list
                 positions.remove(right);
                 positions.remove(up);
                 return null;
