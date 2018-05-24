@@ -25,7 +25,7 @@ public class ValidCheck {
      * @return the boolean
      */
     public static boolean isRectangleValidWithinPack(RectangleRotatable r, Pack p) throws IllegalArgumentException {
-        if (p == null || r == null){
+        if (p == null){
             throw new IllegalArgumentException("Pack p is null");
         }
         else if (r == null) {

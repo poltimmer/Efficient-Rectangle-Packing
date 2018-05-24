@@ -5,7 +5,8 @@ import java.util.PriorityQueue;
 
 public class PackWidthQueue extends Pack {
 
-    private PriorityQueue<RectangleRotatable> rectangles;
+    private final PriorityQueue<RectangleRotatable> rectangles;
+    
     public PackWidthQueue(PackData data) {
         super(data);
         rectangles = new PriorityQueue<>(new Comparator<RectangleRotatable>() {

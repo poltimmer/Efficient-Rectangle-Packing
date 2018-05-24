@@ -22,8 +22,22 @@ public class RectangleRotatable extends Rectangle {
         this.rotated = false;
     }
     
+    /**
+     * Checks whether the rectangle is placed, that is, it has positive x and y
+     * coordinates.
+     * @return true if the rectangle is placed. false otherwise
+     */
     public boolean isPlaced() {
         return x >= 0 && y >= 0;
+    }
+    
+    /**
+     * Gets the area of the rectangle
+     * @post \result == this.width * this.height
+     * @return area of the rectangle
+     */
+    public int getArea() {
+        return width*height;
     }
     
     /** 

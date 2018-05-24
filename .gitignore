@@ -29,6 +29,9 @@ hs_err_pid*
 /res/inputGenerator/
 /res/input/
 
+#Test files that don't need to be uploaded to the git
+/res/localTests/
+
 #IntelliJ project files
 /.idea/
 *.iml
