@@ -81,7 +81,8 @@ public abstract class Pack {
     /**
      * A rather inefficient method of getting the height of the container,
      * by iterating over all placed rectangles in the Pack.
-     * Should be overridden by a subclass extending this class!
+     * Can be overridden by a subclass extending this class, and is recommended
+     * to do so if there is a more efficient way.
      * 
      * @return The height of the container (0 if there are no rectangles or none
      * have been placed yet)
@@ -101,7 +102,8 @@ public abstract class Pack {
     /**
      * A rather inefficient method of getting the width of the container,
      * by iterating over all placed rectangles in the Pack.
-     * Should be overridden by a subclass extending this class!
+     * Can be overridden by a subclass extending this class, and is recommended
+     * to do so if there is a more efficient way.
      * 
      * @return The width of the container (0 if there are no rectangles or none
      * have been placed yet)
@@ -127,8 +129,9 @@ public abstract class Pack {
     }
     
     /**
-     * 
-     * @return 
+     * Gets the size of the area of the pack's container that is covered with
+     * rectangles.
+     * @return The area that is covered with rectangles.
      */
     public int getUsedArea() {
         int area = 0;
@@ -138,12 +141,20 @@ public abstract class Pack {
         return area;
     }
     
+    /**
+     * Gets the size of the area that is not filled with rectangles
+     * @return The area not covered by rectangles
+     */
     public int getUnusedArea() {
         return getContainerArea() - getUsedArea();
     }
     
+    /**
+     * Calculates the coverage (in percentage) of the pack. That is, calculates
+     * how much of the pack's container is filled with rectangles
+     * @return The coverage as a value from 0-100, representing a percentage
+     */
     public int getCoveragePercentage() {
         return getUsedArea() * 100 / getContainerArea();
-    }
-    
+    }    
 }

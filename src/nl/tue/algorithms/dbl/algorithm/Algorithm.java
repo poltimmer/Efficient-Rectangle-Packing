@@ -24,4 +24,32 @@ public abstract class Algorithm<P extends Pack> {
      * overlap and their combined area is minimized.
      */
     public abstract void solve();
+    
+    
+    /**
+     * Gets the height of the Pack. The invoked default implementation of the Pack
+     * is rather inefficient however.
+     * Should be overridden by a subclass extending this class if efficiency is
+     * important!
+     * 
+     * @return The height of the pack's container (0 if there are no rectangles
+     * or none have been placed yet)
+     */
+    public int getContainerHeight() {
+        return pack.getContainerHeight();
+    }
+    
+    /**
+     * Gets the width of the Pack. The invoked default implementation of the Pack
+     * is rather inefficient however.
+     * Should be overridden by a subclass extending this class if efficiency is
+     * important!
+     * 
+     * @return The width of the pack's container (0 if there are no rectangles
+     * or none have been placed yet)
+     */
+    public int getContainerWidth() {
+        return pack.getContainerWidth();
+    }
+
 }

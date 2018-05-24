@@ -12,8 +12,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -47,7 +45,7 @@ public class GUI extends JFrame {
     private final JPanel drawingPane;
     
     /** Background color of the scrollPane*/
-    public static final Color BACKGROUND_COLOR = Color.ORANGE;
+    public static final Color BACKGROUND_COLOR = new Color(247, 247, 217);
     private BufferedImage img;
     private Graphics2D gImg;
     
@@ -60,14 +58,17 @@ public class GUI extends JFrame {
     /** Possible colors of the rectangles */
     public static final Color[] VALID_RECTANGLE_COLORS =
             {   Color.BLACK,    Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
-                Color.GRAY,     Color.GREEN,    Color.LIGHT_GRAY,   Color.MAGENTA,
-                Color.PINK,     Color.RED,      Color.WHITE,        Color.YELLOW };
+                Color.GRAY,     Color.GREEN,    Color.ORANGE,       Color.MAGENTA,
+                Color.PINK,     Color.RED,      Color.YELLOW };
     
     /** Keeps track of which colour to use to draw a rectangle */
     private int colorPicker = 0;
     
     /** Whether to display coverage (in percentages) */
     public static boolean DISPLAY_COVERAGE = true;
+    
+    /** Whether to display container size */
+    public static boolean DISPLAY_CONTAINER_SIZE = true;
 
     /**
      * Sets up things such as the frame title, frame size, scroll pane, resize
@@ -336,12 +337,29 @@ public class GUI extends JFrame {
             drawingPane.revalidate();
             drawingPane.repaint();
             
+            //update title
+            this.setTitle(TITLE);
+            
             //update coverage percentage
             if (DISPLAY_COVERAGE) {
-                this.setTitle(TITLE + " (Coverage : " + p.getCoveragePercentage() + "%)");
+                appendTitle(" | Coverage : " + p.getCoveragePercentage() + "%");
             }
+            
+            //update container sizes
+            if (DISPLAY_CONTAINER_SIZE) {
+                appendTitle(" | Size : " + solver.getAlgorithm().getContainerWidth() + " * " + solver.getAlgorithm().getContainerHeight() + "");
+            }
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * Appends a given string to this Frame's title
+     * @param str The string to append to the title
+     */
+    private void appendTitle(String str) {
+        this.setTitle(getTitle() + str);
     }
 }

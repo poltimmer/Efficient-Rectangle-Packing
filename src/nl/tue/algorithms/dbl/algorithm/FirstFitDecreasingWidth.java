@@ -13,24 +13,34 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
  */
 public class FirstFitDecreasingWidth extends Algorithm<PackWidthQueue> {   
 
-    public FirstFitDecreasingWidth(PackData data) {
-        super(new PackWidthQueue(data));
-    }
-
     int height;
     int xPosition = 0;
     int yPosition = 0;
     int currentShelfWidth;
+    
+    /** cache of the pack's width and height; Should always be equal to
+      * super.getContainerWidth() and super.getContaienrHeight() respectively
+      */
+    private int containerWidth;
+    private int containerHeight;
+    
+    
+    public FirstFitDecreasingWidth(PackData data) {
+        super(new PackWidthQueue(data));
+        
+        this.containerWidth = 0;
+        this.containerHeight = 0;
+    }
 
     /**
      * Basic implementation of First-Fit Decreasing Height algorithm.
      */
     @Override
-    public void solve() {
+    public void solve() {        
             height = pack.getFixedHeight(); //The fixed height of our container.
             RectangleRotatable t = pack.getRectangles().peek(); //We get the first element of queue
             if (pack.canRotate()) { //We set the currentShelfWidth
-                currentShelfWidth = Math.max((int)t.getHeight(), (int)t.getWidth());
+                currentShelfWidth = Math.max(t.height, t.width);
             } else {
                 currentShelfWidth = t.width;
             }
@@ -41,34 +51,49 @@ public class FirstFitDecreasingWidth extends Algorithm<PackWidthQueue> {
             }
     }
 
-
-    public void placeRectangle(RectangleRotatable r) {
+    public void placeRectangle(RectangleRotatable r) {        
         if (r.isRotated()) {
-            if (yPosition + (int)r.getWidth() <= height) { //New rectangle fits on shelf
+            if (yPosition + r.width <= height) { //New rectangle fits on shelf
                 r.x = xPosition;
                 r.y = yPosition;
-                yPosition += r.getWidth();
+                yPosition += r.width;
             } else { //New rectangle doesn't fit on shelf
                 xPosition = currentShelfWidth;
                 yPosition = 0;
                 r.x = xPosition;
                 r.y = yPosition;
-                yPosition += (int)r.getWidth();
-                currentShelfWidth += r.getHeight();
+                yPosition += r.width;
+                currentShelfWidth += r.height;
             }
+            
+            containerHeight = Math.max(containerHeight, r.y + r.width);
+            containerWidth = Math.max(containerWidth, r.x + r.height);
         } else {
-            if (yPosition + (int)r.getHeight() <= height) { //New rectangle fits on shelf
+            //r is not rotated
+            if (yPosition + r.height <= height) { //New rectangle fits on shelf
                 r.x = xPosition;
                 r.y = yPosition;
-                yPosition += r.getHeight();
+                yPosition += r.height;
             } else { //New rectangle doesn't fit on shelf
                 xPosition = currentShelfWidth;
                 yPosition = 0;
                 r.x = xPosition;
                 r.y = yPosition;
-                yPosition += (int)r.getHeight();
-                currentShelfWidth += r.getWidth();
+                yPosition += r.height;
+                currentShelfWidth += r.width;
             }
+            containerHeight = Math.max(containerHeight, r.y + r.height);
+            containerWidth = Math.max(containerWidth, r.x + r.width);
         }
+    }
+    
+    @Override
+    public int getContainerHeight() {
+        return containerHeight;
+    }
+    
+    @Override
+    public int getContainerWidth() {
+        return containerWidth;
     }
 }
