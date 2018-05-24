@@ -25,8 +25,8 @@ public class PositionPlaces implements Iterable<Point> {
     int rectanglesLeft;
     RectangleRotatable R1;
     Point point;
-    Point right;
-    Point up;
+    Point pointRight;
+    Point pointUp;
 
 
     /** Constructor for general range.  */
@@ -58,11 +58,6 @@ public class PositionPlaces implements Iterable<Point> {
         /** Limit of iteration per one dimension. */
         private final int sentinel;
 
-
-
-
-
-
             /**
              * Constructs iterator in initial state.
              *
@@ -73,9 +68,9 @@ public class PositionPlaces implements Iterable<Point> {
              */
             public PositionPlacesIterator() {
                 // placement starts with the size of position.
-                placement = positions.size()-1;
+                placement = 0;
                 // and goes to 0
-                sentinel = 0;
+                sentinel = positions.size()-1;
 
             }
             /**
@@ -87,7 +82,7 @@ public class PositionPlaces implements Iterable<Point> {
              */
             public boolean hasNext()
             {
-                return placement>=sentinel;
+                return placement<=sentinel;
             }
 
 
@@ -111,21 +106,21 @@ public class PositionPlaces implements Iterable<Point> {
                 int widtha = R1.width;
                 int heighta = R1.height;
 
-                // calculate the new points
-                right = new Point(pointX + widtha , pointY );
-                up = new Point(pointX, pointY + heighta);
+                // ad the new points
+                pointRight = new Point(pointX + widtha , pointY );
+                pointUp = new Point(pointX, pointY + heighta);
 
                 // add the points to position
-                positions.add(right);
-                positions.add(up);
+                positions.add(pointRight);
+                positions.add(pointUp);
 
-                placement --;
+                placement ++;
                 return point;
             }
 
             public void remove(){
-                positions.remove(right);
-                positions.remove(up);
+                positions.remove(pointRight);
+                positions.remove(pointUp);
             }
 
 
