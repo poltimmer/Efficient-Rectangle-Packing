@@ -5,6 +5,8 @@
 */
 package nl.tue.algorithms.dbl.common;
 
+import java.util.List;
+
 /**
  *
  * @author Robin Jonker (1011291)
@@ -44,6 +46,26 @@ public class ValidCheck {
      */
     protected static boolean isRectangleNotOverlappingWithPack(RectangleRotatable r, Pack p) {
         for (RectangleRotatable r2 : p.getRectangles()) {
+            if (r2.isPlaced() && r != r2 && r.intersects(r2)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * This method checks if the newly placed rectangle does not overlap with any
+     * of the earlier placed rectangles.
+     *
+     * @param r the RectangleRotatable that has just been placed
+     * @param rectangles a list with rectangles
+     * @pre p != null && r != null
+     * @modifies none
+     * @return the boolean
+     */
+
+    public static boolean isRectangleNotOverlappingWithList(RectangleRotatable r, List<RectangleRotatable> rectangles) {
+        for (RectangleRotatable r2 : rectangles) {
             if (r2.isPlaced() && r != r2 && r.intersects(r2)){
                 return false;
             }

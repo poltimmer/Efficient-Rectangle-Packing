@@ -308,7 +308,7 @@ public class GUI extends JFrame {
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
             
-            PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingHeight.class);
+            PackingSolver solver = new PackingSolver(System.in, BruteForce.class);
             //A specific algorithm can be chosen by using something like:
             //new PackingSolver(System.in, BruteForce.class);
             
