@@ -31,7 +31,7 @@ public class ValidCheckTest extends TestCase {
         assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec1, p));
         assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec2, p));
         rec3.setLocation(1, 1);
-        assertEquals(false, ValidCheck.isRectangleValidWithinPack(rec3, p));
+        assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec3, p));
 
         data = new PackData(4, false, 3);
         p = new PackList(data);
@@ -52,13 +52,13 @@ public class ValidCheckTest extends TestCase {
 
         PackData data = new PackData(-1, false, 3);
         PackList p = new PackList(data);
-        RectangleRotatable rec1 = new RectangleRotatable(0, 5, 1);
+        RectangleRotatable rec1 = new RectangleRotatable(0, 6, 1);
         RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
         RectangleRotatable rec3 = new RectangleRotatable(2, 2,2);
 
 
         rec1.setLocation(0,0);
-        rec2.setLocation(6,6);
+        rec2.setLocation(6,0);
         rec3.setLocation(-1,-1);
         p.addRectangleSubclass(rec1);
         p.addRectangleSubclass(rec2);

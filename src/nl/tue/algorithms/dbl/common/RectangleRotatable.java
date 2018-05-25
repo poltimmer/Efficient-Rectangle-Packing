@@ -42,52 +42,53 @@ public class RectangleRotatable extends Rectangle {
     
     /** 
      * This method checks if the two rectangles given as input do not overlap.
-     *
-     * @param r the rectangle to compare to
-     * @pre solution is still valid up to this point && p != null
-     * @modifies none
-     * @throws solutionNotValidException if solution is not valid up to this point, IllegalArgumentException if p==null
-     * @return true if rectangles do not overlap, false if they do overlap
+     * @param twidth width of the first rectangle
+     * @param theight height of the first rectangle
+     * @param rx x-coordinate of the 2nd rectangle
+     * @param ry y-coordinate of the 2nd rectangle
+     * @param rwidth width of the 2nd rectangle
+     * @param rheight height of the 2nd rectangle
+     * @return true if rectangles overlap, false if they don't overlap
      */
-    
-    private boolean noOverlapTwoRectangles(int twidth, int theight, int rx, int ry, int rwidth, int rheight) {
+    private boolean overlapsRectangle(int twidth, int theight, int rx, int ry, int rwidth, int rheight) {
         int thisXMax = this.x + twidth;
         int thisYMax = this.y + theight;
         int rXMax = rx + rwidth;
         int rYMax = ry + rheight;
         
         // If one rectangle is on left side of other
-        if (this.x > rXMax || rx > thisXMax){
+        if (this.x >= rXMax || rx >= thisXMax){
             return false;
         }
         
         // If one rectangle is above other
-        if (this.y > rYMax || ry > thisYMax){
+        if (this.y >= rYMax || ry >= thisYMax){
             return false;
         }
         
+        //None of the above cases hold, so the rectangles must overlap
         return true;
     }
     
     /** 
-     *  Checks if two rectangles intersect by calling noOverlapTwoRectangles
+     *  Checks if two rectangles intersect by calling overlapsRectangle
      *  Height and width of a rectangle is mirrored if it has been rotated
      * 
      *  @param r RectangleRotatable to compare the newly placed rectangle to
      *  @return true if there is overlap, false if there is no overlap
      */
-    public boolean intersects (RectangleRotatable r) {
+    public boolean intersects(RectangleRotatable r) {
         if (!this.rotated && !r.rotated){
-            return noOverlapTwoRectangles(this.width, this.height, r.x, r.y, r.width, r.height);
+            return overlapsRectangle(this.width, this.height, r.x, r.y, r.width, r.height);
         }
         else if (!this.rotated && r.rotated){
-            return noOverlapTwoRectangles(this.width, this.height, r.x, r.y, r.height, r.width);
+            return overlapsRectangle(this.width, this.height, r.x, r.y, r.height, r.width);
         }
         else if (this.rotated && !r.rotated){
-            return noOverlapTwoRectangles(this.height, this.width, r.x, r.y, r.width, r.height);
+            return overlapsRectangle(this.height, this.width, r.x, r.y, r.width, r.height);
         }
         else{
-            return noOverlapTwoRectangles(this.height, this.width, r.x, r.y, r.height, r.width);
+            return overlapsRectangle(this.height, this.width, r.x, r.y, r.height, r.width);
         }
     }
     
