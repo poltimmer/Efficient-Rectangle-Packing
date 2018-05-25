@@ -42,6 +42,9 @@ import java.util.List;
         possiblePlaces.add(startPosition);
 
         FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
+        for(RectangleRotatable a: bestSolutionRectangles){
+            System.out.println(a.getLocation());
+        }
         copyToPack(bestSolutionRectangles,pack);
 
     }
@@ -50,10 +53,6 @@ import java.util.List;
 
         if (rectanglesLeft != 0) { // add another rectangle
             for (RectangleRotatable a : pack.getRectangles()) { // loop over all the rectangles
-                System.out.println("X coordinate without change");
-                System.out.println(a.getX());
-                System.out.println("Y coordinate without change");
-                System.out.println(a.getY());
 
                 boolean alreadyUsed = false;
                 if (!rectanglesUsed.isEmpty()) {
@@ -64,7 +63,7 @@ import java.util.List;
                     }
                 }
                 if (!alreadyUsed) {
-                    System.out.println("!alreadyUsed");
+
 
                     // initiate the possibleplaces
                     PositionPlaces positions = new PositionPlaces(a, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
@@ -72,7 +71,7 @@ import java.util.List;
                     boolean isValidPosition = false;
                     while(iter.hasNext()){
                         while (!isValidPosition && iter.hasNext()) {
-                            System.out.println("!isValidPosition && iter.hasNext()");
+
                             Point p = (Point) iter.next();
 
                             // get information from the point
@@ -83,26 +82,29 @@ import java.util.List;
                             // place the rectangle
                             a.setLocation(pointX, pointY);
 
+
+
+
                             // check here if the new thingy is valid.
                             if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
-                                System.out.println("this shit isn't valid");
-                                a.setLocation(-1, -1);
+                                a.setLocation(Integer.MIN_VALUE, Integer.MIN_VALUE);
                                 iter.remove();
                             } else {//
+
+                                // place the rectangle
                                 isValidPosition = true;
                             }
                         }
 
-                        if(!isValidPosition == true) { // check if the last rectangle places was valid
-                            System.out.println("isValidPosition==true");
+                        if(isValidPosition) { // check if the last rectangle places was valid
+                            isValidPosition = false;
+
                             // add the rectangle to rectangles used
                             rectanglesUsed.add(a);
 
                             // get the new possitions from the iterator
                             possiblePlaces = positions.getPositions();
 
-                            // copy the
-                            copyToPack(rectanglesUsed, pack);
 
                             FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft - 1);
 
@@ -110,15 +112,14 @@ import java.util.List;
                             rectanglesUsed.remove(a);
                         }
                     }
-                    return;
                 }
-            }
+            } return;
         } else {  // if rectanglesLeft == 0
             int maxRightBorder = 0;
             int maxTopBorder = 0;
             for (RectangleRotatable R1 : pack.getRectangles()) {
                 // calculate the rightborder for each rectangle
-                int rightBorder = (int) (R1.getX() + R1.getWidth());
+                int rightBorder = R1.x + R1.width;
                 // check whether this is greater than the current rightest border
                 if (rightBorder > maxRightBorder) {
                     maxRightBorder = rightBorder; // change the new one
@@ -135,30 +136,27 @@ import java.util.List;
                 // change the best solution
                 System.out.println(bestSolution);
                 System.out.println(newSolution);
-
                 bestSolution = newSolution;
                 bestSolutionRectangles = new LinkedList<>();
+
+
                 for(RectangleRotatable a: rectanglesUsed) {
-                    bestSolutionRectangles.add(a);
+                    bestSolutionRectangles.add((RectangleRotatable) a.clone());
                 }
+
             }
             return;
         }
-        copyToPack(bestSolutionRectangles,pack);
-        return;
     }
 
 
     public void copyToPack(List<RectangleRotatable> Rectangles, PackList pack){
-        System.out.println("copytoPack");
         for(RectangleRotatable R1: pack.getOrderedRectangles()){
             int idA=R1.getID();
             for(RectangleRotatable R2: Rectangles) {
                 int idB = R2.getID();
                 if (idA == idB) {
                     R1.setLocation(R2.getLocation());
-                    System.out.println(R2.getLocation());
-                    System.out.println(R1.getLocation());
                 }
             }
         }
