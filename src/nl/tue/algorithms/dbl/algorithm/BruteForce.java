@@ -62,42 +62,28 @@ import java.util.List;
                         }
                     }
                 }
-                if (!alreadyUsed) {
-
-
-                    // initiate the possibleplaces
+                if (!alreadyUsed) { // if  the rectangle was not already used
+                    // initiate the Iterator
                     PositionPlaces positions = new PositionPlaces(a, possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
                     Iterator iter = positions.iterator();
-                    boolean isValidPosition = false;
+
+                    // loop over all the possible positions
                     while(iter.hasNext()){
-                        while (!isValidPosition && iter.hasNext()) {
+                        // get the new point
+                        Point p = (Point) iter.next();
 
-                            Point p = (Point) iter.next();
+                        // get information from the point
+                        int pointX = p.x;
+                        int pointY = p.y;
 
-                            // get information from the point
+                        // place the rectangle
+                        a.setLocation(pointX, pointY);
 
-                            int pointX = p.x;
-                            int pointY = p.y;
-
-                            // place the rectangle
-                            a.setLocation(pointX, pointY);
-
-
-
-
-                            // check here if the new thingy is valid.
-                            if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
-                                a.setLocation(Integer.MIN_VALUE, Integer.MIN_VALUE);
-                                iter.remove();
-                            } else {//
-
-                                // place the rectangle
-                                isValidPosition = true;
-                            }
-                        }
-
-                        if(isValidPosition) { // check if the last rectangle places was valid
-                            isValidPosition = false;
+                        // check here if the new thingy is valid.
+                        if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
+                            a.setLocation(Integer.MIN_VALUE, Integer.MIN_VALUE);
+                            iter.remove();
+                        } else { //Valid position // if it is valid start the recursion
 
                             // add the rectangle to rectangles used
                             rectanglesUsed.add(a);
@@ -105,7 +91,7 @@ import java.util.List;
                             // get the new possitions from the iterator
                             possiblePlaces = positions.getPositions();
 
-
+                            System.out.println(rectanglesLeft);
                             FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft - 1);
 
                             // remove the rectangle
@@ -113,7 +99,7 @@ import java.util.List;
                         }
                     }
                 }
-            } return;
+            }
         } else {  // if rectanglesLeft == 0
             int maxRightBorder = 0;
             int maxTopBorder = 0;

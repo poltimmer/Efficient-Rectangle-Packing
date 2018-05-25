@@ -25,6 +25,7 @@ public class PositionPlaces implements Iterable<Point> {
     int rectanglesLeft;
     RectangleRotatable R1;
     Point point;
+    Point oldPoint;
     Point pointRight;
     Point pointUp;
 
@@ -68,9 +69,9 @@ public class PositionPlaces implements Iterable<Point> {
              */
             public PositionPlacesIterator() {
                 // placement starts with the size of position.
-                placement = 0;
+                placement = positions.size()-1;
                 // and goes to 0
-                sentinel = positions.size()-1;
+                sentinel = 0;
 
             }
             /**
@@ -82,7 +83,7 @@ public class PositionPlaces implements Iterable<Point> {
              */
             public boolean hasNext()
             {
-                return placement<=sentinel;
+                return placement >= sentinel;
             }
 
 
@@ -98,29 +99,39 @@ public class PositionPlaces implements Iterable<Point> {
                 // pick the next point
                 point = positions.get(placement);
 
+                // set the variable old point to this point
+                oldPoint= point;
+
                 // coordinates of the point
                 int pointX = point.x;
                 int pointY = point.y;
 
-                // width and height of the rectangle
+                // get the width and height of the rectangle
                 int widtha = R1.width;
                 int heighta = R1.height;
 
-                // ad the new points
+                // create the new point the new points
                 pointRight = new Point(pointX + widtha , pointY );
                 pointUp = new Point(pointX, pointY + heighta);
 
-                // add the points to position
-                positions.add(pointRight);
+                // make the point the rightPoint and add the UpPoint
+                point.setLocation(pointRight);
                 positions.add(pointUp);
 
-                placement ++;
+                // adjust the placement
+                placement --;
+
+                //return the point
                 return point;
             }
 
             public void remove(){
-                positions.remove(pointRight);
+                //replace the right point with the old point
+                point.setLocation(oldPoint);
+
+                //remove the up point
                 positions.remove(pointUp);
+
             }
 
 
