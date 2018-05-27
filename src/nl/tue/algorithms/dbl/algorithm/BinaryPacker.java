@@ -24,7 +24,7 @@ import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.growTwoNodes;
 
 public class BinaryPacker extends  Algorithm<PackWidthQueue> {
 
-    private final ArrayList<Node> nodeList = new ArrayList();
+    private ArrayList<Node> nodeList = new ArrayList();
     private Node rightNode;
     private Node topNode;
 
@@ -43,11 +43,14 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
             nodeList.add(node);
             rightNode = node;
             topNode = node;
-            placeRectangle(r.x, r.y);
+            placeRectangle(topNode, rightNode, nodeList);
         }
     }
 
-    private void placeRectangle(int w, int h) {
+    private void placeRectangle(Node top, Node right, ArrayList list) {
+        nodeList = list;
+        topNode = top;
+        rightNode = right;
         //If pack not empty take next rectangle
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
@@ -94,7 +97,7 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
                         }
                         topNode = x;
                         nodeList.add(x);
-                        placeRectangle(topNode.getxNode(), x.getyNode());
+                        placeRectangle(topNode, rightNode, nodeList);
                     } else {
                         r.setLocation(rightNode.getxNode(), 0);
                         Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
@@ -105,7 +108,7 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
                         }
                         rightNode = x;
                         nodeList.add(x);
-                        placeRectangle(topNode.getxNode(), x.getyNode());
+                        placeRectangle(topNode, rightNode, nodeList);
                     }
                     //dmv growNode()
                 }
@@ -125,14 +128,14 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
             topNode = x;
             n.setxRoom(n.getxRoom() - r.width);
             nodeList.add(x);
-            placeRectangle(n.getxNode(), x.getyNode());
+            placeRectangle(topNode, rightNode, nodeList);
         } else {
             r.setLocation(n.getxNode(), 0);
             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
             rightNode = x;
             n.setyRoom(n.getyRoom() - x.getyNode());
             nodeList.add(x);
-            placeRectangle(x.getxNode(), n.getyNode());
+            placeRectangle(topNode, rightNode, nodeList);
         }
     }
 }
