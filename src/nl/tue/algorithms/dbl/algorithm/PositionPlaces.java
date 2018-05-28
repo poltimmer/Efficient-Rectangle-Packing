@@ -25,9 +25,9 @@ public class PositionPlaces implements Iterable<Point> {
     int rectanglesLeft;
     RectangleRotatable R1;
     Point point;
-    Point oldPoint;
     Point pointRight;
     Point pointUp;
+    Point oldPoint = new Point(0,0);
 
 
     /** Constructor for general range.  */
@@ -96,15 +96,16 @@ public class PositionPlaces implements Iterable<Point> {
                 if (! hasNext()) {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
                 }
+
                 // pick the next point
                 point = positions.get(placement);
 
-                // set the variable old point to this point
-                oldPoint= point;
 
                 // coordinates of the point
                 int pointX = point.x;
                 int pointY = point.y;
+
+                oldPoint.setLocation(pointX, pointY);
 
                 // get the width and height of the rectangle
                 int widtha = R1.width;
@@ -122,17 +123,17 @@ public class PositionPlaces implements Iterable<Point> {
                 placement --;
 
                 //return the point
-                return point;
+                return oldPoint;
             }
 
-            public void remove(){
-                //replace the right point with the old point
-                point.setLocation(oldPoint);
+        public void remove(){
+            //replace the right point with the old point
+            point.setLocation(oldPoint);
 
-                //remove the up point
-                positions.remove(pointUp);
+            //remove the up point
+            positions.remove(pointUp);
 
-            }
+        }
 
 
         }

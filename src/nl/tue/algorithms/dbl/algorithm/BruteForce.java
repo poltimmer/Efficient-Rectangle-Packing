@@ -43,6 +43,7 @@ import java.util.List;
 
         FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
         for(RectangleRotatable a: bestSolutionRectangles){
+            System.out.println(a.getID());
             System.out.println(a.getLocation());
         }
         copyToPack(bestSolutionRectangles,pack);
@@ -69,12 +70,14 @@ import java.util.List;
 
                     // loop over all the possible positions
                     while(iter.hasNext()){
-                        // get the new point
+                        // get the new point and add new points to possibleplaces
                         Point p = (Point) iter.next();
 
                         // get information from the point
                         int pointX = p.x;
                         int pointY = p.y;
+
+
 
                         // place the rectangle
                         a.setLocation(pointX, pointY);
@@ -82,6 +85,7 @@ import java.util.List;
                         // check here if the new thingy is valid.
                         if (!ValidCheck.isRectangleValidWithinPack(a, pack)) {
                             a.setLocation(Integer.MIN_VALUE, Integer.MIN_VALUE);
+                            // remove the points that were added
                             iter.remove();
                         } else { //Valid position // if it is valid start the recursion
 
@@ -91,8 +95,10 @@ import java.util.List;
                             // get the new possitions from the iterator
                             possiblePlaces = positions.getPositions();
 
-                            System.out.println(rectanglesLeft);
                             FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft - 1);
+
+                            // remove the points again
+                            iter.remove();
 
                             // remove the rectangle
                             rectanglesUsed.remove(a);
@@ -120,13 +126,18 @@ import java.util.List;
             newSolution = maxRightBorder * maxTopBorder;
             if (newSolution < bestSolution) {
                 // change the best solution
-                System.out.println(bestSolution);
-                System.out.println(newSolution);
+                System.out.println("new solution = " + newSolution);
+                System.out.println("old solution was = " + bestSolution);
                 bestSolution = newSolution;
                 bestSolutionRectangles = new LinkedList<>();
-
+                System.out.println("all locations");
+                for(Point p: possiblePlaces){
+                    System.out.println(p.getLocation());
+                }
 
                 for(RectangleRotatable a: rectanglesUsed) {
+
+                    System.out.println(a.getID() + " : " + a.getLocation());
                     bestSolutionRectangles.add((RectangleRotatable) a.clone());
                 }
 
