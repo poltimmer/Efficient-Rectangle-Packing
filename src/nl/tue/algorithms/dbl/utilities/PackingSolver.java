@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import nl.tue.algorithms.dbl.algorithm.Algorithm;
+import nl.tue.algorithms.dbl.algorithm.BinaryPacker;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingWidth;
 import nl.tue.algorithms.dbl.algorithm.BruteForce;
 //import nl.tue.algorithms.dbl.algorithm.RecursiveFit;
@@ -65,7 +66,7 @@ public class PackingSolver {
             }
         */
         //since we only have 1 algorithm, we have to do this:
-        return new BruteForce(data);
+        return new BinaryPacker(data);
     }
     
     public void readRectangles() throws IOException {
