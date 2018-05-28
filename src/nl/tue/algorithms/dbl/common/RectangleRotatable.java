@@ -20,6 +20,8 @@ public class RectangleRotatable extends Rectangle {
         this.width = width;
         this.height = height;
         this.rotated = false;
+        this.x = Integer.MIN_VALUE;
+        this.y = Integer.MIN_VALUE;
     }
     
     /**

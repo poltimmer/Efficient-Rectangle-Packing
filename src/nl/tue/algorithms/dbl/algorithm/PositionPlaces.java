@@ -63,27 +63,27 @@ public class PositionPlaces implements Iterable<Point> {
              * Constructs iterator in initial state.
              *
              * @pre {@code true}
-             * @post {@code placement == 0 && sentinel == extent() && returned == 0
-             *               && number == (\num of i; i < extent() * extent();
-             *               areRelated(i / extent(), i % extent()); )}
+             * @post {@code placement == 0 && sentinel == positions.size()-1}
+             *
              */
             public PositionPlacesIterator() {
                 // placement starts with the size of position.
-                placement = positions.size()-1;
+                placement = 0;
                 // and goes to 0
-                sentinel = 0;
+                sentinel = positions.size()-1;
 
             }
             /**
              * Check if it has next element.
              *
              * @pre {@code true}
-             * @post {@code \result == (placement < sentinel * sentinel && returned < amountPairs)}
-             * @return  True, if next element exists, otherwise false
+             * @post {@code \result == placement <= sentinel}
+             *              * @return  True, if next element exists, otherwise false
              */
             public boolean hasNext()
             {
-                return placement >= sentinel;
+
+                return placement <= sentinel;
             }
 
 
@@ -120,7 +120,7 @@ public class PositionPlaces implements Iterable<Point> {
                 positions.add(pointUp);
 
                 // adjust the placement
-                placement --;
+                placement ++;
 
                 //return the point
                 return oldPoint;
@@ -132,7 +132,6 @@ public class PositionPlaces implements Iterable<Point> {
 
             //remove the up point
             positions.remove(pointUp);
-
         }
 
 
