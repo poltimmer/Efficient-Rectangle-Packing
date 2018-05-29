@@ -2,6 +2,8 @@
 
 package nl.tue.algorithms.dbl.utilities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedWriter;
@@ -18,36 +20,52 @@ import java.io.OutputStreamWriter;
  * (or creates the directory if it not yet exists).
  * (If there is already an input.txt in that folder, it is replaced) 
  * 
- * @author Pol (1007701)
+ * @author Pol Timmer (1007701)
  * @since 19 MAY 2018
  */
 
 public class InputGenerator {
-    Random r = new Random();
+    Random random = new Random();
     Scanner sc = new Scanner(System.in);
     int height;
     int width;
-    int[] bottomleft = {0,0};
-    int[] bottomright;
-    public static int MINSIZE;
-    public static int recNumber = 0;
+    int[] bottomLeft = {0,0};
+    int[] topRight;
+    public static int MINSIZE = 1;
+    public static int recNumber = 1;
     public static int requiredRectangles;
     public static File OUTPUT = new File("res/inputGenerator");
+    public static List<Rectangle> leafList = new ArrayList<Rectangle>(); //list keeping track of all rectangles (leaves in tree)
     
     public void run(){
         OUTPUT.mkdirs();
         System.out.println("how many rectangles?");
         requiredRectangles = sc.nextInt();
-        System.out.println("Rectangle target size?");
-        MINSIZE = sc.nextInt();
+        //System.out.println("Rectangle target size?");
+        //MINSIZE = sc.nextInt();
         System.out.println("canvas height?");
         height = sc.nextInt();
         System.out.println("canvas width?");
         width = sc.nextInt();
-        bottomright = new int[]{width,height};
-        //Added to ensure that the first rectangle is counted
-        InputGenerator.recNumber++;
-        Rectangle rec = new Rectangle(bottomleft, bottomright);
+        topRight = new int[]{width,height};
+        Rectangle rec = new Rectangle(bottomLeft, topRight);
+        // start splitting
+        while (requiredRectangles > recNumber && !leafList.isEmpty()) {
+            //randomly pick a rectangle
+            int index = random.nextInt(leafList.size());
+            Rectangle rectangle = leafList.get(index);
+            //and split it if possible
+            if (rectangle.topright[0] - rectangle.botleft[0] > MINSIZE && rectangle.topright[1] - rectangle.botleft[1] > MINSIZE) {
+                rectangle.split(random.nextBoolean());
+            } else if (rectangle.topright[0] - rectangle.botleft[0] > MINSIZE) {
+                rectangle.split(true);
+            } else if (rectangle.topright[1] - rectangle.botleft[1] > MINSIZE) {
+                rectangle.split(false);
+            } else {
+                //if you can't split the rectangle in any way, you remove it from the list.
+                InputGenerator.leafList.remove(index);
+            }
+        }
         // start output
         try (
           BufferedWriter fileWriter =
@@ -60,6 +78,7 @@ public class InputGenerator {
            fileWriter.newLine();
            fileWriter.write("number of rectangles: " + recNumber);
            fileWriter.newLine();
+           //walk through all nodes in subtree of 'rec' (which is the root), and print if they're a leaf.
            treeWalk(rec, fileWriter);
         } catch (IOException ex) {
           System.out.println("OEPS");
@@ -84,55 +103,31 @@ public class InputGenerator {
 
 
 class Rectangle {
-    Random r = new Random();
+    Random random = new Random();
     int[] botleft;
     int[] topright;
-
-    public Rectangle(){
-        botleft = new int[]{0,0};
-        topright = new int[]{50,50};
-        InputGenerator.recNumber++;
-        this.split(); //first split
-    }
 
     public Rectangle(int[] bl, int[] tr) {
         botleft = bl;
         topright = tr;
-        this.split();
+        InputGenerator.leafList.add(this); //add this rectangle to leaflist
     }
 
     Rectangle leftChild;
     Rectangle rightChild;
 
-    void split() {
-        boolean direction = true;
-        if (InputGenerator.requiredRectangles <= InputGenerator.recNumber) { // if the required amount of rectangles is reached, then stop.
-            return;
-        }
-        if (topright[0] - botleft[0] > InputGenerator.MINSIZE && topright[1] - botleft[1] > InputGenerator.MINSIZE) {
-            if (r.nextBoolean()) { //split x direction
-                direction = true;
-            } else { //split y direction
-                direction = false;
-            }
-        } else if (topright[0] - botleft[0] > InputGenerator.MINSIZE) {
-            direction = true;
-        } else if (topright[1] - botleft[1] > InputGenerator.MINSIZE) {
-            direction = false;
-        } else {
-            return;
-        }
-
+    void split(boolean direction) {
+        // At this point, the rectangle will get split.
+        InputGenerator.leafList.remove(InputGenerator.leafList.indexOf(this)); //remove this rectangle
+        InputGenerator.recNumber++; //increment, for the amount of leaves is about to increment.
         if (direction) {
-            InputGenerator.recNumber++;
-            int split = r.nextInt(topright[0] - botleft[0] - 1) + botleft[0] + 1;
+            int split = random.nextInt(topright[0] - botleft[0] - 1) + botleft[0] + 1;
             int[] leftTopRight = {split, topright[1]};
             int[] rightBotLeft = {split, botleft[1]};
             leftChild = new Rectangle(botleft, leftTopRight);
             rightChild = new Rectangle(rightBotLeft, topright);
         } else {
-            InputGenerator.recNumber++;
-            int split = r.nextInt(topright[1] - botleft[1] - 1) + botleft[1] + 1;
+            int split = random.nextInt(topright[1] - botleft[1] - 1) + botleft[1] + 1;
             int[] botTopRight = {topright[0], split};
             int[] topBotLeft = {botleft[0], split};
             leftChild = new Rectangle(botleft, botTopRight);
@@ -140,7 +135,7 @@ class Rectangle {
         }
     }
 
-    int[][] info() {
+    int[][] info() { //not used
         int[] size = {topright[0] - botleft[0], topright[1] - botleft[1]};
         int[][] posSize = {botleft,size};
         return posSize;
