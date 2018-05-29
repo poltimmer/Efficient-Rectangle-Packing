@@ -1,9 +1,6 @@
 package nl.tue.algorithms.dbl.algorithm;
 import com.sun.javafx.font.directwrite.RECT;
-import nl.tue.algorithms.dbl.common.Node;
-import nl.tue.algorithms.dbl.common.PackData;
-import nl.tue.algorithms.dbl.common.PackWidthQueue;
-import nl.tue.algorithms.dbl.common.RectangleRotatable;
+import nl.tue.algorithms.dbl.common.*;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -22,14 +19,14 @@ import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.growTwoNodes;
  * @since 9 MAY 2018
  */
 
-public class BinaryPacker extends  Algorithm<PackWidthQueue> {
+public class BinaryPacker extends  Algorithm<PackHeightQueue> {
 
     private ArrayList<Node> nodeList = new ArrayList();
     private Node rightNode;
     private Node topNode;
 
     public BinaryPacker(PackData data) {
-        super(new PackWidthQueue(data));
+        super(new PackHeightQueue(data));
     }
 
     @Override
@@ -54,8 +51,10 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
         //If pack not empty take next rectangle
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
+            System.out.println(r.getHeight());
             if (nodeList.size() == 1) {
                 placeOneNode(r);
+                placeRectangle(topNode, rightNode, nodeList);
             } else {
                 //if more than one node, fill in the gap.
                 for (Node n : nodeList) {
@@ -83,7 +82,7 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
                         }
                     }
                 }
-                if (r.y == -1 || r.x == -1) {
+                if (r.y <= -1 || r.x <= -1) {
                     //plaatsen bij de right node of top node
                     //If true then grow up, if false grow right
                     if (growTwoNodes(topNode, rightNode, r)) {
@@ -99,6 +98,7 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
                         nodeList.add(x);
                         placeRectangle(topNode, rightNode, nodeList);
                     } else {
+                        System.out.println("test2");
                         r.setLocation(rightNode.getxNode(), 0);
                         Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
                         for (Node n : nodeList) {
@@ -110,7 +110,9 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
                         nodeList.add(x);
                         placeRectangle(topNode, rightNode, nodeList);
                     }
-                    //dmv growNode()
+
+                } else {
+                    placeRectangle(topNode, rightNode, nodeList);
                 }
             }
         } else {
@@ -128,14 +130,13 @@ public class BinaryPacker extends  Algorithm<PackWidthQueue> {
             topNode = x;
             n.setxRoom(n.getxRoom() - r.width);
             nodeList.add(x);
-            placeRectangle(topNode, rightNode, nodeList);
         } else {
             r.setLocation(n.getxNode(), 0);
             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
             rightNode = x;
             n.setyRoom(n.getyRoom() - x.getyNode());
             nodeList.add(x);
-            placeRectangle(topNode, rightNode, nodeList);
         }
+        return;
     }
 }
