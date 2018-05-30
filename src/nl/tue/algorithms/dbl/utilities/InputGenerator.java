@@ -145,13 +145,13 @@ class Rectangle {
         InputGenerator.leafList.remove(InputGenerator.leafList.indexOf(this)); //remove this rectangle
         InputGenerator.recNumber++; //increment, for the amount of leaves is about to increment.
         if (direction) {
-            int split = random.nextInt(topright[0] - botleft[0] - 1 - InputGenerator.MINSIZE/2) + botleft[0] + 1 + InputGenerator.MINSIZE/2;
+            int split = random.nextInt(topright[0] - botleft[0] - 1 - InputGenerator.MINSIZE/2) + botleft[0] + 1 + InputGenerator.MINSIZE/4;
             int[] leftTopRight = {split, topright[1]};
             int[] rightBotLeft = {split, botleft[1]};
             leftChild = new Rectangle(botleft, leftTopRight);
             rightChild = new Rectangle(rightBotLeft, topright);
         } else {
-            int split = random.nextInt(topright[1] - botleft[1] - 1 - InputGenerator.MINSIZE/2) + botleft[1] + 1 + InputGenerator.MINSIZE/2;
+            int split = random.nextInt(topright[1] - botleft[1] - 1 - InputGenerator.MINSIZE/2) + botleft[1] + 1 + InputGenerator.MINSIZE/4;
             int[] botTopRight = {topright[0], split};
             int[] topBotLeft = {botleft[0], split};
             leftChild = new Rectangle(botleft, botTopRight);
