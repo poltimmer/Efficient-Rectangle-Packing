@@ -62,7 +62,6 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                             r.setLocation(n.getxNode(), n.getyNode() - n.getyRoom()); //place node
                             n.setyRoom(n.getyRoom() - r.height); //change the values of the node
                             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height); //adds new node
-
                             //removes node if node is not needed anymore
                             if (n.getyRoom() == 0) {
                                 x.setxRoom(n.getxRoom() + x.getxRoom());
@@ -88,12 +87,6 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                     if (growTwoNodes(topNode, rightNode, r)) {
                         r.setLocation(0, topNode.getyNode());
                         Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
-                        topNode = x;
-                        for (Node n : nodeList) {
-                            if (n == topNode) {
-                                n.setyRoom(topNode.getxRoom() - r.width);
-                            }
-                        }
                         topNode = x;
                         nodeList.add(x);
                         placeRectangle(topNode, rightNode, nodeList);
