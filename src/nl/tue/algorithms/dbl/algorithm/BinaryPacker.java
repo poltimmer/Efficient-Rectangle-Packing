@@ -50,6 +50,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
         //If pack not empty take next rectangle
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
+            System.out.println(r.height);
             System.out.println(r.getHeight());
             if (nodeList.size() == 1) {
                 placeOneNode(r);
@@ -98,7 +99,6 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                         nodeList.add(x);
                         placeRectangle(topNode, rightNode, nodeList);
                     } else {
-                        System.out.println("test2");
                         r.setLocation(rightNode.getxNode(), 0);
                         Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
                         for (Node n : nodeList) {
@@ -128,13 +128,19 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
             r.setLocation(0, n.getyNode());
             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
             topNode = x;
+            if (x.getxNode() >= rightNode.getxNode()) {
+                rightNode = x;
+            }
             n.setxRoom(n.getxRoom() - r.width);
             nodeList.add(x);
         } else {
             r.setLocation(n.getxNode(), 0);
             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
             rightNode = x;
-            n.setyRoom(n.getyRoom() - x.getyNode());
+            if (x.getyNode() >= rightNode.getyNode()) {
+                topNode = x;
+            }
+            n.setyRoom(n.getyRoom() - r.height);
             nodeList.add(x);
         }
         return;

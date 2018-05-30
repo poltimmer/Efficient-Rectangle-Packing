@@ -88,11 +88,11 @@ public class BinaryTreeAuxiliary {
     public static boolean fits(Node node, RectangleRotatable rec) {
         //size of rectangle
         int recHeight = (int) rec.getHeight();
-        int recWidth = (int) rec.getHeight();
+        //int recWidth = (int) rec.getWidth();
 
 
         int nodeHeight = node.getyRoom();
-        int nodeWidth = node.getxRoom();
+        //int nodeWidth = node.getxRoom();
 
         if (recHeight <= nodeHeight) {
             return true;
