@@ -100,6 +100,7 @@ public class PackingSolver {
     //Expected by Momotor; Uses System.in and System.out
     public static void main(String args[]) throws IOException {
         PackingSolver solver = new PackingSolver(System.in);
+        //System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
         //A specific algorithm can instead be chosen by using:
         //new PackingSolver(System.in, BruteForce.class);
         
