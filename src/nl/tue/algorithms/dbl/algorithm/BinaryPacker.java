@@ -25,18 +25,17 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
     private Node rightNode;
     private Node topNode;
 
+    //Make a pack with the rectangles sorted on height
     public BinaryPacker(PackData data) {
         super(new PackHeightQueue(data));
     }
 
     @Override
     public void solve() {
-        //RectangleRotatable first = pack.getRectangles().peek(); //get the first rectangle
-
         if (!pack.getRectangles().isEmpty()) {
-            RectangleRotatable r = pack.getRectangles().poll();
-            r.setLocation(0, 0);
-            Node node = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
+            RectangleRotatable r = pack.getRectangles().poll(); //get first rectangle and delete it from the pack
+            r.setLocation(0, 0); //first rec always in position 0,0
+            Node node = new Node(r.width, r.height, r.width, r.height); //make new node top right corner of rec
             nodeList.add(node);
             rightNode = node;
             topNode = node;
@@ -82,6 +81,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                         }
                     }
                 }
+                //if the rectangle couldnt be placed right of a node (except of the rightmost node)
                 if (r.y <= -1 || r.x <= -1) {
                     //plaatsen bij de right node of top node
                     //If true then grow up, if false grow right
