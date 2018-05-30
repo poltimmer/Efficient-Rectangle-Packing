@@ -50,7 +50,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
         //If pack not empty take next rectangle
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
-            System.out.println(r.height);
+            //System.out.println(r.height);
             if (nodeList.size() == 1) {
                 placeOneNode(r);
                 placeRectangle(topNode, rightNode, nodeList);
