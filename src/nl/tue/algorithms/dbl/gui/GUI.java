@@ -58,7 +58,7 @@ public class GUI extends JFrame {
 
     /** Possible colors of the rectangles */
     public static final Color[] VALID_RECTANGLE_COLORS =
-            {   Color.BLACK,    Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
+            {   Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
                 Color.GRAY,     Color.GREEN,    Color.ORANGE,       Color.MAGENTA,
                 Color.PINK,     Color.YELLOW };
     
