@@ -51,7 +51,6 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
             System.out.println(r.height);
-            System.out.println(r.getHeight());
             if (nodeList.size() == 1) {
                 placeOneNode(r);
                 placeRectangle(topNode, rightNode, nodeList);
@@ -60,7 +59,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                 for (Node n : nodeList) {
                     if (n != rightNode) {
                         if (fits(n, r) && r.width + n.getxNode() <= rightNode.getxNode()) { //if rectangle fits in node and does not extend the right most node
-                            r.setLocation(n.getxNode() - n.getxRoom(), n.getyNode() - n.getyRoom()); //place node
+                            r.setLocation(n.getxNode(), n.getyNode() - n.getyRoom()); //place node
                             n.setyRoom(n.getyRoom() - r.height); //change the values of the node
                             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height); //adds new node
 
