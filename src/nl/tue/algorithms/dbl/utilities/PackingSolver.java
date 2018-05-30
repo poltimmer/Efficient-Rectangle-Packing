@@ -66,7 +66,17 @@ public class PackingSolver {
             }
         */
         //since we only have 1 algorithm, we have to do this:
-        return new BinaryPacker(data);
+        
+        //for small input sizes (n<=5) we want bruteforce
+        if (data.getNumberOfRectangles()<=5) {
+            return new BruteForce(data);
+        }
+        //for bigger inputs without fixed height defined we can only use BinaryPacker
+        else if (!data.hasFixedHeight()) {
+            return new BinaryPacker(data);
+        } else {
+            return new FirstFitDecreasingWidth(data);
+        }
     }
     
     public void readRectangles() throws IOException {
