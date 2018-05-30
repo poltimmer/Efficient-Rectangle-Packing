@@ -36,13 +36,23 @@ public class InputGenerator {
     public static int requiredRectangles;
     public static File OUTPUT = new File("res/inputGenerator");
     public static List<Rectangle> leafList = new ArrayList<Rectangle>(); //list keeping track of all rectangles (leaves in tree)
-    
+    public static boolean rotate = false;
+
     public void run(){
         OUTPUT.mkdirs();
         System.out.println("how many rectangles?");
         requiredRectangles = sc.nextInt();
-        //System.out.println("Rectangle target size?");
-        //MINSIZE = sc.nextInt();
+        System.out.println("Rectangle target size?");
+        MINSIZE = sc.nextInt();
+        /*while () {
+            System.out.println("Rotations? y/n");
+            char rotationChar = sc.next().charAt(0);
+            if (rotationChar == 'y'){
+                rotate = true;
+            } else if (rotationChar == 'n'){
+                rotate = false;
+            }
+        }*/
         System.out.println("canvas height?");
         height = sc.nextInt();
         System.out.println("canvas width?");
@@ -74,7 +84,11 @@ public class InputGenerator {
         ){
            fileWriter.write("container height: fixed " + height);
            fileWriter.newLine();
-           fileWriter.write("rotations allowed: no");
+           if (rotate){
+               fileWriter.write("rotations allowed: yes");
+           } else {
+               fileWriter.write("rotations allowed: no");
+           }
            fileWriter.newLine();
            fileWriter.write("number of rectangles: " + recNumber);
            fileWriter.newLine();
@@ -143,6 +157,13 @@ class Rectangle {
 
     void print(BufferedWriter fileWriter) throws IOException{
         int[] size = {topright[0] - botleft[0], topright[1] - botleft[1]};
+        if (InputGenerator.rotate) {
+            if (random.nextBoolean()){
+                fileWriter.write(size[1] + " " + size[0]);
+                fileWriter.newLine();
+                return;
+            }
+        }
         fileWriter.write(size[0] + " " + size[1]);
         fileWriter.newLine();
     }
