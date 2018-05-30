@@ -37,6 +37,7 @@ public class InputGenerator {
     public static File OUTPUT = new File("res/inputGenerator");
     public static List<Rectangle> leafList = new ArrayList<Rectangle>(); //list keeping track of all rectangles (leaves in tree)
     public static boolean rotate = false;
+    public static boolean uniform = false;
 
     public void run(){
         OUTPUT.mkdirs();
@@ -44,15 +45,22 @@ public class InputGenerator {
         requiredRectangles = sc.nextInt();
         System.out.println("Rectangle target size?");
         MINSIZE = sc.nextInt();
-        /*while () {
-            System.out.println("Rotations? y/n");
-            char rotationChar = sc.next().charAt(0);
-            if (rotationChar == 'y'){
-                rotate = true;
-            } else if (rotationChar == 'n'){
-                rotate = false;
-            }
-        }*/
+        //rotations?
+        System.out.println("Rotations? y/n");
+        char rotationChar = sc.next().charAt(0);
+        if (rotationChar == 'y'){
+            rotate = true;
+        } else if (rotationChar == 'n'){
+            rotate = false;
+        }
+        //more uniform or more random?
+        System.out.println("uniform or random cuts? u/r (uniform is better)");
+        char uniformChar = sc.next().charAt(0);
+        if (uniformChar == 'u'){
+            uniform = true;
+        } else if (uniformChar == 'r'){
+            uniform = false;
+        }
         System.out.println("canvas height?");
         height = sc.nextInt();
         System.out.println("canvas width?");
@@ -61,8 +69,10 @@ public class InputGenerator {
         Rectangle rec = new Rectangle(bottomLeft, topRight);
         // start splitting
         while (requiredRectangles > recNumber && !leafList.isEmpty()) {
-            //randomly pick a rectangle
-            int index = random.nextInt(leafList.size());
+            int index = 0;
+            if (!uniform) { //randomly pick a rectangle
+                index = random.nextInt(leafList.size());
+            }
             Rectangle rectangle = leafList.get(index);
             //and split it if possible
             if (rectangle.topright[0] - rectangle.botleft[0] > MINSIZE && rectangle.topright[1] - rectangle.botleft[1] > MINSIZE) {
