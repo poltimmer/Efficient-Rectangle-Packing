@@ -47,7 +47,7 @@ public class ValidCheckTest extends TestCase {
         assertEquals(true, ValidCheck.isRectangleValidWithinPack(rec1, p));
     }
 
-    public void testIsRectangleNotOverlappingWithPack() throws Exception {
+    public void testIsRectangleOverlappingWithPack() throws Exception {
         System.out.println("ValidCheck test");
 
         PackData data = new PackData(-1, false, 3);
@@ -64,9 +64,9 @@ public class ValidCheckTest extends TestCase {
         p.addRectangleSubclass(rec2);
         p.addRectangleSubclass(rec3);
 
-        assertEquals(true, ValidCheck.isRectangleNotOverlappingWithPack(rec2, p));
+        assertEquals(false, ValidCheck.isRectangleOverlappingWithPack(rec2, p));
         rec2.setLocation(0,0);
-        assertEquals(false, ValidCheck.isRectangleNotOverlappingWithPack(rec2, p));
+        assertEquals(true, ValidCheck.isRectangleOverlappingWithPack(rec2, p));
 
     }
 
@@ -86,10 +86,10 @@ public class ValidCheckTest extends TestCase {
 
         //check if not fits
         rec1.setRotated(true);
-        assertEquals(false, ValidCheck.isRectangleWithinPackHeight(rec1, p));
+        assertEquals(true, ValidCheck.isRectangleWithinPackHeight(rec1, p));
     }
 
-    public void testIsRectangleNotRotatedIllegallyWithinPack() throws Exception {
+    public void testIsRectangleRotatedIllegallyWithinPack() throws Exception {
         System.out.println("NoIllegalRotation test");
 
         PackData data1 = new PackData(-1, false, 5);
@@ -100,12 +100,12 @@ public class ValidCheckTest extends TestCase {
         RectangleRotatable rec2 = new RectangleRotatable(1, 400, 300);
 
         rec2.setRotated(true);
-        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec1, p));
-        assertEquals(false, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec2, p));
+        assertEquals(false, ValidCheck.isRectangleRotatedIllegallyWithinPack(rec1, p));
+        assertEquals(true, ValidCheck.isRectangleRotatedIllegallyWithinPack(rec2, p));
 
         p = new PackList(data2);
-        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec1, p));
-        assertEquals(true, ValidCheck.isRectangleNotRotatedIllegallyWithinPack(rec2, p));
+        assertEquals(false, ValidCheck.isRectangleRotatedIllegallyWithinPack(rec1, p));
+        assertEquals(false, ValidCheck.isRectangleRotatedIllegallyWithinPack(rec2, p));
     }
 
 }

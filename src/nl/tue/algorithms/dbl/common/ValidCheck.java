@@ -27,11 +27,10 @@ public class ValidCheck {
     public static boolean isRectangleValidWithinPack(RectangleRotatable r, Pack p) throws IllegalArgumentException {
         if (p == null){
             throw new IllegalArgumentException("Pack p is null");
-        }
-        else if (r == null) {
+        } else if (r == null) {
             throw new IllegalArgumentException("Rectangle r is null");
         }
-        return isRectangleWithinPackHeight(r, p) && isRectangleNotRotatedIllegallyWithinPack(r, p) && isRectangleNotOverlappingWithPack(r, p);
+        return isRectangleWithinPackHeight(r, p) && !isRectangleRotatedIllegallyWithinPack(r, p) && !isRectangleOverlappingWithPack(r, p);
     }
     
     /**
@@ -44,13 +43,13 @@ public class ValidCheck {
      * @modifies none
      * @return the boolean
      */
-    protected static boolean isRectangleNotOverlappingWithPack(RectangleRotatable r, Pack p) {
-        for (RectangleRotatable r2 : p.getRectangles()) {
+    protected static boolean isRectangleOverlappingWithPack(RectangleRotatable r, Pack p) {
+        for (RectangleRotatable r2 : p.getOrderedRectangles()) {
             if (r2.isPlaced() && r != r2 && r.intersects(r2)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -64,13 +63,13 @@ public class ValidCheck {
      * @return the boolean
      */
 
-    public static boolean isRectangleNotOverlappingWithList(RectangleRotatable r, List<RectangleRotatable> rectangles) {
+    public static boolean isRectangleOverlappingWithList(RectangleRotatable r, List<RectangleRotatable> rectangles) {
         for (RectangleRotatable r2 : rectangles) {
             if (r2.isPlaced() && r != r2 && r.intersects(r2)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
     
     /**
@@ -101,7 +100,7 @@ public class ValidCheck {
      * @modifies none
      * @return the boolean
      */
-    protected static boolean isRectangleNotRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
-        return p.canRotate() || !r.isRotated();
+    protected static boolean isRectangleRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
+        return !(p.canRotate() || !r.isRotated());
     }
 }
