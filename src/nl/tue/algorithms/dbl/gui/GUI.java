@@ -18,6 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import nl.tue.algorithms.dbl.algorithm.*;
 import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 import nl.tue.algorithms.dbl.utilities.PackingSolver;
 
 /**
@@ -57,9 +58,15 @@ public class GUI extends JFrame {
 
     /** Possible colors of the rectangles */
     public static final Color[] VALID_RECTANGLE_COLORS =
-            {   Color.BLACK,    Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
+            {   Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
                 Color.GRAY,     Color.GREEN,    Color.ORANGE,       Color.MAGENTA,
-                Color.PINK,     Color.RED,      Color.YELLOW };
+                Color.PINK,     Color.YELLOW };
+    
+    /** Colour that overlapping rectangles get */
+    public static final Color OVERLAP_COLOR = Color.RED;
+    
+    /** Whether to give overlapping rectangles the overlap colour */
+    public static final boolean ENABLE_OVERLAP_COLOR = true;
     
     /** Keeps track of which colour to use to draw a rectangle */
     private int colorPicker = 0;
@@ -69,6 +76,10 @@ public class GUI extends JFrame {
     
     /** Whether to display container size */
     public static boolean DISPLAY_CONTAINER_SIZE = true;
+    
+    /** Whether to display errors */
+    public static boolean DISPLAY_ERRORS = true;
+    private boolean error;
 
     /**
      * Sets up things such as the frame title, frame size, scroll pane, resize
@@ -207,8 +218,13 @@ public class GUI extends JFrame {
      */
     public void drawRectangle(RectangleRotatable r) {
         Color col = getNextColor();
+        
+        drawRectangle(r, col);
+    }
+    
+    private void drawRectangle(RectangleRotatable r, Color col) {        
         if (!r.isRotated()) {
-            drawRectangle(r, col);
+            drawRectangle(new Rectangle(r.x, r.y, r.width, r.height), col);
         } else {
             drawRectangle(new Rectangle(r.x, r.y, r.height, r.width), col);
         }
@@ -227,6 +243,11 @@ public class GUI extends JFrame {
         gImg.fillRect(r.x * SIZE_MODIFIER,
                 img.getHeight() - r.y * SIZE_MODIFIER - r.height * SIZE_MODIFIER,
                 r.width * SIZE_MODIFIER, r.height * SIZE_MODIFIER);
+        
+        gImg.setColor(col.darker());
+        gImg.drawRect(r.x * SIZE_MODIFIER,
+                img.getHeight() - r.y * SIZE_MODIFIER - r.height * SIZE_MODIFIER,
+                r.width * SIZE_MODIFIER, r.height * SIZE_MODIFIER);
     }
     
     /**
@@ -236,8 +257,19 @@ public class GUI extends JFrame {
      * @post All rectangles from the given pack are drawn on the screen
      */
     public void drawPack(Pack p) {
-        for (RectangleRotatable r : p.getOrderedRectangles()) {
-            drawRectangle(r);
+        for (RectangleRotatable r : p.getOrderedRectangles()) {             
+            if (ValidCheck.isRectangleValidWithinPack(r, p)) {
+                drawRectangle(r);
+            } else {
+                System.out.println("WARNING: Rectangle was placed in an invalid way!");
+                drawRectangle(r, OVERLAP_COLOR);
+                error = true;
+            }
+            
+            if (!r.isPlaced()) {
+                System.out.println("WARNING: Rectangle was NOT placed!");
+                error = true;
+            }
         }
     }
     
@@ -309,6 +341,8 @@ public class GUI extends JFrame {
      */
     public void reload() {   
         try {
+            error = false;
+            
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
 
@@ -340,6 +374,11 @@ public class GUI extends JFrame {
             
             //update title
             this.setTitle(TITLE);
+            
+            //update ERROR (if any)
+            if (DISPLAY_ERRORS && error) {
+                appendTitle(" | ERROR: Invalid Pack");
+            }
             
             //update coverage percentage
             if (DISPLAY_COVERAGE) {
