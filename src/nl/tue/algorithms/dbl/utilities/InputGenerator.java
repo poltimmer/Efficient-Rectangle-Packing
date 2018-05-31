@@ -63,7 +63,7 @@ public class InputGenerator {
             uniform = false;
         }
         //more square rectangles?
-        System.out.println("alternate cuts or randomise? a/r (alternating cuts makes for more square rectangles, instead of long shapes)");
+        System.out.println("alternate cuts or randomise? a/r (alternating cuts prevents extremely long shapes)");
         char alternateChar = sc.next().charAt(0);
         if (alternateChar == 'a'){
             alternate = true;
