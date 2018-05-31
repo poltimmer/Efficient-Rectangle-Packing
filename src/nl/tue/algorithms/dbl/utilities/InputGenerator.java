@@ -38,6 +38,7 @@ public class InputGenerator {
     public static List<Rectangle> leafList = new ArrayList<Rectangle>(); //list keeping track of all rectangles (leaves in tree)
     public static boolean rotate = false;
     public static boolean uniform = false;
+    public static boolean alternate = false;
 
     public void run(){
         OUTPUT.mkdirs();
@@ -61,6 +62,14 @@ public class InputGenerator {
         } else if (uniformChar == 'r'){
             uniform = false;
         }
+        //more square rectangles?
+        System.out.println("alternate cuts or randomise? a/r (alternating cuts makes for more square rectangles, instead of long shapes)");
+        char alternateChar = sc.next().charAt(0);
+        if (alternateChar == 'a'){
+            alternate = true;
+        } else if (alternateChar == 'r'){
+            alternate = false;
+        }
         System.out.println("canvas height?");
         height = sc.nextInt();
         System.out.println("canvas width?");
@@ -76,7 +85,17 @@ public class InputGenerator {
             Rectangle rectangle = leafList.get(index);
             //and split it if possible
             if (rectangle.topright[0] - rectangle.botleft[0] > MINSIZE && rectangle.topright[1] - rectangle.botleft[1] > MINSIZE) {
-                rectangle.split(random.nextBoolean());
+                if (alternate){ //alternate splits to prevent long rectangles
+                    if (rectangle.topright[0] - rectangle.botleft[0] > rectangle.topright[1] - rectangle.botleft[1]){
+                        rectangle.split(true);
+                    } else if (rectangle.topright[0] - rectangle.botleft[0] < rectangle.topright[1] - rectangle.botleft[1]) {
+                        rectangle.split(true);
+                    } else {
+                        rectangle.split(random.nextBoolean());
+                    }
+                } else {
+                    rectangle.split(random.nextBoolean());
+                }
             } else if (rectangle.topright[0] - rectangle.botleft[0] > MINSIZE) {
                 rectangle.split(true);
             } else if (rectangle.topright[1] - rectangle.botleft[1] > MINSIZE) {
