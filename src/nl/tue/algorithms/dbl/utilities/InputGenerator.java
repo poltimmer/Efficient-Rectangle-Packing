@@ -89,7 +89,7 @@ public class InputGenerator {
                     if (rectangle.topright[0] - rectangle.botleft[0] > rectangle.topright[1] - rectangle.botleft[1]){
                         rectangle.split(true);
                     } else if (rectangle.topright[0] - rectangle.botleft[0] < rectangle.topright[1] - rectangle.botleft[1]) {
-                        rectangle.split(true);
+                        rectangle.split(false);
                     } else {
                         rectangle.split(random.nextBoolean());
                     }
