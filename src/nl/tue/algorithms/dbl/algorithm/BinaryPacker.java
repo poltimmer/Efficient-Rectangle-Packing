@@ -129,7 +129,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
             r.setLocation(n.getxNode(), 0);
             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
             rightNode = x;
-            if (x.getyNode() >= rightNode.getyNode()) {
+            if (x.getyNode() >= topNode.getyNode()) {
                 topNode = x;
             }
             n.setyRoom(n.getyRoom() - r.height);
