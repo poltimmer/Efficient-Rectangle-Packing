@@ -113,5 +113,13 @@ public class RectangleRotatable extends Rectangle {
         return "(" + width + ", " + height + ")";
     }
     
+    public int getRotatedWidth() {
+        return rotated ? this.height : this.width;
+    }
+    
+    public int getRotatedHeight() {
+        return rotated ? this.width : this.height;
+    }
+    
     //TODO: possible extensions include rotations, positions, etc.
 }

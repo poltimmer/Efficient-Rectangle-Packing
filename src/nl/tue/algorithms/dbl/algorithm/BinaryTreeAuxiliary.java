@@ -62,11 +62,11 @@ public class BinaryTreeAuxiliary {
      * @return true if algo should grow up, false if algo should grow right
      */
     public static boolean growTwoNodes(Node topNode, Node rightNode, RectangleRotatable r) {
-        boolean canGrowUp  = (r.width <= topNode.getxNode());
-        boolean canGrowRight = (r.height <= rightNode.getyNode());
+        boolean canGrowUp  = (r.getRotatedWidth() <= topNode.getxNode());
+        boolean canGrowRight = (r.getRotatedHeight() <= rightNode.getyNode());
 
-        boolean shouldGrowRight = canGrowRight && (topNode.getyNode() >= (rightNode.getxNode() + r.width)); // attempt to keep square-ish by growing right when height is much greater than width
-        boolean shouldGrowUp  = canGrowUp  && (rightNode.getxNode() >= (topNode.getyNode() + r.height)); // attempt to keep square-ish by growing down  when width  is much greater than height
+        boolean shouldGrowRight = canGrowRight && (topNode.getyNode() >= (rightNode.getxNode() + r.getRotatedWidth())); // attempt to keep square-ish by growing right when height is much greater than width
+        boolean shouldGrowUp  = canGrowUp  && (rightNode.getxNode() >= (topNode.getyNode() + r.getRotatedHeight())); // attempt to keep square-ish by growing down  when width  is much greater than height
 
         if (!(canGrowRight || canGrowUp)) {
             throw new IllegalStateException("Rectangle can't be placed, make sure to sort the list of rectangles on width or height");
@@ -87,7 +87,7 @@ public class BinaryTreeAuxiliary {
 
     public static boolean fits(Node node, RectangleRotatable rec) {
         //size of rectangle
-        int recHeight = (int) rec.getHeight();
+        int recHeight = (int) rec.getRotatedHeight();
         //int recWidth = (int) rec.getWidth();
 
 
