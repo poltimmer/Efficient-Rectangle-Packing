@@ -28,6 +28,7 @@ public class PositionPlaces implements Iterable<Point> {
     Point pointRight;
     Point pointUp;
     Point oldPoint = new Point(0,0);
+    boolean isRotated;
 
 
     /** Constructor for general range.  */
@@ -48,6 +49,9 @@ public class PositionPlaces implements Iterable<Point> {
         return positions;
     }
 
+    public void setChange(boolean isRotated){
+        this.isRotated = isRotated;
+    }
 
     /**
      * Inner class for a low-to-high iterator.
@@ -82,7 +86,6 @@ public class PositionPlaces implements Iterable<Point> {
              */
             public boolean hasNext()
             {
-
                 return placement <= sentinel;
             }
 
@@ -93,13 +96,12 @@ public class PositionPlaces implements Iterable<Point> {
 
             public Point next() throws NoSuchElementException {
                 // Precondition.
-                if (! hasNext()) {
+                if (! hasNext() && !isRotated) {
                     throw new NoSuchElementException("IntRelationArraysIterator.next");
                 }
 
                 // pick the next point
                 point = positions.get(placement);
-
 
                 // coordinates of the point
                 int pointX = point.x;
@@ -112,15 +114,21 @@ public class PositionPlaces implements Iterable<Point> {
                 int heighta = R1.height;
 
                 // create the new point the new points
-                pointRight = new Point(pointX + widtha , pointY );
-                pointUp = new Point(pointX, pointY + heighta);
-
+                if(!isRotated || !pack.canRotate()) {
+                    pointRight = new Point(pointX + widtha, pointY);
+                    pointUp = new Point(pointX, pointY + heighta);
+                } else { // if isRotated
+                    pointRight = new Point(pointX + heighta, pointY);
+                    pointUp = new Point(pointX, pointY + widtha);
+                }
                 // make the point the rightPoint and add the UpPoint
                 point.setLocation(pointRight);
                 positions.add(pointUp);
 
                 // adjust the placement
-                placement ++;
+                if(!isRotated || !pack.canRotate()) {
+                    placement++;
+                }
 
                 //return the point
                 return oldPoint;
