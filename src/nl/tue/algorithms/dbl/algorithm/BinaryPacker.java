@@ -1,15 +1,7 @@
 package nl.tue.algorithms.dbl.algorithm;
-import com.sun.javafx.font.directwrite.RECT;
 import nl.tue.algorithms.dbl.common.*;
 
-import java.awt.*;
-import java.util.Iterator;
 import java.util.ArrayList;
-
-import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.fits;
-import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.growNode;
-import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.growTwoNodes;
-
 
 /**
  * Algorithm for packing, using nodes.
@@ -21,7 +13,7 @@ import static nl.tue.algorithms.dbl.algorithm.BinaryTreeAuxiliary.growTwoNodes;
 
 public class BinaryPacker extends  Algorithm<PackHeightQueue> {
 
-    private ArrayList<Node> nodeList = new ArrayList();
+    private ArrayList<Node> nodeList = new ArrayList<>();
     private Node rightNode;
     private Node topNode;
 
@@ -43,14 +35,14 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
         }
     }
 
-    private void placeRectangle(Node top, Node right, ArrayList list) {
+    private void placeRectangle(Node top, Node right, ArrayList<Node> list) {
         nodeList = list;
         topNode = top;
         rightNode = right;
         //If pack not empty take next rectangle
         if (!pack.getRectangles().isEmpty()) {
             RectangleRotatable r = pack.getRectangles().poll();
-            //System.out.println(r.height);
+            //ValidCheck.print(r.height);
             if (nodeList.size() == 1) {
                 placeOneNode(r);
                 placeRectangle(topNode, rightNode, nodeList);
@@ -58,7 +50,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                 //if more than one node, fill in the gap.
                 for (Node n : nodeList) {
                     if (n != rightNode) {
-                        if (fits(n, r) && r.width + n.getxNode() <= rightNode.getxNode()) { //if rectangle fits in node and does not extend the right most node
+                        if (BinaryTreeAuxiliary.fits(n, r) && r.width + n.getxNode() <= rightNode.getxNode()) { //if rectangle fits in node and does not extend the right most node
                             r.setLocation(n.getxNode(), n.getyNode() - n.getyRoom()); //place node
                             n.setyRoom(n.getyRoom() - r.height); //change the values of the node
                             Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height); //adds new node
@@ -84,7 +76,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                 if (r.y <= -1 || r.x <= -1) {
                     //plaatsen bij de right node of top node
                     //If true then grow up, if false grow right
-                    if (growTwoNodes(topNode, rightNode, r)) {
+                    if (BinaryTreeAuxiliary.growTwoNodes(topNode, rightNode, r)) {
                         r.setLocation(0, topNode.getyNode());
                         Node x = new Node(r.x + r.width, r.y + r.height, r.width, r.height);
                         topNode = x;
@@ -108,7 +100,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                 }
             }
         } else {
-            System.out.println("done");
+            ValidCheck.print("done");
         }
     }
 

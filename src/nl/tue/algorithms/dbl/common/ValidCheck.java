@@ -103,4 +103,11 @@ public class ValidCheck {
     protected static boolean isRectangleRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
         return !(p.canRotate() || !r.isRotated());
     }
+    
+    /**
+     * Prints to System.out
+     */
+    public static void print(Object str) {
+        //System.out.println(str);
+    }
 }
