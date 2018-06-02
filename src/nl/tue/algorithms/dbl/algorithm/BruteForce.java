@@ -1,6 +1,5 @@
 package nl.tue.algorithms.dbl.algorithm;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
@@ -34,7 +33,7 @@ import java.util.List;
     public void solve() { // method that solves this shit
         // declaring important variants
         int rectanglesLeft = pack.getRectangles().size();
-        System.out.println(pack.getRectangles());
+        ValidCheck.print(pack.getRectangles());
         //HERE
         int bestSolution = Integer.MAX_VALUE;
         List<RectangleRotatable> rectanglesUsed;
@@ -43,7 +42,7 @@ import java.util.List;
         if (amountRectangles<8){
             for(int i = 1; i<=amountRectangles; i++){
                 limit = limit * i*i;
-                System.out.println("limit = " + limit);
+                ValidCheck.print("limit = " + limit);
             }
         } else {
             limit = Integer.MAX_VALUE-1;
@@ -59,7 +58,7 @@ import java.util.List;
         possiblePlaces.add(startPosition);
 
         FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
-        System.out.println("count =" + count);
+        ValidCheck.print("count =" + count);
         copyToPack(bestSolutionRectangles,pack);
 
     }
@@ -85,7 +84,7 @@ import java.util.List;
                         Iterator iter = positions.iterator();
 
                         boolean rotated = !pack.canRotate();
-                        System.out.println(rotated);
+                        ValidCheck.print(rotated);
 
                         // loop over all the possible positions
                         while (iter.hasNext() || !rotated) {
@@ -174,8 +173,8 @@ import java.util.List;
                 newSolution = maxRightBorder * maxTopBorder;
                 if (newSolution < bestSolution) {
                     // change the best solution
-                    System.out.println("new solution = " + newSolution);
-                    System.out.println("old solution was = " + bestSolution);
+                    ValidCheck.print("new solution = " + newSolution);
+                    ValidCheck.print("old solution was = " + bestSolution);
                     bestSolution = newSolution;
 
                     // place the best solution in a new list.
