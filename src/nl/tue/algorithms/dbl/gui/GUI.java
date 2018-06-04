@@ -51,7 +51,7 @@ public class GUI extends JFrame {
     private Graphics2D gImg;
     
     /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
-    public static int SIZE_MODIFIER = 10;
+    public static int SIZE_MODIFIER = 1;
     
     /** Scroll speed of the Horizontal and Vertical Scroll bars of the JScrollPane */
     public static final int SCROLL_SPEED = 20;
@@ -346,7 +346,7 @@ public class GUI extends JFrame {
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
 
-            PackingSolver solver = new PackingSolver(System.in, BinaryPacker.class);
+            PackingSolver solver = new PackingSolver(System.in, BruteForce.class);
             // PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingWidth.class);
             //A specific algorithm can be chosen by using something like:
             //new PackingSolver(System.in, BruteForce.class);
