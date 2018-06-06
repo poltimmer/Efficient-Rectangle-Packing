@@ -156,5 +156,5 @@ public abstract class Pack {
      */
     public int getCoveragePercentage() {
         return getUsedArea() * 100 / getContainerArea();
-    }    
+    }
 }

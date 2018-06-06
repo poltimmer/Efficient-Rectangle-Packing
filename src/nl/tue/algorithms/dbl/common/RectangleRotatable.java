@@ -121,5 +121,13 @@ public class RectangleRotatable extends Rectangle {
         return rotated ? this.width : this.height;
     }
     
-    //TODO: possible extensions include rotations, positions, etc.
+    /**
+     * Copies this rectangle and returns a new instance
+     * @return A rectangle with the same width, height, location, etc. as this
+     */
+    public RectangleRotatable copy() {
+        RectangleRotatable r = new RectangleRotatable(ID, width, height);
+        r.setLocation(x, y);
+        return r;
+    }
 }

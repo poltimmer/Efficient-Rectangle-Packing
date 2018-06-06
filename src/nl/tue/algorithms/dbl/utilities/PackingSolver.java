@@ -8,14 +8,14 @@ import nl.tue.algorithms.dbl.algorithm.Algorithm;
 import nl.tue.algorithms.dbl.algorithm.BinaryPacker;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingWidth;
 import nl.tue.algorithms.dbl.algorithm.BruteForce;
-//import nl.tue.algorithms.dbl.algorithm.RecursiveFit;
-import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.io.InputReader;
 import nl.tue.algorithms.dbl.io.OutputWriter;
 
 /**
- * Class that is expected by Momotor. Should be the only class with a main method!
+ * Class that is expected by Momotor.
+ * Solves a given PackingProblem from an Inputstream.
+ * Can be forced to use a specific algorithm to solve the PackignProblem.
  */
 
 /**
@@ -57,18 +57,9 @@ public class PackingSolver {
     }
     
     private Algorithm selectAlgorithm(PackData data) {
-        //an algorithm based on pack data can be chosen here. E.g.:
-        /* 
-            if (data.canRotate()) {
-                return new AlgorithmOne(data);
-            } else {
-                return new AlgorithmTwo(data);
-            }
-        */
-        //since we only have 1 algorithm, we have to do this:
-        
-        //for small input sizes (n<=5) we want bruteforce
-        if (data.getNumberOfRectangles()<=5) {
+        //an algorithm based on pack data can be chosen here.        
+        //for small input sizes (n <= 5) we want bruteforce
+        if (data.getNumberOfRectangles() <= 5) {
             return new BruteForce(data);
         }
         //for bigger inputs without fixed height defined we can only use BinaryPacker

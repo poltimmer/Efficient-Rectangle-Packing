@@ -25,7 +25,6 @@ public abstract class Algorithm<P extends Pack> {
      */
     public abstract void solve();
     
-    
     /**
      * Gets the height of the Pack. The invoked default implementation of the Pack
      * is rather inefficient however.
@@ -50,6 +49,16 @@ public abstract class Algorithm<P extends Pack> {
      */
     public int getContainerWidth() {
         return pack.getContainerWidth();
+    }
+    
+    /**
+     * Gets the area of the Pack by invoking the Pack's implementation of it.
+     * 
+     * @return The area of the pack's container (0 if there are no rectangles
+     * or none have been placed yet)
+     */
+    int getContainerArea() {
+        return pack.getContainerArea();
     }
 
 }

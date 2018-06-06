@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class PackList extends Pack {
 
-    private List<RectangleRotatable> rectangles;
+    private final List<RectangleRotatable> rectangles;
     public PackList(PackData data) {
         super(data);
         this.rectangles = new ArrayList<>();

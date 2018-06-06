@@ -342,25 +342,42 @@ public class GUI extends JFrame {
     public void reload() {   
         try {
             error = false;
+            String subAlgo = "";
+            
+            Class <? extends Algorithm> forcedClass = CompoundAlgorithm.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
 
-            PackingSolver solver = new PackingSolver(System.in, BinaryPacker.class);
-            // PackingSolver solver = new PackingSolver(System.in, FirstFitDecreasingWidth.class);
-            //A specific algorithm can be chosen by using something like:
-            //new PackingSolver(System.in, BruteForce.class);
+            //Force the solver to use a specific algorithm
+            PackingSolver solver = new PackingSolver(System.in, forcedClass);
             
             //add the rectangles to the solver's Pack and calculate
             //how to place those rectangles in this pack
             solver.readRectangles();
-            solver.solve();
+            
+            //Special stuff for a compoundClass
+            if (forcedClass == CompoundAlgorithm.class) {
+                //This only works (and is neccessary) for a CompoundAlgorithm
+                CompoundAlgorithm compoundAlgo = (CompoundAlgorithm) solver.getAlgorithm();
+                
+                //Add other algorithms to the CompoundAlgorithm
+                //compoundAlgo.add(BinaryPacker.class, true);
+                compoundAlgo.add(FirstFitDecreasingWidth.class, true);
+                
+                solver.solve();
+                
+                //additional info
+                subAlgo = "(" + compoundAlgo.bestAlgoName + ", " + (compoundAlgo.getPack().canRotate() ? "" : "no ") + "rotations)";
+            } else {
+                solver.solve();
+            }      
             
             //Get the pack
             Pack p = solver.getAlgorithm().getPack();
             
             //Print useful data
-            System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
+            System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " " + subAlgo + " is shown on the Screen");
             System.out.println("Input contained " + p.getNumberOfRectangles() + " rectangles: ");
             System.out.println(p.getOrderedRectangles());
             

@@ -102,7 +102,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                 }
             }
         } else {
-            ValidCheck.print("done");
+            //ValidCheck.print("done");
         }
     }
     */
@@ -195,7 +195,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                     }
                 }
             } else {
-                ValidCheck.print("done");
+                //ValidCheck.print("done");
             }
         }
     }
