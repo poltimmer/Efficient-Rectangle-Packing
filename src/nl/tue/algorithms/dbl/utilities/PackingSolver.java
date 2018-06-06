@@ -9,6 +9,7 @@ import nl.tue.algorithms.dbl.algorithm.BinaryPacker;
 import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingWidth;
 import nl.tue.algorithms.dbl.algorithm.BruteForce;
 import nl.tue.algorithms.dbl.common.PackData;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 import nl.tue.algorithms.dbl.io.InputReader;
 import nl.tue.algorithms.dbl.io.OutputWriter;
 
@@ -91,7 +92,7 @@ public class PackingSolver {
     //Expected by Momotor; Uses System.in and System.out
     public static void main(String args[]) throws IOException {
         PackingSolver solver = new PackingSolver(System.in);
-        //System.out.println("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
+        ValidCheck.print("Result using " + solver.getAlgorithm().getClass().getSimpleName() + " is shown on the Screen");
         //A specific algorithm can instead be chosen by using:
         //new PackingSolver(System.in, BruteForce.class);
         

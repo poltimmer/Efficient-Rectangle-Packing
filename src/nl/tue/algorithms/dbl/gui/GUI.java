@@ -344,7 +344,7 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
-            Class <? extends Algorithm> forcedClass = CompoundAlgorithm.class;
+            Class <? extends Algorithm> forcedClass = FirstFitDecreasingWidth.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
@@ -362,8 +362,8 @@ public class GUI extends JFrame {
                 CompoundAlgorithm compoundAlgo = (CompoundAlgorithm) solver.getAlgorithm();
                 
                 //Add other algorithms to the CompoundAlgorithm
-                //compoundAlgo.add(BinaryPacker.class, true);
                 compoundAlgo.add(FirstFitDecreasingWidth.class, true);
+                compoundAlgo.add(BinaryPacker.class, true);
                 
                 solver.solve();
                 

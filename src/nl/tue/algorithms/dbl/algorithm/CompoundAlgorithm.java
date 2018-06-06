@@ -6,6 +6,7 @@ import java.util.List;
 import nl.tue.algorithms.dbl.common.Pack;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
+import nl.tue.algorithms.dbl.common.Pair;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
 
 /**
@@ -20,7 +21,7 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
  */
 public class CompoundAlgorithm extends Algorithm<Pack> {
     /** List of subscribed algorithms */
-    private final List<Algorithm> algos;
+    private final List<Pair<Class<? extends Algorithm>, Boolean>> algos;
     public String bestAlgoName;
     
     public CompoundAlgorithm(PackData data) {
@@ -33,6 +34,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
      */
     @Override
     public void solve() throws IllegalStateException {
+        //there must be at least 1 algorithm
         if (algos.isEmpty()) {
             throw new IllegalStateException("ERROR: No algorithms to execute for this CompoundAlgorithm");
         }
@@ -42,7 +44,13 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
         int minContainerArea = Integer.MAX_VALUE;
         
         //execute all added algorithms
-        for (Algorithm algo : algos) {
+        for (Pair<Class<? extends Algorithm>, Boolean> algoClass : algos) {
+            //only create an instance of this class now as to preserve memory
+            //(data structures may be HUGE when having many rectangles)
+            Algorithm algo = newAlgoFromClass(algoClass.a, algoClass.b);
+            
+            //solve the packingProblem using the created algorithm, and retrieve
+            //its size
             algo.solve();
             int area = algo.getContainerArea();
             
@@ -50,6 +58,8 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
             //algorithm is found
             if (area < minContainerArea) {
                 minContainerArea = area;
+                //only storing the data structure of the best algorithm is enough
+                //The Java Garbage Collector can get rid of the worse solutions
                 bestAlgo = algo;
             }
         }
@@ -78,37 +88,42 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
         }
         
         //create packdata for this algorithm
-        PackData data = new PackData(pack.getFixedHeight(), pack.canRotate(), pack.getNumberOfRectangles());
-        add(algoClass, data);
+        algos.add(new Pair(algoClass, pack.canRotate()));
         
         if (bothRotations && pack.canRotate()) {
-            data = new PackData(pack.getFixedHeight(), false, pack.getNumberOfRectangles());
-            add(algoClass, data);
+            algos.add(new Pair(algoClass, false));
         }
     }
     
     /**
-     * 
-     * @param data 
+     * Instantiates an instance of a given Algorithm class using this.pack, but
+     * ignoring the value of this.pack.rotationsAllowed and instead using rotations
+     * for it.
+     * @param  algoClass the Algorithm class to create an instance of
+     * @param executeAsIfRotationsAllowed whether to execute the algorithm as if it had rotations
      */
-    private void add(Class <? extends Algorithm> algoClass, PackData data) {
-        Algorithm algo;
+    private Algorithm newAlgoFromClass(Class <? extends Algorithm> algoClass, boolean executeAsIfRotationsAllowed) {
+        Algorithm algo = null;
         try {
+            //create packdata
+            PackData data = new PackData(pack.getFixedHeight(), executeAsIfRotationsAllowed, pack.getNumberOfRectangles());
+            
             //create the algorithm by calling its constructor
             algo = algoClass.getConstructor(PackData.class).newInstance(data);
             //add the rectangles to it
             addRectanglesToPack(algo.pack);           
-            //add it to our list
-            algos.add(algo);
+            
+            //return the algo
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             //display error if class could not be created
             System.err.println("ERROR: COULD NOT INSTANTIATE ALGORITHM OF CLASS " + algoClass.getSimpleName());
             e.printStackTrace();
         }
+        return algo;
     }
 
     /**
-     * Adds all rectangles from this pack to a given pack
+     * Adds all rectangles from this pack to a given pack (as a copy!)
      * @param p The pack to add the rectangles to
      * @pre p != null
      */

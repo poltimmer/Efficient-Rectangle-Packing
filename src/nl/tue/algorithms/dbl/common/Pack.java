@@ -68,7 +68,7 @@ public abstract class Pack {
     
     /** basic query */
     public boolean hasFixedHeight() {
-        return fixedHeight >= 0;
+        return fixedHeight > 0;
     }
 
     /** abstract query to be implemented by subclass **/
@@ -124,8 +124,13 @@ public abstract class Pack {
      * Calculates the area of the pack. Invokes getWidth() and getHeight()
      * @return the area of this pack
      */
-    public int getContainerArea() {
-        return getContainerHeight() * getContainerWidth();
+    public int getContainerArea() {       
+        int w = getContainerWidth();
+        int h = getContainerHeight();
+
+        //detect overflow
+        boolean overflow = (w!=0 && w*h/w != h) || (h!=0 && h*w/h != w);
+        return overflow ? Integer.MAX_VALUE : getContainerHeight()*getContainerWidth();
     }
     
     /**

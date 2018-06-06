@@ -58,7 +58,11 @@ public abstract class Algorithm<P extends Pack> {
      * or none have been placed yet)
      */
     int getContainerArea() {
-        return pack.getContainerArea();
-    }
+        int w = getContainerWidth();
+        int h = getContainerHeight();
 
+        //detect overflow
+        boolean overflow = (w!=0 && w*h/w != h) || (h!=0 && h*w/h != w);
+        return overflow ? Integer.MAX_VALUE : getContainerHeight()*getContainerWidth();
+    }
 }
