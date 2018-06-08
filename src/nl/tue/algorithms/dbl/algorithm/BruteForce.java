@@ -11,7 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Algorithm that brute forces a solution, with no rotation and no fixed height
+ * Algorithm that brute forces a solution. It tries all possibilities and presents
+ * the best solution out of those. That is, the possibility with the lowest area.
  *
  * @author Tom Verberk
  * @since 16 May 2018
@@ -170,7 +171,7 @@ import java.util.List;
                         maxTopBorder = topBorder; // change the new one
                     }
                 }
-                newSolution = maxRightBorder * maxTopBorder;
+                newSolution = maxRightBorder * Math.max(maxTopBorder, pack.getFixedHeight());
                 if (newSolution < bestSolution) {
                     // change the best solution
                     ValidCheck.print("new solution = " + newSolution);

@@ -344,7 +344,7 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
-            Class <? extends Algorithm> forcedClass = FirstFitDecreasingWidth.class;
+            Class <? extends Algorithm> forcedClass = BruteForce.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
