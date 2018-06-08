@@ -95,7 +95,7 @@ public class FirstFitDecreasingWidth extends Algorithm<PackWidthQueue> {
     
     @Override
     public int getContainerHeight() {
-        return containerHeight;
+        return Math.max(containerHeight, pack.getFixedHeight());
     }
     
     @Override

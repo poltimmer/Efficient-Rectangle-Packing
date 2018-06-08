@@ -88,6 +88,10 @@ public abstract class Pack {
      * have been placed yet)
      */
     public int getContainerHeight() {
+        if (hasFixedHeight()) {
+            return getFixedHeight();
+        }
+        
         int highestY = Integer.MIN_VALUE;
         
         for (RectangleRotatable r : getOrderedRectangles()) {
