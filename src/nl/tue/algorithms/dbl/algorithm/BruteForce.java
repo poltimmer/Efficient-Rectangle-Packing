@@ -32,8 +32,8 @@ import java.util.List;
     @Override
     public void solve() { // method that solves this shit
         // declaring important variants
-        int rectanglesLeft = pack.getRectangles().size();
-        ValidCheck.print(pack.getRectangles());
+        int rectanglesLeft = pack.getOrderedRectangles().size();
+        ValidCheck.print(pack.getOrderedRectangles());
         //HERE
         int bestSolution = Integer.MAX_VALUE;
         List<RectangleRotatable> rectanglesUsed;
@@ -51,7 +51,6 @@ import java.util.List;
             limit = limit*4;
         }
 
-
         //initiate the possiblePlaces list
         Point startPosition = new Point(0, 0);
         possiblePlaces = new LinkedList<>();
@@ -64,11 +63,19 @@ import java.util.List;
     }
 
     public void FindBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft) {
+        
+        // check if current solution is better than best solution
+        // kinda untested, but for example the test input 5 rectangles v1 gives better results when this is enabled...
+        if (!solutionStillBetterThanBest()) {
+            return;
+        }
+        
+        
         if (count > limit) {
             return;
         } else {
             if (rectanglesLeft > 0) { // add another rectangle
-                for (RectangleRotatable a : pack.getRectangles()) { // loop over all the rectangles
+                for (RectangleRotatable a : pack.getOrderedRectangles()) { // loop over all the rectangles
                     boolean alreadyUsed = false;
                     if (!rectanglesUsed.isEmpty()) {
                         for (RectangleRotatable usedRectangle : rectanglesUsed) { // check if the rectangle was already used
@@ -146,7 +153,8 @@ import java.util.List;
                 count++;
                 int maxRightBorder = 0;
                 int maxTopBorder = 0;
-                for (RectangleRotatable R1 : pack.getRectangles()) {
+                /*
+                for (RectangleRotatable R1 : pack.getOrderedRectangles()) {
                     // calculate the rightborder for each rectangle
                     int rightBorder;
                     if(R1.isRotated()){
@@ -169,8 +177,8 @@ import java.util.List;
                     if (topBorder > maxTopBorder) {
                         maxTopBorder = topBorder; // change the new one
                     }
-                }
-                newSolution = maxRightBorder * maxTopBorder;
+                }*/
+                newSolution = getContainerArea();
                 if (newSolution < bestSolution) {
                     // change the best solution
                     ValidCheck.print("new solution = " + newSolution);
@@ -181,7 +189,7 @@ import java.util.List;
                     bestSolutionRectangles = new LinkedList<>();
 
                     for (RectangleRotatable a : rectanglesUsed) {
-                        bestSolutionRectangles.add((RectangleRotatable) a.clone());
+                        bestSolutionRectangles.add(a.copy());
                     }
 
                 }
@@ -201,6 +209,10 @@ import java.util.List;
                 }
             }
         }
+    }
+    
+    private boolean solutionStillBetterThanBest() {
+        return bestSolution > getContainerArea();
     }
 
  }
