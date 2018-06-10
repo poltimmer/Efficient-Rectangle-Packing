@@ -149,6 +149,8 @@ class Rectangle {
     Random random = new Random();
     int[] botleft;
     int[] topright;
+    Rectangle leftChild;
+    Rectangle rightChild;
 
     public Rectangle(int[] bl, int[] tr) {
         botleft = bl;
@@ -156,20 +158,17 @@ class Rectangle {
         InputGenerator.leafList.add(this); //add this rectangle to leaflist
     }
 
-    Rectangle leftChild;
-    Rectangle rightChild;
-
     void split(boolean direction) {
         // At this point, the rectangle will get split.
         InputGenerator.leafList.remove(InputGenerator.leafList.indexOf(this)); //remove this rectangle
         InputGenerator.recNumber++; //increment, for the amount of leaves is about to increment.
-        if (direction) {
+        if (direction) { //split vertically
             int split = random.nextInt(topright[0] - botleft[0] - 1 - InputGenerator.MINSIZE/2) + botleft[0] + 1 + InputGenerator.MINSIZE/4;
             int[] leftTopRight = {split, topright[1]};
             int[] rightBotLeft = {split, botleft[1]};
             leftChild = new Rectangle(botleft, leftTopRight);
             rightChild = new Rectangle(rightBotLeft, topright);
-        } else {
+        } else { //split horizontally
             int split = random.nextInt(topright[1] - botleft[1] - 1 - InputGenerator.MINSIZE/2) + botleft[1] + 1 + InputGenerator.MINSIZE/4;
             int[] botTopRight = {topright[0], split};
             int[] topBotLeft = {botleft[0], split};
