@@ -21,7 +21,7 @@ public class PackLinkedList extends Pack {
             @Override
             public int compare(RectangleRotatable o1, RectangleRotatable o2) {
                 if (!canRotate()) {
-                    return (o1.getWidth() >= o2.getWidth()) ? 1 : -1;
+                    return (o1.getWidth() >= o2.getWidth()) ? -1 : 1;
                 } else {
                     if (o2.getHeight() > o2.getWidth()) {
                         o2.setRotated(true);
