@@ -27,6 +27,9 @@ public abstract class Pack {
         this.rectangleOrder = new ArrayList<>();
     }
     
+    /** Ratio at which to rotate rectangles */
+    private final static double ROTATE_RATIO = 3;
+    
     /**
      * Adds a rectangle to be packed to the pack
      * @param rec Rectangle to add
@@ -164,6 +167,20 @@ public abstract class Pack {
      * @return The coverage as a value from 0-100, representing a percentage
      */
     public long getCoveragePercentage() {
-        return (long)getUsedArea() * (long)100 / (long)getContainerArea();
+        return (long) getUsedArea() * 100 / (long) getContainerArea();
+    }
+    
+    /**
+     * Checks whether the pack should rotate r based on Ratios
+     * @param r Rectangle
+     * @return true if the rectangle should be rotated
+     */
+    protected boolean shouldRotate(RectangleRotatable r) {
+                //rotations are allowed AND
+        return canRotate() &&
+                //The rectangle has the ratio OR
+                (r.getHeight() / r.getWidth() >= ROTATE_RATIO) ||
+                //There is a fixed height and the rectangle's height exceeds this
+                (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight());
     }
 }

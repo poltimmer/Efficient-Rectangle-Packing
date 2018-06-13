@@ -59,7 +59,7 @@ public class PackingSolver {
         //an algorithm based on pack data can be chosen here.        
         //for small input sizes (n <= 5) we want bruteforce
         return new RecursiveFit(data);
-        /**if (data.getNumberOfRectangles() <= 5) {
+        /*if (data.getNumberOfRectangles() <= 5) {
             return new BruteForce(data);
         }
         //for bigger inputs without fixed height defined we can only use BinaryPacker
