@@ -35,10 +35,12 @@ public class PackLinkedList extends Pack {
                     } else if (Math.max(o1.getHeight(), o1.getWidth()) < Math.max(o2.getHeight(), o2.getWidth())) {
                         return 1;
                     } else {
-                        if (Math.min(o1.getHeight(), o1.getWidth()) >= Math.min(o2.getHeight(), o2.getWidth())) {
+                        if (Math.min(o1.getHeight(), o1.getWidth()) > Math.min(o2.getHeight(), o2.getWidth())) {
                             return -1;
-                        } else {
+                        } else if (Math.min(o1.getHeight(), o1.getWidth()) < Math.min(o2.getHeight(), o2.getWidth())){
                             return 1;
+                        } else {
+                            return 0;
                         }
                     }
                 }

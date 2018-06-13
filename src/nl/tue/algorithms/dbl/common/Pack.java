@@ -163,7 +163,7 @@ public abstract class Pack {
      * how much of the pack's container is filled with rectangles
      * @return The coverage as a value from 0-100, representing a percentage
      */
-    public int getCoveragePercentage() {
-        return getUsedArea() * 100 / getContainerArea();
+    public long getCoveragePercentage() {
+        return (long)getUsedArea() * (long)100 / (long)getContainerArea();
     }
 }

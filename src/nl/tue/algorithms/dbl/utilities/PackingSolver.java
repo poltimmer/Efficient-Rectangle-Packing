@@ -97,9 +97,7 @@ public class PackingSolver {
         
         solver.readRectangles();
         solver.solve();
-        System.out.println("Percentage: " + solver.getAlgorithm().getPack().getCoveragePercentage());
         
         solver.printOutput(System.out, true);
-        System.out.println("Percentage: " + solver.getAlgorithm().getPack().getCoveragePercentage());
     }
 }

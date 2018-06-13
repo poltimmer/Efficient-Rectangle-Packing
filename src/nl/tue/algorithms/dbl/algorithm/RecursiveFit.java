@@ -72,8 +72,16 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
      * @return \return A >= 0 if r fits, where A is the remaining area or \return = -1 if r doesn't fit
      */
     public boolean rectangleFitter(RectangleRotatable r, int x, int y, int s) {
-        if (r.isRotated()) {
-            return (x+(int)r.getHeight()<=s) && (y+(int)r.getWidth()<=H);
+        if (pack.canRotate()) {
+            if ((x+(int)r.getHeight()<=s) && (y+(int)r.getWidth()<=H)) {
+                r.setRotated(true);
+                return true;
+            } else if ((x+(int)r.getWidth()<=s) && (y+(int)r.getHeight()<=H)) {
+                r.setRotated(false);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return (x+(int)r.getWidth()<=s) && (y+(int)r.getHeight()<=H);
         }

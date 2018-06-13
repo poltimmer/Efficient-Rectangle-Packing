@@ -51,7 +51,7 @@ public class GUI extends JFrame {
     private Graphics2D gImg;
     
     /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
-    public static int SIZE_MODIFIER = 5;
+    public static int SIZE_MODIFIER = 1;
     
     /** Scroll speed of the Horizontal and Vertical Scroll bars of the JScrollPane */
     public static final int SCROLL_SPEED = 20;
