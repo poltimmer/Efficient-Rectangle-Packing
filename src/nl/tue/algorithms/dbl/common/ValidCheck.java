@@ -108,6 +108,6 @@ public class ValidCheck {
      * Prints to System.out
      */
     public static void print(Object str) {
-        //System.out.println(str);
+        System.out.println(str);
     }
 }

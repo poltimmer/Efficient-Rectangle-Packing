@@ -51,7 +51,7 @@ public class GUI extends JFrame {
     private Graphics2D gImg;
     
     /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
-    public static int SIZE_MODIFIER = 5;
+    public static int SIZE_MODIFIER = 10;
     
     /** Scroll speed of the Horizontal and Vertical Scroll bars of the JScrollPane */
     public static final int SCROLL_SPEED = 20;
@@ -215,9 +215,8 @@ public class GUI extends JFrame {
      * @post The specified rectangle is drawn on the screen with an arbitrary
      * colour
      */
-    public void drawRectangle(RectangleRotatable r) {
+    public void drawRectangle(RectangleRotatable r) {       
         Color col = getNextColor();
-        
         drawRectangle(r, col);
     }
     
@@ -226,6 +225,8 @@ public class GUI extends JFrame {
             drawRectangle(new Rectangle(r.x, r.y, r.width, r.height), col);
         } else {
             drawRectangle(new Rectangle(r.x, r.y, r.height, r.width), col);
+            gImg.setColor(Color.BLACK);
+            gImg.drawString("R", r.x*SIZE_MODIFIER, img.getHeight() - r.y * SIZE_MODIFIER/*- r.width * SIZE_MODIFIER*/);
         }
     }
     
@@ -266,7 +267,7 @@ public class GUI extends JFrame {
             }
             
             if (!r.isPlaced()) {
-                System.out.println("WARNING: Rectangle was NOT placed!");
+                System.out.println("WARNING: Rectangle (" + r + ") was NOT placed!");
                 error = true;
             }
         }
@@ -343,7 +344,7 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
-            Class <? extends Algorithm> forcedClass = RecursiveFit.class;
+            Class <? extends Algorithm> forcedClass = BruteForce.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
@@ -407,7 +408,8 @@ public class GUI extends JFrame {
             }
             
         } catch (IOException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            System.err.println("ERROR: IOException was thrown. Probably related to the size of the container that is too big...");
         }
     }
 

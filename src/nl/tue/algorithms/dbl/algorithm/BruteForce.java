@@ -29,6 +29,9 @@ import java.util.List;
     public List<RectangleRotatable> bestSolutionRectangles;
     int count = 0;
     int limit = 1;
+    
+    //Whether a solution with 100% coverage has been found
+    private boolean hundredPercentCoverageFound = false;
 
     @Override
     public void solve() { // method that solves this shit
@@ -57,17 +60,17 @@ import java.util.List;
         possiblePlaces = new LinkedList<>();
         possiblePlaces.add(startPosition);
 
-        FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
+        findBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
         ValidCheck.print("count =" + count);
         copyToPack(bestSolutionRectangles,pack);
 
     }
 
-    public void FindBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft) {
-        
-        // check if current solution is better than best solution
+    public void findBestSolution(List<Point> possiblePlaces, PackList pack, List<RectangleRotatable> rectanglesUsed, int rectanglesLeft) {
+        // check if we have already found a solution with 100% coverage (cannot be improved)
+        // also check if current solution is better than best solution
         // kinda untested, but for example the test input 5 rectangles v1 gives better results when this is enabled...
-        if (!solutionStillBetterThanBest()) {
+        if (hundredPercentCoverageFound || !solutionStillBetterThanBest()) {
             return;
         }
         
@@ -110,7 +113,7 @@ import java.util.List;
                             // place the rectangle
                             a.setLocation(pointX, pointY);
 
-                            if(pack.canRotate()){
+                            if (pack.canRotate()){
                                 a.setRotated(rotated);
                                 rotated = !rotated;
                             }
@@ -132,7 +135,7 @@ import java.util.List;
                                 possiblePlaces = positions.getPositions();
 
                                 // recurse over the pack with the new rectangles.
-                                FindBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft - 1);
+                                findBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft - 1);
 
                                 // remove the rotation if it is rotated
                                 if(pack.canRotate()) {
@@ -152,38 +155,12 @@ import java.util.List;
                 }
             } else {  // if rectanglesLeft == 0
                 count++;
-                int maxRightBorder = 0;
-                int maxTopBorder = 0;
-                /*
-                for (RectangleRotatable R1 : pack.getOrderedRectangles()) {
-                    // calculate the rightborder for each rectangle
-                    int rightBorder;
-                    if(R1.isRotated()){
-                        rightBorder = R1.x + R1.height;
-                    } else {
-                        rightBorder = R1.x + R1.width;
-                    }
-                    // check whether this is greater than the current rightest border
-                    if (rightBorder > maxRightBorder) {
-                        maxRightBorder = rightBorder; // change the new one
-                    }
-                    // calculate the topborder for each rectangle
-                    int topBorder;
-                    if(R1.isRotated()){
-                        topBorder = R1.y + R1.width;
-                    } else {
-                        topBorder = R1.y + R1.height;
-                    }
-                    // check whether this is greater than the current rightest border
-                    if (topBorder > maxTopBorder) {
-                        maxTopBorder = topBorder; // change the new one
-                    }
-                }*/
+                
                 newSolution = getContainerArea();
                 if (newSolution < bestSolution) {
                     // change the best solution
-                    ValidCheck.print("new solution = " + newSolution);
-                    ValidCheck.print("old solution was = " + bestSolution);
+                    //ValidCheck.print("new solution = " + newSolution);
+                    //ValidCheck.print("old solution was = " + bestSolution);
                     bestSolution = newSolution;
 
                     // place the best solution in a new list.
@@ -191,6 +168,12 @@ import java.util.List;
 
                     for (RectangleRotatable a : rectanglesUsed) {
                         bestSolutionRectangles.add(a.copy());
+                    }
+                    
+                    //optimal solution found. I.e. No unused area left
+                    if (newSolution - pack.getUsedArea() == 0) {
+                        hundredPercentCoverageFound = true;
+                        ValidCheck.print("100% COVERAGE FOUND!!!");
                     }
 
                 }

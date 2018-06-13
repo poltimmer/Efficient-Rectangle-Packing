@@ -10,12 +10,6 @@ import java.util.List;
  * 
  * Simplest implementation of a Pack data type. Stores all rectangles in a
  * simple list
- * 
- * Representation Invariants:
- * TODO
- * 
- * Abstraction function:
- * TODO
  */
 public class PackList extends Pack {
 
