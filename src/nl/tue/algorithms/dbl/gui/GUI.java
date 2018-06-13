@@ -144,7 +144,6 @@ public class GUI extends JFrame {
     
     /**
      * Initializes the drawPane that draws the BufferedImage
-     * @param img BufferedImage to draw
      * @pre img != null
      * @return A JPanel that draws img
      */
@@ -344,7 +343,7 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
-            Class <? extends Algorithm> forcedClass = BinaryPacker.class;
+            Class <? extends Algorithm> forcedClass = RecursiveFit.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");

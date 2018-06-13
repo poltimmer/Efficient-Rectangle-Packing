@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
-import nl.tue.algorithms.dbl.algorithm.Algorithm;
-import nl.tue.algorithms.dbl.algorithm.BinaryPacker;
-import nl.tue.algorithms.dbl.algorithm.FirstFitDecreasingWidth;
-import nl.tue.algorithms.dbl.algorithm.BruteForce;
+
+import nl.tue.algorithms.dbl.algorithm.*;
 import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.ValidCheck;
 import nl.tue.algorithms.dbl.io.InputReader;
@@ -60,7 +58,8 @@ public class PackingSolver {
     private Algorithm selectAlgorithm(PackData data) {
         //an algorithm based on pack data can be chosen here.        
         //for small input sizes (n <= 5) we want bruteforce
-        if (data.getNumberOfRectangles() <= 5) {
+        return new RecursiveFit(data);
+        /**if (data.getNumberOfRectangles() <= 5) {
             return new BruteForce(data);
         }
         //for bigger inputs without fixed height defined we can only use BinaryPacker
@@ -68,7 +67,7 @@ public class PackingSolver {
             return new BinaryPacker(data);
         } else {
             return new FirstFitDecreasingWidth(data);
-        }
+        }*/
     }
     
     public void readRectangles() throws IOException {
@@ -98,7 +97,9 @@ public class PackingSolver {
         
         solver.readRectangles();
         solver.solve();
+        System.out.println("Percentage: " + solver.getAlgorithm().getPack().getCoveragePercentage());
         
         solver.printOutput(System.out, true);
+        System.out.println("Percentage: " + solver.getAlgorithm().getPack().getCoveragePercentage());
     }
 }
