@@ -95,7 +95,6 @@ import java.util.List;
                         Iterator iter = positions.iterator();
 
                         boolean rotated = !pack.canRotate();
-                        ValidCheck.print(rotated);
 
                         // loop over all the possible positions
                         while (iter.hasNext() || !rotated) {
@@ -159,8 +158,8 @@ import java.util.List;
                 newSolution = getContainerArea();
                 if (newSolution < bestSolution) {
                     // change the best solution
-                    //ValidCheck.print("new solution = " + newSolution);
-                    //ValidCheck.print("old solution was = " + bestSolution);
+                    ValidCheck.print("new solution = " + newSolution);
+                    ValidCheck.print("old solution was = " + bestSolution);
                     bestSolution = newSolution;
 
                     // place the best solution in a new list.

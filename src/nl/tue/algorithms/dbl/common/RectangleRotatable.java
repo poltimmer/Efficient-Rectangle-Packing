@@ -127,6 +127,7 @@ public class RectangleRotatable extends Rectangle {
      */
     public RectangleRotatable copy() {
         RectangleRotatable r = new RectangleRotatable(ID, width, height);
+        r.setRotated(rotated);
         r.setLocation(x, y);
         return r;
     }
