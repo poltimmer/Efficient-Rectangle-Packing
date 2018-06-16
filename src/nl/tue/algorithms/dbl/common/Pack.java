@@ -171,15 +171,29 @@ public abstract class Pack {
     }
     
     /**
-     * Checks whether the pack should rotate r based on Ratios
+     * Checks whether the pack should rotate r based on Ratios, for WidthQueue
      * @param r Rectangle
      * @return true if the rectangle should be rotated
      */
-    protected boolean shouldRotate(RectangleRotatable r) {
+    protected boolean shouldRotateWidth(RectangleRotatable r) {
                 //rotations are allowed AND
         return canRotate() &&
                 //The rectangle has the ratio OR
                 (r.getHeight() / r.getWidth() >= ROTATE_RATIO) ||
+                //There is a fixed height and the rectangle's height exceeds this
+                (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight());
+    }
+    
+    /**
+     * Checks whether the pack should rotate r based on Ratios, for HeightQueue
+     * @param r Rectangle
+     * @return true if the rectangle should be rotated
+     */
+    protected boolean shouldRotateHeight(RectangleRotatable r) {
+                //rotations are allowed AND
+        return canRotate() &&
+                //The rectangle has the ratio OR
+                (r.getWidth() / r.getHeight() >= ROTATE_RATIO) ||
                 //There is a fixed height and the rectangle's height exceeds this
                 (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight());
     }

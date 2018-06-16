@@ -11,35 +11,26 @@ public class PackHeightQueue extends Pack {
         super(data);
         rectangles = new PriorityQueue<>(new Comparator<RectangleRotatable>() {
             @Override
-            public int compare(RectangleRotatable o1, RectangleRotatable o2) {
-                if (!canRotate()) {
-                    return (o1.getHeight() >= o2.getHeight()) ? -1 : 1;
+            public int compare(RectangleRotatable r1, RectangleRotatable r2) {
+                if (r1.getRotatedHeight() > r2.getRotatedHeight()) {
+                    return -1;
+                } else if (r1.getRotatedHeight() < r2.getRotatedHeight()) {
+                    return 1;
                 } else {
-                    if (o1.getHeight() > o1.getWidth()) {
-                        o1.setRotated(true);
-                    }
-                    if (o2.getHeight() > o2.getWidth()) {
-                        o2.setRotated(true);
-                    }
-                    if (Math.max(o1.getHeight(), o1.getWidth()) > Math.max(o2.getHeight(), o2.getWidth())) {
-                        return -1;
-                    } else if (Math.max(o1.getHeight(), o1.getWidth()) < Math.max(o2.getHeight(), o2.getWidth())) {
-                        return 1;
-                    } else { // Rectangles have the same max(h,w)
-                        if (Math.min(o1.getHeight(), o1.getWidth()) >= Math.min(o2.getHeight(), o2.getWidth())) {
-                            return -1;
-                        } else {
-                            return 1;
-                        }
-                    }
+                    //r1.getRotatedWidth() == r2.getRotatedWidth()
+                    return r1.getRotatedWidth() >= r2.getRotatedWidth() ? -1 : 1;
                 }
             }
         }); // Turn PriorityQueue into Max Heap.
     }
 
     @Override
-    protected void addRectangleSubclass(RectangleRotatable rec) {
-        rectangles.add(rec);
+    protected void addRectangleSubclass(RectangleRotatable r) {
+        //rotate the rectangle for a specific ratio
+        if (shouldRotateHeight(r)) {
+            r.setRotated(true);
+        }
+        rectangles.add(r);
     }
 
     @Override
