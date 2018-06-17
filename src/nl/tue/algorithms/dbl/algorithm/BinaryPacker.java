@@ -16,10 +16,12 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
     private final ArrayList<Node> nodeList = new ArrayList<>();
     private Node rightNode;
     private Node topNode;
+    private final int H;
 
     //Make a pack with the rectangles sorted on height
     public BinaryPacker(PackData data) {
         super(new PackHeightQueue(data));
+        H = pack.getFixedHeight();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
         //If one node, just place it to the right or top
         Node n = nodeList.get(0); //get only node
         // if true, place up, otherwise place right, change values of xRoom or yRoom of Node n.
-        if (BinaryTreeAuxiliary.growNode(n, r.x, r.y)){
+        if (BinaryTreeAuxiliary.growNode(n, r.x, r.y, H)){
             r.setLocation(0, n.getyNode());
             Node x = new Node(r.x + r.getRotatedWidth(), r.y + r.getRotatedHeight(), r.getRotatedWidth(), r.getRotatedHeight());
             topNode = x;
@@ -100,7 +102,7 @@ public class BinaryPacker extends  Algorithm<PackHeightQueue> {
                     if (r.y <= -1 || r.x <= -1) {
                         //plaatsen bij de right node of top node
                         //If true then grow up, if false grow right
-                        if (BinaryTreeAuxiliary.growTwoNodes(topNode, rightNode, r)) {
+                        if (BinaryTreeAuxiliary.growTwoNodes(topNode, rightNode, r, H)) {
                             r.setLocation(0, topNode.getyNode());
                             Node x = new Node(r.x + r.getRotatedWidth(), r.y + r.getRotatedHeight(), r.getRotatedWidth(), r.getRotatedHeight());
                             topNode = x;

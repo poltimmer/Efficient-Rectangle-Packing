@@ -24,8 +24,8 @@ public class BinaryTreeAuxiliary {
      * 
      * @return true if algo should grow up, false if algo should grow right
      */
-    public static boolean growNode(Node node, int w, int h) throws IllegalStateException {
-        boolean canGrowUp  = (w <= node.getxNode());
+    public static boolean growNode(Node node, int w, int h, int fixedHeight) throws IllegalStateException {
+        boolean canGrowUp  = (w <= node.getxNode() && (fixedHeight<0 || (node.getyNode()+h) <= fixedHeight));
         boolean canGrowRight = (h <= node.getyNode());
 
         boolean shouldGrowRight = canGrowRight && (node.getyNode() >= (node.getxNode() + w)); // attempt to keep square-ish by growing right when height is much greater than width
@@ -61,8 +61,8 @@ public class BinaryTreeAuxiliary {
      *
      * @return true if algo should grow up, false if algo should grow right
      */
-    public static boolean growTwoNodes(Node topNode, Node rightNode, RectangleRotatable r) {
-        boolean canGrowUp  = (r.getRotatedWidth() <= topNode.getxNode());
+    public static boolean growTwoNodes(Node topNode, Node rightNode, RectangleRotatable r, int fixedHeight) {
+        boolean canGrowUp  = (r.getRotatedWidth() <= topNode.getxNode() && (fixedHeight<0 || (topNode.getyNode()+r.getRotatedHeight()) <= fixedHeight));
         boolean canGrowRight = (r.getRotatedHeight() <= rightNode.getyNode());
 
         boolean shouldGrowRight = canGrowRight && (topNode.getyNode() >= (rightNode.getxNode() + r.getRotatedWidth())); // attempt to keep square-ish by growing right when height is much greater than width

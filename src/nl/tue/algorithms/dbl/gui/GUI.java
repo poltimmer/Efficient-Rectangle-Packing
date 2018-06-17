@@ -367,6 +367,11 @@ public class GUI extends JFrame {
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); //ratio = 3
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); //ratio = 1
                 compoundAlgo.add(BinaryPacker.class, 10); //custom ratio
+                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); //ratio = Integer.MAX_VALUE
+                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); //ratio = 0
+                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); //ratio = 3
+                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); //ratio = 1
+                compoundAlgo.add(RecursiveFit.class, 10); //custom ratio
                 
                 solver.solve();
                 
