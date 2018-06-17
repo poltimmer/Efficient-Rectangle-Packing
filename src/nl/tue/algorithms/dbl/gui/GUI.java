@@ -51,14 +51,14 @@ public class GUI extends JFrame {
     private Graphics2D gImg;
     
     /** Rectangles are drawn SIZE_MODIFIER times as big as they actually are */
-    public static int SIZE_MODIFIER = 10;
+    public static int SIZE_MODIFIER = 1;
     
     /** Scroll speed of the Horizontal and Vertical Scroll bars of the JScrollPane */
     public static final int SCROLL_SPEED = 20;
 
     /** Possible colors of the rectangles */
     public static final Color[] VALID_RECTANGLE_COLORS =
-            {   Color.BLUE,     Color.CYAN,         Color.DARK_GRAY,
+            {   Color.BLUE,     Color.CYAN,
                 Color.GRAY,     Color.GREEN,    Color.ORANGE,       Color.MAGENTA,
                 Color.PINK,     Color.YELLOW };
     
@@ -80,7 +80,7 @@ public class GUI extends JFrame {
     /** Whether to display errors */
     public static boolean DISPLAY_ERRORS = true;
     private boolean error;
-
+    
     /**
      * Sets up things such as the frame title, frame size, scroll pane, resize
      * listener, and BufferedImage to draw on.
@@ -344,7 +344,7 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
-            Class <? extends Algorithm> forcedClass = BinaryPacker.class;
+            Class <? extends Algorithm> forcedClass = CompoundAlgorithm.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");
@@ -362,13 +362,16 @@ public class GUI extends JFrame {
                 CompoundAlgorithm compoundAlgo = (CompoundAlgorithm) solver.getAlgorithm();
                 
                 //Add other algorithms to the CompoundAlgorithm
-                compoundAlgo.add(FirstFitDecreasingWidth.class, true);
-                compoundAlgo.add(BinaryPacker.class, true);
+                compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); //ratio = Integer.MAX_VALUE
+                compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); //ratio = 0
+                compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); //ratio = 3
+                compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); //ratio = 1
+                compoundAlgo.add(BinaryPacker.class, 10); //custom ratio
                 
                 solver.solve();
                 
                 //additional info
-                subAlgo = "(" + compoundAlgo.bestAlgoName + ", " + (compoundAlgo.getPack().canRotate() ? "" : "no ") + "rotations)";
+                subAlgo = "(" + compoundAlgo.bestAlgoName + ", ROTATE_RATIO = " + compoundAlgo.getPack().ROTATE_RATIO + ")";
             } else {
                 solver.solve();
             }      
@@ -408,7 +411,7 @@ public class GUI extends JFrame {
             }
             
         } catch (IOException ex) {
-            //ex.printStackTrace();
+            ex.printStackTrace();
             System.err.println("ERROR: IOException was thrown. Probably related to the size of the container that is too big...");
         }
     }

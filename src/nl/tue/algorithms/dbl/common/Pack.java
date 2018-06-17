@@ -27,8 +27,15 @@ public abstract class Pack {
         this.rectangleOrder = new ArrayList<>();
     }
     
-    /** Ratio at which to rotate rectangles */
-    private final static double ROTATE_RATIO = 3;
+    /** Ratio at which to rotate rectangles
+      * Rotations are always done if ROTATE_RATIO = 0
+      * Rotations are disabled if ROTATE_RATIO = Double.MAX_VALUE
+      * In all other cases, Rotations are done if the Width-Height ratio of a
+      * rectangle in this pack >= ROTATE_RATIO
+      * NOTE that algorithms may choose to not use this Ratio, or to change its
+      * value.
+      */
+    public double ROTATE_RATIO = 3;
     
     /**
      * Adds a rectangle to be packed to the pack
@@ -175,9 +182,9 @@ public abstract class Pack {
      * @param r Rectangle
      * @return true if the rectangle should be rotated
      */
-    protected boolean shouldRotateWidth(RectangleRotatable r) {
+    protected boolean shouldRotateByRatioWidth(RectangleRotatable r) {
                 //rotations are allowed AND
-        return canRotate() &&
+        return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
                 //The rectangle has the ratio OR
                 (r.getHeight() / r.getWidth() >= ROTATE_RATIO) ||
                 //There is a fixed height and the rectangle's height exceeds this
@@ -189,9 +196,9 @@ public abstract class Pack {
      * @param r Rectangle
      * @return true if the rectangle should be rotated
      */
-    protected boolean shouldRotateHeight(RectangleRotatable r) {
+    protected boolean shouldRotateByRatioHeight(RectangleRotatable r) {
                 //rotations are allowed AND
-        return canRotate() &&
+        return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
                 //The rectangle has the ratio OR
                 (r.getWidth() / r.getHeight() >= ROTATE_RATIO) ||
                 //There is a fixed height and the rectangle's height exceeds this

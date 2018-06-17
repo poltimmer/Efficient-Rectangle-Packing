@@ -27,7 +27,7 @@ public class PackHeightQueue extends Pack {
     @Override
     protected void addRectangleSubclass(RectangleRotatable r) {
         //rotate the rectangle for a specific ratio
-        if (shouldRotateHeight(r)) {
+        if (shouldRotateByRatioHeight(r)) {
             r.setRotated(true);
         }
         rectangles.add(r);

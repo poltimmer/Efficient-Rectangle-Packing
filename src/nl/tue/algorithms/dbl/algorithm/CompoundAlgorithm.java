@@ -8,6 +8,7 @@ import nl.tue.algorithms.dbl.common.PackData;
 import nl.tue.algorithms.dbl.common.PackList;
 import nl.tue.algorithms.dbl.common.Pair;
 import nl.tue.algorithms.dbl.common.RectangleRotatable;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 
 /**
  * An Algorithm that executes all algorithms that are added to it, and presents
@@ -21,10 +22,18 @@ import nl.tue.algorithms.dbl.common.RectangleRotatable;
  */
 public class CompoundAlgorithm extends Algorithm<Pack> {
     /** List of subscribed algorithms */
-    private final List<Pair<Class<? extends Algorithm>, Boolean>> algos;
+    private final List<Pair<Class<? extends Algorithm>, Double>> algos;
     public String bestAlgoName;
     
+    public enum RotationMode {
+        ROTATIONMODE_NONE,          //rotate no rectangles
+        ROTATIONMODE_ALL,           //rotate all rectangles
+        ROTATIONMODE_BIGGEST_SIDE,  //rotate rectangles with a width-height ratio >= 1 (I.e. biggest side)
+        ROTATIONMODE_DEFAULT_RATIO, //rotate rectangles using the default ratio
+    }
+    
     public CompoundAlgorithm(PackData data) {
+        //Any Pack-subclass would work here. PackList was chosen arbitrarily
         super(new PackList(data));
         algos = new ArrayList<>();
     }
@@ -44,7 +53,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
         int minContainerArea = Integer.MAX_VALUE;
         
         //execute all added algorithms
-        for (Pair<Class<? extends Algorithm>, Boolean> algoClass : algos) {
+        for (Pair<Class<? extends Algorithm>, Double> algoClass : algos) {
             //only create an instance of this class now as to preserve memory
             //(data structures may be HUGE when having many rectangles)
             Algorithm algo = newAlgoFromClass(algoClass.a, algoClass.b);
@@ -61,6 +70,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
                 //only storing the data structure of the best algorithm is enough
                 //The Java Garbage Collector can get rid of the worse solutions
                 bestAlgo = algo;
+                this.pack.ROTATE_RATIO = algo.pack.ROTATE_RATIO;
             }
         }
         
@@ -74,24 +84,41 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
      * If it provides the best solution out of all Algorithms that are executed,
      * then CompoundAlgorithm's solution will be this solution.
      * @param algoClass Class of an Algorithm to add
-     * @param bothRotations whether to execute the algorithm twice: once with
-     *                      rotations and once without (if rotations are allowed
-     *                      in the first place)
+     * @param rotationRatio Rotate rectangles with a w-h ratio >= rotationRatio
      * 
      * @pre algoClass != Algorithm.class && algoClass != null
      * @post this.algos.contains(newInstance(algoClass))
      * @throws IllegalArgumentException if precondition is violated
      */
-    public void add(Class <? extends Algorithm> algoClass, boolean bothRotations) throws IllegalArgumentException {
-        if (algoClass == Algorithm.class) {
-            throw new IllegalArgumentException("CompoundAlgorithm.pre violated: Algorithm.class is NOT a valid class!");
+    public void add(Class <? extends Algorithm> algoClass, double rotationRatio) throws IllegalArgumentException {
+        if (algoClass == Algorithm.class || algoClass == null) {
+            throw new IllegalArgumentException("CompoundAlgorithm.add.pre violated: Algorithm.class is NOT a valid class!");
         }
         
-        //create packdata for this algorithm
-        algos.add(new Pair(algoClass, pack.canRotate()));
+        Pair p;
+        if (!pack.canRotate()) {
+            p = new Pair(algoClass, Double.MAX_VALUE);
+        } else {
+            p = new Pair(algoClass, rotationRatio);
+        }
         
-        if (bothRotations && pack.canRotate()) {
-            algos.add(new Pair(algoClass, false));
+        //only add it if it is not already in the list of algos
+        if (!contains(p)) {
+            algos.add(p);
+        }
+    }
+    
+    public void add(Class <? extends Algorithm> algoClass) {
+        add(algoClass, RotationMode.ROTATIONMODE_DEFAULT_RATIO);
+    }
+    
+    public void add(Class <? extends Algorithm> algoClass, RotationMode mode) {
+        switch (mode) {
+            case ROTATIONMODE_ALL:           add(algoClass, 0); break;
+            case ROTATIONMODE_NONE:          add(algoClass, Double.MAX_VALUE); break;
+            case ROTATIONMODE_BIGGEST_SIDE:  add(algoClass, 1); break;
+            case ROTATIONMODE_DEFAULT_RATIO: 
+            default:                         add(algoClass, -1); break;
         }
     }
     
@@ -102,15 +129,25 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
      * @param  algoClass the Algorithm class to create an instance of
      * @param executeAsIfRotationsAllowed whether to execute the algorithm as if it had rotations
      */
-    private Algorithm newAlgoFromClass(Class <? extends Algorithm> algoClass, boolean executeAsIfRotationsAllowed) {
+    private Algorithm newAlgoFromClass(Class <? extends Algorithm> algoClass, double rotationRatio) {
         Algorithm algo = null;
         try {
+            boolean rotations = rotationRatio != 0;
+            
             //create packdata
-            PackData data = new PackData(pack.getFixedHeight(), executeAsIfRotationsAllowed, pack.getNumberOfRectangles());
+            PackData data = new PackData(pack.getFixedHeight(), rotations, pack.getNumberOfRectangles());
             
             //create the algorithm by calling its constructor
             algo = algoClass.getConstructor(PackData.class).newInstance(data);
-            //add the rectangles to it
+            
+            //when using a non-default rotationRatio:
+            if (rotationRatio >= 0) {
+                //set the rotation-ratio (some Packs do NOT use this though!)
+                algo.getPack().ROTATE_RATIO = rotationRatio;
+            }
+            ValidCheck.print("CompoundAlgorithm: " + algoClass.getSimpleName() + " with ROTATE_RATIO = " + algo.getPack().ROTATE_RATIO);
+            
+            //add the rectangles to the pack
             addRectanglesToPack(algo.pack);           
             
             //return the algo
@@ -134,4 +171,17 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
         }
     }
     
+    /**
+     * Checks whether a pair with the same values as reqPair is inside algos
+     * @param reqPair The Pair to check for
+     * @return true iff algos contains a reqPair with the same algoClass and rotateRatio
+     */
+    public boolean contains(Pair<Class<? extends Algorithm>, Double> reqPair) {
+        for (Pair<Class<? extends Algorithm>, Double> pair : algos) {
+            if (pair.a == reqPair.a && Double.compare(pair.b, reqPair.b) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
