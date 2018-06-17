@@ -19,6 +19,7 @@ public class BinaryTreeAuxiliary {
      * @param node the one node available
      * @param w the width of the rectangle to be placed
      * @param h the height of the rectangle to be placed
+     * @param fixedHeight the fixed height if there is any, otherwise -1
      * 
      * @throws IllegalStateException if both canGrowUp and canGrowRight are false
      * 
@@ -56,6 +57,7 @@ public class BinaryTreeAuxiliary {
      * @param topNode the top node available
      * @param rightNode the right node available
      * @param r the rectangle to place.
+     * @param fixedHeight the fixed height if there is any, otherwise -1
      *
      * @throws IllegalStateException if both canGrowUp and canGrowRight are false
      *

@@ -344,6 +344,10 @@ public class GUI extends JFrame {
             error = false;
             String subAlgo = "";
             
+            //for n<= 5 use this to simulate PackingSolver functionality:
+            //Class <? extends Algorithm> forcedClass = BruteForce.class;
+            
+            //for n>5 use this to simulate PackingSolver functionality:
             Class <? extends Algorithm> forcedClass = CompoundAlgorithm.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
@@ -367,11 +371,21 @@ public class GUI extends JFrame {
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); //ratio = 3
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); //ratio = 1
                 compoundAlgo.add(BinaryPacker.class, 10); //custom ratio
+                compoundAlgo.add(BinaryPacker.class, 0.01);
+                compoundAlgo.add(BinaryPacker.class, 0.1);
+                compoundAlgo.add(BinaryPacker.class, 0.25);
+                
+                //For fixed height tests with n>5, remove comments from following section to simulate PackingSolver functionality:
+                /*
                 compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); //ratio = Integer.MAX_VALUE
                 compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); //ratio = 0
                 compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); //ratio = 3
                 compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); //ratio = 1
                 compoundAlgo.add(RecursiveFit.class, 10); //custom ratio
+                compoundAlgo.add(RecursiveFit.class, 0.01);
+                compoundAlgo.add(RecursiveFit.class, 0.1);
+                compoundAlgo.add(RecursiveFit.class, 0.25);
+                */
                 
                 solver.solve();
                 
