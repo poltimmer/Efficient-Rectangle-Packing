@@ -410,6 +410,9 @@ public class GUI extends JFrame {
                 appendTitle(" | Size : " + solver.getAlgorithm().getContainerWidth() + " * " + solver.getAlgorithm().getContainerHeight() + "");
             }
             
+            //Print rectangle placements
+            //solver.printOutput(System.out, false);
+            
         } catch (IOException ex) {
             ex.printStackTrace();
             System.err.println("ERROR: IOException was thrown. Probably related to the size of the container that is too big...");

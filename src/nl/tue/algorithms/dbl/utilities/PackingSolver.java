@@ -55,19 +55,44 @@ public class PackingSolver {
         this.algo = algo;        
     }
     
+    /**
+     * Select an algorithm based on given PackData
+     * @return An Algorithm to run
+     */
     private Algorithm selectAlgorithm(PackData data) {
-        //an algorithm based on pack data can be chosen here.        
-        //for small input sizes (n <= 5) we want bruteforce
-        return new RecursiveFit(data);
-        /*if (data.getNumberOfRectangles() <= 5) {
+        
+        if (data.getNumberOfRectangles() <= 5) {
+            //for small input sizes (n <= 5) we want bruteforce
+            //Since BruteForce always finds the optimal solution, there's no need
+            //to run CompoundAlgorithm.
+            
             return new BruteForce(data);
+            
+        } else { //n > 5
+            //we want to run the compoundAlgorithm for big inputs
+            CompoundAlgorithm compoundAlgo = new CompoundAlgorithm(data);
+            
+            //for fixed height invoke RecursiveFit; for free height invoke BinaryPacker
+            Class invokeClass = data.hasFixedHeight() ? RecursiveFit.class : BinaryPacker.class;
+            
+            //rotate no rectangles
+            compoundAlgo.add(invokeClass, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); 
+            
+            //rotate all rectangles
+            compoundAlgo.add(invokeClass, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); 
+            
+            //rotate rectangles based on their largest side
+            compoundAlgo.add(invokeClass, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); 
+
+            //rotate rectangles if their width-height ratio >= the default ratio as defined in Pack
+            compoundAlgo.add(invokeClass, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); 
+            
+            //rotate rectangles if their width-height ratio >= 10. I.e. for very thin and long rectangles
+            compoundAlgo.add(invokeClass, 10); 
+                
+            //actualy return the compoundAlgorithm now that the above has been defined for it.
+            return compoundAlgo;
         }
-        //for bigger inputs without fixed height defined we can only use BinaryPacker
-        else if (!data.hasFixedHeight()) {
-            return new BinaryPacker(data);
-        } else {
-            return new FirstFitDecreasingWidth(data);
-        }*/
     }
     
     public void readRectangles() throws IOException {
