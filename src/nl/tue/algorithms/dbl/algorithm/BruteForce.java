@@ -38,8 +38,7 @@ import java.util.List;
         // declaring important variants
         int rectanglesLeft = pack.getOrderedRectangles().size();
         ValidCheck.print(pack.getOrderedRectangles());
-        //HERE
-        int bestSolution = Integer.MAX_VALUE;
+
         List<RectangleRotatable> rectanglesUsed;
         rectanglesUsed = new LinkedList<>();
         int amountRectangles = rectanglesLeft;

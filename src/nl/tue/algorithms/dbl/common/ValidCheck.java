@@ -30,6 +30,7 @@ public class ValidCheck {
         } else if (r == null) {
             throw new IllegalArgumentException("Rectangle r is null");
         }
+        
         return isRectangleWithinPackHeight(r, p) && !isRectangleRotatedIllegallyWithinPack(r, p) && !isRectangleOverlappingWithPack(r, p);
     }
     

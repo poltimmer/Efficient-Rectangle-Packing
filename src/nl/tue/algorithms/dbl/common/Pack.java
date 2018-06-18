@@ -97,11 +97,7 @@ public abstract class Pack {
      * @return The height of the container (0 if there are no rectangles or none
      * have been placed yet)
      */
-    public int getContainerHeight() {
-        if (hasFixedHeight()) {
-            return getFixedHeight();
-        }
-        
+    public int getContainerHeight() {        
         int highestY = Integer.MIN_VALUE;
         
         for (RectangleRotatable r : getOrderedRectangles()) {
@@ -110,7 +106,8 @@ public abstract class Pack {
                 highestY = r.y + height;
             }
         }
-        return Math.max(highestY, 0);
+        
+        return Math.max(0, Math.max(highestY, getFixedHeight()));
     }
     
     /**
@@ -183,17 +180,7 @@ public abstract class Pack {
      * @return true if the rectangle should be rotated
      */
     protected boolean shouldRotateByRatioWidth(RectangleRotatable r) {
-        if (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight() && !canRotate()) {
-            ValidCheck.print("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
-                    + "EXCEEDS THE FIXED HEIGHT");
-        }
-        
-                //rotations are allowed AND
-        return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
-                //The rectangle has the ratio OR
-                (r.getHeight() / r.getWidth() >= ROTATE_RATIO) ||
-                //There is a fixed height and the rectangle's height exceeds this
-                (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight());
+        return shouldRotateByRatio(r.getHeight(), r.getWidth(), r.getRotatedWidth(), r.getRotatedHeight());
     }
     
     /**
@@ -202,16 +189,33 @@ public abstract class Pack {
      * @return true if the rectangle should be rotated
      */
     protected boolean shouldRotateByRatioHeight(RectangleRotatable r) {
-        if (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight() && !canRotate()) {
+        return shouldRotateByRatio(r.getWidth(), r.getHeight(), r.getRotatedWidth(), r.getRotatedHeight());
+    }
+    
+    private boolean shouldRotateByRatio(double width, double height, int rotatedWidth, int rotatedHeight) {
+        //Rectangle has the right ratio to rotate
+        boolean canRotateDueToRatio = ROTATE_RATIO < Double.MAX_VALUE && (width / height >= ROTATE_RATIO);
+        //Rectangle's height > fixed height
+        boolean heightExceedsFixedHeight = hasFixedHeight() && rotatedHeight > getFixedHeight();
+        //Rectangle's width > fixed height
+        boolean widthExceedsFixedHeight = hasFixedHeight() && rotatedWidth > getFixedHeight();
+        
+        //cannot rotate and height > fixedheight
+        if (heightExceedsFixedHeight && !canRotate()) {
             ValidCheck.print("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
-                    + "EXCEEDS THE FIXED HEIGHT");
+                    + "EXCEEDS THE FIXED HEIGHT WHILE IT ACTUALLY CAN'T IN THIS PACK");
         }
         
-                //rotations are allowed AND
-        return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
-                //The rectangle has the ratio OR
-                (r.getWidth() / r.getHeight() >= ROTATE_RATIO) ||
+        //canRotate and width > fixedheight and height > fixedheigt
+        if (widthExceedsFixedHeight && heightExceedsFixedHeight && canRotate()) {
+            ValidCheck.print("WARNING: RECTANGLES WIDTH AND HEIGHT BOTH EXCEED"
+                    + "THE FIXED HEIGTH! THERE IS NOW WAY TO PLACE THIS RECTANGLE"
+                    + "IN A VALID WAY");
+        }  
+        
+                //rotations are allowed AND the ratio is correct AND width does not exceed fixed height OR
+        return (canRotate() && canRotateDueToRatio && !widthExceedsFixedHeight) ||
                 //There is a fixed height and the rectangle's height exceeds this
-                (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight());
+                heightExceedsFixedHeight;
     }
 }

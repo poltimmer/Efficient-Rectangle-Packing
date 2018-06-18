@@ -75,7 +75,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
         }
         
         //overwrite the current pack by the 'best' pack
-        this.pack = bestAlgo.pack;
+        copyRectanglesFromPackToPack(bestAlgo.pack, this.pack);
         this.bestAlgoName = bestAlgo.getClass().getSimpleName();
     }
     
@@ -149,7 +149,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
             ValidCheck.print("CompoundAlgorithm: " + algoClass.getSimpleName() + " with ROTATE_RATIO = " + algo.getPack().ROTATE_RATIO);
             
             //add the rectangles to the pack
-            addRectanglesToPack(algo.pack);           
+            copyRectanglesFromPackToPack(this.pack, algo.pack);           
             
             //return the algo
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -165,11 +165,15 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
      * @param p The pack to add the rectangles to
      * @pre p != null
      */
-    private void addRectanglesToPack(Pack p) {
+    private void copyRectanglesFromPackToPack(Pack fromPack, Pack toPack) {
+        //clear all rectangles from the pack's Data Structure first
+        toPack.getOrderedRectangles().clear();
+        toPack.getRectangles().clear();
+        
         //add each rectangle of this pack to algo's pack (as a copy!)
-        for (RectangleRotatable r : pack.getOrderedRectangles()) {
+        for (RectangleRotatable r : fromPack.getOrderedRectangles()) {
             RectangleRotatable rCopy = r.copy();
-            p.addRectangle(rCopy);
+            toPack.addRectangle(rCopy);
         }
     }
     
