@@ -9,7 +9,6 @@ import java.util.LinkedList;
  * are allowed, rectangles are rotated if the width-height ratio exceeds
  * ROTATE_RATIO
  */
-
 public class PackLinkedList extends Pack {
     private final LinkedList<RectangleRotatable> rectangles;
 

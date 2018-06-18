@@ -19,7 +19,6 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
         H = pack.getFixedHeight();
     }
 
-
     @Override
     public void solve() {
         pack.sort();
@@ -82,6 +81,12 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
             } else {
                 return false;
             }
+        } else if (r.height > H) {
+            //special case if a rectangle exceeds the fixed height, but according
+            //to the pack we cannot rotate. => Ignore the pack and rotate anyway
+            r.setRotated(true);
+            
+            return x + r.height <= s && y + r.width <= H;
         } else {
             return (x+(int)r.getWidth()<=s) && (y+(int)r.getHeight()<=H);
         }
