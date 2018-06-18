@@ -171,6 +171,11 @@ public abstract class Pack {
      * @return The coverage as a value from 0-100, representing a percentage
      */
     public long getCoveragePercentage() {
+        long containerArea = getContainerArea();
+        if (containerArea == 0) {
+            return 0;
+        }
+        
         return (long) getUsedArea() * 100 / (long) getContainerArea();
     }
     
@@ -202,13 +207,13 @@ public abstract class Pack {
         
         //cannot rotate and height > fixedheight
         if (heightExceedsFixedHeight && !canRotate()) {
-            ValidCheck.print("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
+            ValidCheck.println("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
                     + "EXCEEDS THE FIXED HEIGHT WHILE IT ACTUALLY CAN'T IN THIS PACK");
         }
         
         //canRotate and width > fixedheight and height > fixedheigt
         if (widthExceedsFixedHeight && heightExceedsFixedHeight && canRotate()) {
-            ValidCheck.print("WARNING: RECTANGLES WIDTH AND HEIGHT BOTH EXCEED"
+            ValidCheck.println("WARNING: RECTANGLES WIDTH AND HEIGHT BOTH EXCEED"
                     + "THE FIXED HEIGTH! THERE IS NOW WAY TO PLACE THIS RECTANGLE"
                     + "IN A VALID WAY");
         }  

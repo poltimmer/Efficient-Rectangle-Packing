@@ -37,7 +37,7 @@ import java.util.List;
     public void solve() { // method that solves this shit
         // declaring important variants
         int rectanglesLeft = pack.getOrderedRectangles().size();
-        ValidCheck.print(pack.getOrderedRectangles());
+        ValidCheck.println(pack.getOrderedRectangles());
 
         List<RectangleRotatable> rectanglesUsed;
         rectanglesUsed = new LinkedList<>();
@@ -45,7 +45,7 @@ import java.util.List;
         if (amountRectangles<8){
             for(int i = 1; i<=amountRectangles; i++){
                 limit = limit * i*i;
-                ValidCheck.print("limit = " + limit);
+                ValidCheck.println("limit = " + limit);
             }
         } else {
             limit = Integer.MAX_VALUE-1;
@@ -60,7 +60,7 @@ import java.util.List;
         possiblePlaces.add(startPosition);
 
         findBestSolution(possiblePlaces, pack, rectanglesUsed, rectanglesLeft);
-        ValidCheck.print("count =" + count);
+        ValidCheck.println("count =" + count);
         copyToPack(bestSolutionRectangles,pack);
 
     }
@@ -157,8 +157,8 @@ import java.util.List;
                 newSolution = getContainerArea();
                 if (newSolution < bestSolution) {
                     // change the best solution
-                    ValidCheck.print("new solution = " + newSolution);
-                    ValidCheck.print("old solution was = " + bestSolution);
+                    ValidCheck.println("new solution = " + newSolution);
+                    ValidCheck.println("old solution was = " + bestSolution);
                     bestSolution = newSolution;
 
                     // place the best solution in a new list.
@@ -171,7 +171,7 @@ import java.util.List;
                     //optimal solution found. I.e. No unused area left
                     if (newSolution - pack.getUsedArea() == 0) {
                         hundredPercentCoverageFound = true;
-                        ValidCheck.print("100% COVERAGE FOUND!!!");
+                        ValidCheck.println("100% COVERAGE FOUND!!!");
                     }
 
                 }

@@ -73,8 +73,12 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
                 this.pack.ROTATE_RATIO = algo.pack.ROTATE_RATIO;
             }
             
-            //sanity check to easily spot out any error in any invoked algorithm (makes it run slower though)
+            //extra debug stuff
             if (ValidCheck.DEBUG_ENABLED) {
+                //display coverage as well           
+                ValidCheck.println(" (" + algo.pack.getCoveragePercentage() + "%)");
+                
+                //sanity check to easily spot out any error in any invoked algorithm (makes it run slower though)
                 for (RectangleRotatable r : algo.pack.getOrderedRectangles()) {
                     if (!ValidCheck.isRectangleValidWithinPack(r, algo.pack) &&
                             !(ValidCheck.isRectangleRotatedIllegallyWithinPack(r, algo.pack)

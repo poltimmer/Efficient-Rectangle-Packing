@@ -110,9 +110,18 @@ public class ValidCheck {
     /**
      * Prints to System.out
      */
-    public static void print(Object str) {
+    public static void println(Object str) {
         if (DEBUG_ENABLED) {
             System.out.println(str);
+        }
+    }
+    
+    /**
+     * Prints to System.out
+     */
+    public static void print(Object str) {
+        if (DEBUG_ENABLED) {
+            System.out.print(str);
         }
     }
 }
