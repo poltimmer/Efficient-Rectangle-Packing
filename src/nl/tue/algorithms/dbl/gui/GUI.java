@@ -261,7 +261,7 @@ public class GUI extends JFrame {
             if (ValidCheck.isRectangleValidWithinPack(r, p)) {
                 drawRectangle(r);
             } else {
-                System.out.println("WARNING: Rectangle was placed in an invalid way!");
+                System.out.println("WARNING: Rectangle (" + r + ") was placed in an invalid way!");
                 drawRectangle(r, OVERLAP_COLOR);
                 error = true;
             }

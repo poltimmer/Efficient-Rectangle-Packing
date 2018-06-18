@@ -10,6 +10,9 @@ import java.util.LinkedList;
 public class RecursiveFit extends Algorithm<PackLinkedList> {
     /** The container height */
     private final int H;
+    
+    private boolean wasRun;
+    
     /** The linked list containing all the rectangles to be placed.
      *  After a rectangle has been placed, it will be removed from the list */
     private LinkedList<RectangleRotatable> list;
@@ -17,13 +20,18 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
     public RecursiveFit(PackData data) {
         super(new PackLinkedList(data));
         H = pack.getFixedHeight();
+        wasRun = false;
     }
 
     @Override
     public void solve() {
-        pack.sort();
-        list = pack.getRectangles();
-        placeRectangle(list.pollFirst(), 0, 0, Integer.MAX_VALUE);
+        if (pack.hasFixedHeight()) {
+            pack.sort();
+            list = pack.getRectangles();
+            placeRectangle(list.pollFirst(), 0, 0, Integer.MAX_VALUE);
+            
+            wasRun = true;
+        }
     }
 
     /**
@@ -90,5 +98,15 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
         } else {
             return (x+(int)r.getWidth()<=s) && (y+(int)r.getHeight()<=H);
         }
+    }
+    
+    @Override
+    public int getContainerHeight() {
+        return wasRun ? super.getContainerHeight() : Integer.MAX_VALUE;
+    }
+    
+    @Override
+    public int getContainerWidth() {
+        return wasRun ? super.getContainerWidth() : Integer.MAX_VALUE;
     }
 }
