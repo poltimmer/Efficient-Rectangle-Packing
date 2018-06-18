@@ -132,7 +132,8 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
     private Algorithm newAlgoFromClass(Class <? extends Algorithm> algoClass, double rotationRatio) {
         Algorithm algo = null;
         try {
-            boolean rotations = rotationRatio != 0;
+            //Double.MAX_VALUE indicates that rotations are not allowed
+            boolean rotations = rotationRatio < Double.MAX_VALUE;
             
             //create packdata
             PackData data = new PackData(pack.getFixedHeight(), rotations, pack.getNumberOfRectangles());
@@ -167,7 +168,8 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
     private void addRectanglesToPack(Pack p) {
         //add each rectangle of this pack to algo's pack (as a copy!)
         for (RectangleRotatable r : pack.getOrderedRectangles()) {
-            p.addRectangle(r.copy());
+            RectangleRotatable rCopy = r.copy();
+            p.addRectangle(rCopy);
         }
     }
     

@@ -183,6 +183,11 @@ public abstract class Pack {
      * @return true if the rectangle should be rotated
      */
     protected boolean shouldRotateByRatioWidth(RectangleRotatable r) {
+        if (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight() && !canRotate()) {
+            ValidCheck.print("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
+                    + "EXCEEDS THE FIXED HEIGHT");
+        }
+        
                 //rotations are allowed AND
         return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
                 //The rectangle has the ratio OR
@@ -197,6 +202,11 @@ public abstract class Pack {
      * @return true if the rectangle should be rotated
      */
     protected boolean shouldRotateByRatioHeight(RectangleRotatable r) {
+        if (hasFixedHeight() && r.getRotatedHeight() > getFixedHeight() && !canRotate()) {
+            ValidCheck.print("WARNING: RECTANGLE HAS TO BE ROTATED BECAUSE IT "
+                    + "EXCEEDS THE FIXED HEIGHT");
+        }
+        
                 //rotations are allowed AND
         return canRotate() && ROTATE_RATIO < Double.MAX_VALUE &&
                 //The rectangle has the ratio OR
