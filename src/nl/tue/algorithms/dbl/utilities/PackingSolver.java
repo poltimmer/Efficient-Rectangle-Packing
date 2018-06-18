@@ -93,28 +93,26 @@ public class PackingSolver {
             compoundAlgo.add(BinaryPacker.class, 0.01);
             compoundAlgo.add(BinaryPacker.class, 0.1);
             compoundAlgo.add(BinaryPacker.class, 0.25);
-            
-            if (data.hasFixedHeight()) {
-                
-                //rotate no rectangles
-                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); 
 
-                //rotate all rectangles
-                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); 
+            //rotate no rectangles
+            compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE);
 
-                //rotate rectangles based on their largest side
-                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE); 
+            //rotate all rectangles
+            compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL);
 
-                //rotate rectangles if their width-height ratio >= the default ratio as defined in Pack
-                compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO); 
+            //rotate rectangles based on their largest side
+            compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_BIGGEST_SIDE);
 
-                //rotate rectangles if their width-height ratio >= 10, 0.01, 0.1 and 0.25 respectively. 
-                //I.e. for very thin and long rectangles
-                compoundAlgo.add(RecursiveFit.class, 10);
-                compoundAlgo.add(RecursiveFit.class, 0.01);
-                compoundAlgo.add(RecursiveFit.class, 0.1);
-                compoundAlgo.add(RecursiveFit.class, 0.25);
-            }
+            //rotate rectangles if their width-height ratio >= the default ratio as defined in Pack
+            compoundAlgo.add(RecursiveFit.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_DEFAULT_RATIO);
+
+            //rotate rectangles if their width-height ratio >= 10, 0.01, 0.1 and 0.25 respectively.
+            //I.e. for very thin and long rectangles
+            compoundAlgo.add(RecursiveFit.class, 10);
+            compoundAlgo.add(RecursiveFit.class, 0.01);
+            compoundAlgo.add(RecursiveFit.class, 0.1);
+            compoundAlgo.add(RecursiveFit.class, 0.25);
+
             //actualy return the compoundAlgorithm now that the above has been defined for it.
             return compoundAlgo;
         }

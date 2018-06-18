@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class RecursiveFit extends Algorithm<PackLinkedList> {
     /** The container height */
-    private final int H;
+    private int H;
     
     private boolean wasRun;
     
@@ -30,6 +30,13 @@ public class RecursiveFit extends Algorithm<PackLinkedList> {
             list = pack.getRectangles();
             placeRectangle(list.pollFirst(), 0, 0, Integer.MAX_VALUE);
             
+            wasRun = true;
+        } else {
+            pack.sort();
+            list = pack.getRectangles();
+            H = 2 * Math.max(list.getFirst().width, list.getFirst().height);
+            placeRectangle(list.pollFirst(), 0, 0, Integer.MAX_VALUE);
+
             wasRun = true;
         }
     }
