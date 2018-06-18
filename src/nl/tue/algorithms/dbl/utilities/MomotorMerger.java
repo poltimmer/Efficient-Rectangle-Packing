@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import nl.tue.algorithms.dbl.common.ValidCheck;
 
 /**
  * This class is never used in the Algorithm code, and is only used to submit
@@ -214,7 +215,14 @@ public class MomotorMerger {
     }
     
     /** Basic Java main method */
-    public static void main(String [ ] args) {        
+    public static void main(String [ ] args) {    
+        //ensure that debug mode is disabled
+        if (ValidCheck.DEBUG_ENABLED) {
+            System.err.println("Please disable Debug Mode first! (See DEBUG_ENABLED in ValidCheck.java)");
+            System.err.println(MomotorMerger.class.getSimpleName() + " aborted");
+            System.exit(0);
+        }        
+        
         //make 'momotor' directory in res/ (if it does not yet exist)
         MOMOTOR_DIR.mkdirs();
         

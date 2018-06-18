@@ -72,6 +72,21 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
                 bestAlgo = algo;
                 this.pack.ROTATE_RATIO = algo.pack.ROTATE_RATIO;
             }
+            
+            //sanity check to easily spot out any error in any invoked algorithm (makes it run slower though)
+            if (ValidCheck.DEBUG_ENABLED) {
+                for (RectangleRotatable r : algo.pack.getOrderedRectangles()) {
+                    if (!ValidCheck.isRectangleValidWithinPack(r, algo.pack) &&
+                            !(ValidCheck.isRectangleRotatedIllegallyWithinPack(r, algo.pack)
+                            && r.height > algo.pack.getFixedHeight() && algo.pack.hasFixedHeight())) {
+                        System.err.println(algoClass.a + ": WARNING ERROR IN THIS PACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                        //one error msg is enough
+                        break;
+                    }
+                }
+            }
+            
         }
         
         //overwrite the current pack by the 'best' pack

@@ -14,6 +14,8 @@ import java.util.List;
  * @since 16 MAY 2018
  */
 public class ValidCheck {
+    public static final boolean DEBUG_ENABLED = true;
+    
     /**
      * A method that checks if the solution is still valid.
      *
@@ -101,7 +103,7 @@ public class ValidCheck {
      * @modifies none
      * @return the boolean
      */
-    protected static boolean isRectangleRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
+    public static boolean isRectangleRotatedIllegallyWithinPack(RectangleRotatable r, Pack p){
         return !(p.canRotate() || !r.isRotated());
     }
     
@@ -109,6 +111,8 @@ public class ValidCheck {
      * Prints to System.out
      */
     public static void print(Object str) {
-        System.out.println(str);
+        if (DEBUG_ENABLED) {
+            System.out.println(str);
+        }
     }
 }

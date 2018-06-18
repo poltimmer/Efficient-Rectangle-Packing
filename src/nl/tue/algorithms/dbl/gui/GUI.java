@@ -371,7 +371,7 @@ public class GUI extends JFrame {
                 //This only works (and is neccessary) for a CompoundAlgorithm
                 CompoundAlgorithm compoundAlgo = (CompoundAlgorithm) solver.getAlgorithm();
                 
-                /*
+                
                 //Add other algorithms to the CompoundAlgorithm
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_NONE); //ratio = Integer.MAX_VALUE
                 compoundAlgo.add(BinaryPacker.class, CompoundAlgorithm.RotationMode.ROTATIONMODE_ALL); //ratio = 0
@@ -381,7 +381,7 @@ public class GUI extends JFrame {
                 compoundAlgo.add(BinaryPacker.class, 0.01);
                 compoundAlgo.add(BinaryPacker.class, 0.1);
                 compoundAlgo.add(BinaryPacker.class, 0.25);
-                */
+                
                 
                 //For fixed height tests with n>5, remove comments from following section to simulate PackingSolver functionality:
                 
