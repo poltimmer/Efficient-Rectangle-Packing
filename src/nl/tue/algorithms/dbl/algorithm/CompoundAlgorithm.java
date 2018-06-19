@@ -60,8 +60,20 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
             
             //solve the packingProblem using the created algorithm, and retrieve
             //its size
-            algo.solve();
-            int area = algo.getContainerArea();
+            int area;
+            
+            try {
+                algo.solve();
+                area = algo.getContainerArea();
+            } catch (Exception e) {
+                //mask errors when not in debug mode
+                if (ValidCheck.DEBUG_ENABLED) {
+                    System.err.println("EXCEPTION THROWN");
+                    throw e;
+                }
+                //and just ignore this result
+                area = Integer.MAX_VALUE;
+            }
             
             //if the area is lower than the current best area, then a new 'best'
             //algorithm is found
