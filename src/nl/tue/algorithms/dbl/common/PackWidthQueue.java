@@ -18,7 +18,11 @@ public class PackWidthQueue extends Pack {
                     return 1;
                 } else {
                     //r1.getRotatedWidth() == r2.getRotatedWidth()
-                    return r1.getRotatedHeight() >= r2.getRotatedHeight() ? -1 : 1;
+                    if (r1.getRotatedHeight() == r2.getRotatedHeight()) {
+                        return 0;
+                    }
+                    
+                    return r1.getRotatedHeight() > r2.getRotatedHeight() ? -1 : 1;
                 }
             }
         }); // Turn PriorityQueue into Max Heap.

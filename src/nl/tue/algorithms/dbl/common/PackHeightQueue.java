@@ -17,8 +17,11 @@ public class PackHeightQueue extends Pack {
                 } else if (r1.getRotatedHeight() < r2.getRotatedHeight()) {
                     return 1;
                 } else {
-                    //r1.getRotatedWidth() == r2.getRotatedWidth()
-                    return r1.getRotatedWidth() >= r2.getRotatedWidth() ? -1 : 1;
+                    //r1.getRotatedHeight() == r2.getRotatedHeight()
+                    if (r1.getRotatedWidth() == r2.getRotatedWidth()) {
+                        return 0;
+                    }
+                    return r1.getRotatedWidth() > r2.getRotatedWidth() ? -1 : 1;
                 }
             }
         }); // Turn PriorityQueue into Max Heap.
