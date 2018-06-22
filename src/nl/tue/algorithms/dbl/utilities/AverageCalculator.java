@@ -32,7 +32,7 @@ public class AverageCalculator{
     private static final String R_FILENAME = "results.r";
     
     //Algorithm to test
-    private static final Class<? extends Algorithm> TEST_ALGORITHM = BinaryPacker.class;
+    private static final Class<? extends Algorithm> TEST_ALGORITHM = RecursiveFit.class;
     
     //hardcode allowed testFile extensions
     private static final Map<String, Boolean> ALLOWED_FILE_EXTENSIONS;
@@ -115,7 +115,7 @@ public class AverageCalculator{
             //Print general info:
             fileWriter.write("Results for " + TEST_ALGORITHM.getSimpleName() + " (" + files.size() + " tests) :");
             fileWriter.newLine();
-            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); ContainerWidth (int); ContainerHeight int); ContainerArea (int); Coverage (%);");
+            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); NumberOfRectangles; ContainerWidth (int); ContainerHeight int); ContainerArea (int); Coverage (%);");
             fileWriter.newLine();
             
             //read each testcase
@@ -150,7 +150,7 @@ public class AverageCalculator{
                     int containerArea = algo.getContainerArea();
                     long coverage = pack.getCoveragePercentage();
                     
-                    fileWriter.write(containerWidth + ";" + containerHeight + ";" + containerArea + ";" + coverage + ";");
+                    fileWriter.write(pack.getNumberOfRectangles() + ";" + containerWidth + ";" + containerHeight + ";" + containerArea + ";" + coverage + ";");
                     fileWriter.newLine();          
                 }
             }   
@@ -192,13 +192,15 @@ public class AverageCalculator{
             fileWriter.newLine();
             fileWriter.write("totalRuntime <- data$V3");
             fileWriter.newLine();
-            fileWriter.write("containerWidth <- data$V4");
+            fileWriter.write("n <- data$V4");
             fileWriter.newLine();
-            fileWriter.write("containerHeight <- data$V5");
+            fileWriter.write("containerWidth <- data$V5");
             fileWriter.newLine();
-            fileWriter.write("containerArea <- data$V6");
+            fileWriter.write("containerHeight <- data$V6");
             fileWriter.newLine();
-            fileWriter.write("coverage <- data$V7");
+            fileWriter.write("containerArea <- data$V7");
+            fileWriter.newLine();
+            fileWriter.write("coverage <- data$V8");
             fileWriter.newLine();
             fileWriter.newLine();
             
