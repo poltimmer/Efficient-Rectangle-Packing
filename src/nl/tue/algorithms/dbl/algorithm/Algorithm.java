@@ -57,7 +57,7 @@ public abstract class Algorithm<P extends Pack> {
      * @return The area of the pack's container (0 if there are no rectangles
      * or none have been placed yet)
      */
-    int getContainerArea() {
+    public int getContainerArea() {
         int w = getContainerWidth();
         int h = getContainerHeight();
 

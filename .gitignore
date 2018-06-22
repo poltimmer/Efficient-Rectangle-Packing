@@ -24,10 +24,10 @@ hs_err_pid*
 #Netbeans stuff
 /nbproject/private/
 
-#MomotorMerger and InputGenerator files
+#MomotorMerger, InputGenerator, and averageCalculator files
 /res/momotor/
 /res/inputGenerator/
-/res/input/
+/res/averageCalculator/
 
 #Test files that don't need to be uploaded to the git
 /res/localTests/
