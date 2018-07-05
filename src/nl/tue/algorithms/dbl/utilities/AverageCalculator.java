@@ -32,7 +32,7 @@ public class AverageCalculator{
     private static final String R_FILENAME = "results.r";
     
     //Algorithm to test
-    private static final Class<? extends Algorithm> TEST_ALGORITHM = RecursiveFit.class;
+    private static final Class<? extends Algorithm> TEST_ALGORITHM = Algorithm.class;
     
     //hardcode allowed testFile extensions
     private static final Map<String, Boolean> ALLOWED_FILE_EXTENSIONS;
@@ -115,12 +115,17 @@ public class AverageCalculator{
             //Print general info:
             fileWriter.write("Results for " + TEST_ALGORITHM.getSimpleName() + " (" + files.size() + " tests) :");
             fileWriter.newLine();
-            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); NumberOfRectangles; ContainerWidth (int); ContainerHeight int); ContainerArea (int); Coverage (%);");
+            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); NumberOfRectangles; ContainerWidth (int); ContainerHeight (int); ContainerArea (int); Coverage (%);");
             fileWriter.newLine();
+            
+            System.out.println("Starting to read files (this may take a while if there are many files)...");
+            int n = files.size();
+            int i = 0;
             
             //read each testcase
             for (File file : files)
             {
+                System.out.println("- " + file.getName() + "file " + (i+1) + " out of " + n);
                 try (InputStream fileIn = new FileInputStream(file))
                 {           
                     //keep track of runtime (in ns)
@@ -151,8 +156,9 @@ public class AverageCalculator{
                     long coverage = pack.getCoveragePercentage();
                     
                     fileWriter.write(pack.getNumberOfRectangles() + ";" + containerWidth + ";" + containerHeight + ";" + containerArea + ";" + coverage + ";");
-                    fileWriter.newLine();          
+                    fileWriter.newLine();     
                 }
+                i++;
             }   
             
             System.out.println("Results for " + files.size() + " tests were outputed in " + RESULTS_DIR.getAbsolutePath());
