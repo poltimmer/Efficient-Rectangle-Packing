@@ -125,7 +125,7 @@ public class AverageCalculator{
             //read each testcase
             for (File file : files)
             {
-                System.out.println("- " + file.getName() + "file " + (i+1) + " out of " + n);
+                System.out.println("- " + file.getName() + " (file " + (i+1) + " out of " + n + ")");
                 try (InputStream fileIn = new FileInputStream(file))
                 {           
                     //keep track of runtime (in ns)

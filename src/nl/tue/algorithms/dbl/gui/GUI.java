@@ -351,10 +351,10 @@ public class GUI extends JFrame {
             //Class <? extends Algorithm> forcedClass = CompoundAlgorithm.class;
             
             //This is to test BinaryPacker functionality outside of CompoundAlgorithm, which is not realistic but maybe useful for testing
-            Class <? extends Algorithm> forcedClass = BinaryPacker.class;
+            //Class <? extends Algorithm> forcedClass = BinaryPacker.class;
             
             //This is to test RecursiveFit functionality outside of CompoundAlgorithm, which is not realistic but maybe useful for testing
-            //Class <? extends Algorithm> forcedClass = RecursiveFit.class;
+            Class <? extends Algorithm> forcedClass = RecursiveFit.class;
             
             System.out.println("GUI Reloaded, please respecify inputs");
             System.out.print("> ");

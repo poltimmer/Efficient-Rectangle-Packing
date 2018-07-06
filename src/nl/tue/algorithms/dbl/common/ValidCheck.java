@@ -14,7 +14,7 @@ import java.util.List;
  * @since 16 MAY 2018
  */
 public class ValidCheck {
-    public static final boolean DEBUG_ENABLED = false;
+    public static final boolean DEBUG_ENABLED = true;
     
     /**
      * A method that checks if the solution is still valid.

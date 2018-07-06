@@ -95,7 +95,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
                     if (!ValidCheck.isRectangleValidWithinPack(r, algo.pack) &&
                             !(ValidCheck.isRectangleRotatedIllegallyWithinPack(r, algo.pack)
                             && r.height > algo.pack.getFixedHeight() && algo.pack.hasFixedHeight())) {
-                        System.err.println(algoClass.a + ": WARNING ERROR IN THIS PACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        System.out.println(algoClass.a + ": WARNING ERROR IN THIS PACK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                         //one error msg is enough
                         break;
@@ -126,7 +126,7 @@ public class CompoundAlgorithm extends Algorithm<Pack> {
             throw new IllegalArgumentException("CompoundAlgorithm.add.pre violated: Algorithm.class is NOT a valid class!");
         }
         
-        Pair p;
+        Pair<Class <? extends Algorithm>, Double> p;
         if (!pack.canRotate()) {
             p = new Pair(algoClass, Double.MAX_VALUE);
         } else {
