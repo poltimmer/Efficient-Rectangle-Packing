@@ -23,7 +23,6 @@ import nl.tue.algorithms.dbl.common.ValidCheck;
 public class CompoundAlgorithm extends Algorithm<Pack> {
     /** List of subscribed algorithms */
     private final List<Pair<Class<? extends Algorithm>, Double>> algos;
-    public String bestAlgoName;
     
     public enum RotationMode {
         ROTATIONMODE_NONE,          //rotate no rectangles

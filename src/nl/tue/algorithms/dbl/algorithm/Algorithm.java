@@ -9,8 +9,10 @@ import nl.tue.algorithms.dbl.common.Pack;
  */
 public abstract class Algorithm<P extends Pack> {
     protected P pack;
+    public String bestAlgoName;
     
     public Algorithm(P pack) {
+        this.bestAlgoName = getClass().getSimpleName();
         this.pack = pack;
     }
     

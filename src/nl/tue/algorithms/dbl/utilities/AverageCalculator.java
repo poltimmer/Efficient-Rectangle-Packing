@@ -115,7 +115,7 @@ public class AverageCalculator{
             //Print general info:
             fileWriter.write("Results for " + TEST_ALGORITHM.getSimpleName() + " (" + files.size() + " tests) :");
             fileWriter.newLine();
-            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); NumberOfRectangles; ContainerWidth (int); ContainerHeight (int); ContainerArea (int); Coverage (%);");
+            fileWriter.write("ReadingRuntime (ns); SolverRuntime (ns); TotalRuntime (ns); NumberOfRectangles; ContainerWidth (int); ContainerHeight (int); ContainerArea (int); UsedArea (int); Coverage (%); RotationRatio (int); bestAlgoName (in case of CompoundAlgorithm)");
             fileWriter.newLine();
             
             System.out.println("Starting to read files (this may take a while if there are many files)...");
@@ -153,9 +153,13 @@ public class AverageCalculator{
                     int containerWidth = algo.getContainerWidth();
                     int containerHeight = algo.getContainerHeight();
                     int containerArea = algo.getContainerArea();
+                    int usedArea = pack.getUsedArea();
                     long coverage = pack.getCoveragePercentage();
                     
-                    fileWriter.write(pack.getNumberOfRectangles() + ";" + containerWidth + ";" + containerHeight + ";" + containerArea + ";" + coverage + ";");
+                    fileWriter.write(pack.getNumberOfRectangles() + ";" + containerWidth + ";" + containerHeight + ";" + containerArea + ";" + usedArea + ";" + coverage + ";");
+                    
+                    //rotate ratio and algo name used
+                    fileWriter.write(pack.ROTATE_RATIO + ";" + algo.bestAlgoName + ";");                    
                     fileWriter.newLine();     
                 }
                 i++;
@@ -206,7 +210,13 @@ public class AverageCalculator{
             fileWriter.newLine();
             fileWriter.write("containerArea <- data$V7");
             fileWriter.newLine();
-            fileWriter.write("coverage <- data$V8");
+            fileWriter.write("usedArea <- data$V8");
+            fileWriter.newLine();
+            fileWriter.write("coverage <- data$V9");
+            fileWriter.newLine();
+            fileWriter.write("rotateRatio <- data$V10");
+            fileWriter.newLine();
+            fileWriter.write("algorithm <- data$V11");
             fileWriter.newLine();
             fileWriter.newLine();
             
